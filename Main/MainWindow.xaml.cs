@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 
 namespace CS3280FinalProject
 {
+    
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -23,6 +24,12 @@ namespace CS3280FinalProject
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Search.wndSearch wndSearch = new Search.wndSearch();
+            wndSearch.Show();
         }
     }
 }
