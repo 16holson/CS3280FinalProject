@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Test" HorizontalAlignment="Left" Margin="400,189,0,0" VerticalAlignment="Top"/>
-
+        <Menu>
+            <MenuItem x:Name="MenuSearch" Header="Search" Click="MenuSearch_Click"/>
+            <MenuItem x:Name="MenuEditItems" Header="Edit Items" Click="MenuEditItems_Click"/>
+        </Menu>
     </Grid>
 </Window>

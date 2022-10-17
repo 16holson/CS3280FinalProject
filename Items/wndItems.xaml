@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CS3280FinalProject.Items"
         mc:Ignorable="d"
-        Title="wndItems" Height="450" Width="800">
-    <Grid>
-        
+        Title="wndItems" Height="450" Width="800" WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize">
+    <Grid ShowGridLines="True">
+        <!--Split the window into two columns, the left for the controls and the right for the data-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--split the left column into two rows, the top for the labels and text boxes and the bottom for the buttons-->
+        <Grid Grid.Column="0" ShowGridLines="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--labels and user inputs-->
+            <Label Grid.Row="0" Content="Code:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+            <Label Content="TDB" HorizontalAlignment="Left" Margin="55,10,0,0" VerticalAlignment="Top"/>
+
+            <Label Grid.Row="0" Content="Cost:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+            <Label Content="tempCost" HorizontalAlignment="Left" Margin="55,41,0,0" VerticalAlignment="Top"/>
+
+            <Label Grid.Row="0" Content="Description:" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+            <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="A short description of the item" VerticalAlignment="Center" Height="22" Width="380"/>
+
+            <!--button controls-->
+            <Button x:Name="btnAddItem" Grid.Row="1" Content="Add Item" HorizontalAlignment="Left" Click="btnAddItem_Click"/>
+            <Button x:Name="btnEditItem" Grid.Row="1" Content="Edit Item" HorizontalAlignment="Center"/>
+            <Button x:Name="btnDeleteItem" Grid.Row="1" Content="Delete Item" HorizontalAlignment="Right"/>
+            <Button x:Name="btnSaveItem" Grid.Row="1" Content="Save Item" Margin="0,40,0,0" Click="btnSaveItem_Click"/>
+
+        </Grid>
+
+        <DataGrid x:Name="datagridItems" Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=5}" Width="380" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+
     </Grid>
 </Window>
