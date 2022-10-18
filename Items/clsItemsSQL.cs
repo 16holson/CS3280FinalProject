@@ -13,57 +13,55 @@ namespace CS3280FinalProject.Items
     {
         #region variables
         /// <summary>
+        /// Holds the connection the DB so that we can query it.
+        /// </summary>
+        clsDataAccess DB;
+
+        /// <summary>
         /// Connection string to the database.
         /// </summary>
-        private string sConnectionString;
+        private string SQLcommand;
         #endregion
+
 
         #region functions
         /// <summary>
-        /// Default constructor that sets the connection string to the database.
+        /// Default constructor for the clsItemsSQL class.
         /// </summary>
         public clsItemsSQL()
         {
-            try
-            {
-                sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\Invoice.mdb";
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
+            DB = new clsDataAccess();
         }
+        /* 
+         * SQL statements to implement
+         * (DONE) select ItemCode, ItemDesc, Cost from ItemDesc
+         * (DONE) select distinct(InvoiceNum) from LineItems where ItemCode = 'A'
+         * (DONE) Update ItemDesc Set ItemDesc = 'abcdef', Cost = 123 where ItemCode = 'A'
+         * (DONE) Insert into ItemDesc (ItemCode, ItemDesc, Cost) Values ('ABC', 'blah', 321)
+         * (DONE) Delete from ItemDesc Where ItemCode = 'ABC'
+         */
 
-        public DataSet ExecuteSQLStatement(string sSQL, ref int iRetVal)
+        /// <summary>
+        /// Gets all the items that are inside the DB.
+        /// </summary>
+        /// <returns>A list of object, of the type clsItem, for all of the Items inside the DB.</returns>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
+        public List<clsItem> GetAllItemsFromDB()
         {
             try
             {
-                //Create a new DataSet
-                DataSet ds = new DataSet();
+                int rowsReturned = 0;
 
-                using (OleDbConnection conn = new OleDbConnection(sConnectionString))
+                DataSet ds = DB.ExecuteSQLStatement("select ItemCode, ItemDesc, Cost from ItemDesc", ref rowsReturned);
+                List<clsItem> items = new List<clsItem>();
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-
-                    using (OleDbDataAdapter adapter = new OleDbDataAdapter())
-                    {
-
-                        //Open the connection to the database
-                        conn.Open();
-
-                        //Add the information for the SelectCommand using the SQL statement and the connection object
-                        adapter.SelectCommand = new OleDbCommand(sSQL, conn);
-                        adapter.SelectCommand.CommandTimeout = 0;
-
-                        //Fill up the DataSet with data
-                        adapter.Fill(ds);
-                    }
+                    clsItem currentItem = new clsItem(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), ds.Tables[0].Rows[i][2].ToString());
+                    items.Add(currentItem);
                 }
 
-                //Set the number of values returned
-                iRetVal = ds.Tables[0].Rows.Count;
-
-                //return the DataSet
-                return ds;
+                return items;
             }
             catch (Exception ex)
             {
@@ -72,46 +70,26 @@ namespace CS3280FinalProject.Items
         }
 
         /// <summary>
-        /// This method takes an SQL statement that is passed in and executes it.  The resulting single 
-        /// value is returned.
+        /// This gets a list all the invoice number that have the itemcode specified.
         /// </summary>
-        /// <param name="sSQL">The SQL statement to be executed.</param>
-        /// <returns>Returns a string from the scalar SQL statement.</returns>
-        public string ExecuteScalarSQL(string sSQL)
+        /// <param name="ItemCode">The item code you are looking for.</param>
+        /// <returns>A list of strings for all the invoice number that have "ItemCode" inside the invoice.</returns>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
+        public List<int> GetAllInvoiceNumsForItemCode(string ItemCode)
         {
             try
             {
-                //Holds the return value
-                object obj;
+                int rowsReturned = 0;
 
-                using (OleDbConnection conn = new OleDbConnection(sConnectionString))
+                DataSet ds = DB.ExecuteSQLStatement("select distinct(InvoiceNum) from LineItems where ItemCode = '" + ItemCode + "'", ref rowsReturned);
+                List<int> items = new List<int>();
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    using (OleDbDataAdapter adapter = new OleDbDataAdapter())
-                    {
-
-                        //Open the connection to the database
-                        conn.Open();
-
-                        //Add the information for the SelectCommand using the SQL statement and the connection object
-                        adapter.SelectCommand = new OleDbCommand(sSQL, conn);
-                        adapter.SelectCommand.CommandTimeout = 0;
-
-                        //Execute the scalar SQL statement
-                        obj = adapter.SelectCommand.ExecuteScalar();
-                    }
+                    items.Add((int)ds.Tables[0].Rows[i][0]);
                 }
 
-                //See if the object is null
-                if (obj == null)
-                {
-                    //Return a blank
-                    return "";
-                }
-                else
-                {
-                    //Return the value
-                    return obj.ToString();
-                }
+                return items;
             }
             catch (Exception ex)
             {
@@ -120,32 +98,48 @@ namespace CS3280FinalProject.Items
         }
 
         /// <summary>
-        /// This method takes an SQL statement that is a non query and executes it.
+        /// Updates an item's data with the supplied data.
         /// </summary>
-        /// <param name="sSQL">The SQL statement to be executed.</param>
-        /// <returns>Returns the number of rows affected by the SQL statement.</returns>
-        public int ExecuteNonQuery(string sSQL)
+        /// <param name="ItemCode">The item code of the item you are going to update.</param>
+        /// <param name="ItemDescription">The item's updated description.</param>
+        /// <param name="ItemCost">The item's updated cost.</param>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
+        public void UpdateItemData(string ItemCode, string ItemDescription, int ItemCost)
         {
             try
             {
-                //Number of rows affected
-                int iNumRows;
+                int rowsAffected = DB.ExecuteNonQuery("Update ItemDesc Set ItemDesc = " + "'" + ItemDescription + "', Cost = " + ItemCost + " where ItemCode = '" + ItemCode + "'");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
 
-                using (OleDbConnection conn = new OleDbConnection(sConnectionString))
-                {
-                    //Open the connection to the database
-                    conn.Open();
+        /// <summary>
+        /// Adds an item to the DB using the supplied data.
+        /// </summary>
+        /// <param name="ItemCode">The item code of the item you are going to update.</param>
+        /// <param name="ItemDescription">The item's updated description.</param>
+        /// <param name="ItemCost">The item's updated cost.</param>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
+        public void AddItem(string ItemCode, string ItemDescription, int ItemCost)
+        {
+            try
+            {
+                int rowsAffected = DB.ExecuteNonQuery("Insert into ItemDesc (ItemCode, ItemDesc, Cost) Values ('" + ItemCode + "', '" + ItemDescription + "', +m " + ItemCost + ")");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
 
-                    //Add the information for the SelectCommand using the SQL statement and the connection object
-                    OleDbCommand cmd = new OleDbCommand(sSQL, conn);
-                    cmd.CommandTimeout = 0;
-
-                    //Execute the non query SQL statement
-                    iNumRows = cmd.ExecuteNonQuery();
-                }
-
-                //return the number of rows affected
-                return iNumRows;
+        public void DeleteItem(string ItemCode)
+        {
+            try
+            {
+                int rowsAffected = DB.ExecuteNonQuery("Delete from ItemDesc Where ItemCode = '" + ItemCode + "'");
             }
             catch (Exception ex)
             {
@@ -153,6 +147,5 @@ namespace CS3280FinalProject.Items
             }
         }
         #endregion
-
     }
 }

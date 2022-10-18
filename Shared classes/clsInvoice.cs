@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace CS3280FinalProject.Shared
 {
-    public class Invoice
+    public class clsInvoice
     {
         #region Class Variables
         /// <summary>
@@ -26,18 +26,18 @@ namespace CS3280FinalProject.Shared
         /// <summary>
         /// List of items in the invoice
         /// </summary>
-        public List<Item> items { get; set; }
+        public List<clsItem> items { get; set; }
         #endregion
 
         #region Constructor
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public Invoice()
+        public clsInvoice()
         {
             try
             {
-                items = new List<Item>();
+                items = new List<clsItem>();
             }
             catch(Exception ex)
             {

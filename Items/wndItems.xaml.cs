@@ -23,12 +23,9 @@ namespace CS3280FinalProject.Items
     {
         #region variables
         //private variables
-        /// <summary>
-        /// Stores a reference to the ObservableCollection of items that are in the DB.
-        /// </summary>
-        private ObservableCollection<Item> items;
+        private clsItemsLogic ItemLogic;
 
-        private clsItemsLogic ItemsLogic;
+        private clsItemsSQL DBExtract;
 
         private bool bHasItemsBeenChanged;
         
@@ -40,13 +37,13 @@ namespace CS3280FinalProject.Items
 
         #region functions
         /// <summary>
-        /// Default constructor for the wndItems window
+        /// Default constructor for the wndItems window.
         /// </summary>
         public wndItems()
         {
             InitializeComponent();
-            ItemsLogic = new clsItemsLogic();
-            //this.items = ItemCollection;
+            ItemLogic = new clsItemsLogic();
+            DBExtract = new clsItemsSQL();
         }
 
         private void btnAddItem_Click(object sender, RoutedEventArgs e)
