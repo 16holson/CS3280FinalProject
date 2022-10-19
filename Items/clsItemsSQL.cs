@@ -1,67 +1,50 @@
-﻿using CS3280FinalProject.Shared;
+﻿/*
+ * Braxton Wright
+ * CS 3280
+ * Final Project prototype class clsItemsSQL
+ * Shawn Cowder
+ * Due: November 19, 2022 at 11:59 PM
+ * Version: 0.5
+ *  ----------------------------------------------------------------------------------------------------------
+ * This file contains the functions that returns a string representing the SQL statment to querry the DB.
+ * -----------------------------------------------------------------------------------------------------------
+ */
+
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.OleDb;
-using System.IO;
 using System.Reflection;
-using System.Windows.Documents;
 
 namespace CS3280FinalProject.Items
 {
     public class clsItemsSQL
     {
-        #region variables
-        /// <summary>
-        /// Holds the connection the DB so that we can query it.
-        /// </summary>
-        clsDataAccess DB;
-
-        /// <summary>
-        /// Connection string to the database.
-        /// </summary>
-        private string SQLcommand;
-        #endregion
-
-
         #region functions
         /// <summary>
         /// Default constructor for the clsItemsSQL class.
         /// </summary>
         public clsItemsSQL()
         {
-            DB = new clsDataAccess();
+            //do nothing
         }
-        /* 
-         * SQL statements to implement
-         * (DONE) select ItemCode, ItemDesc, Cost from ItemDesc
-         * (DONE) select distinct(InvoiceNum) from LineItems where ItemCode = 'A'
-         * (DONE) Update ItemDesc Set ItemDesc = 'abcdef', Cost = 123 where ItemCode = 'A'
-         * (DONE) Insert into ItemDesc (ItemCode, ItemDesc, Cost) Values ('ABC', 'blah', 321)
-         * (DONE) Delete from ItemDesc Where ItemCode = 'ABC'
-         */
+
+        /* Statements to implement:
+         * (Done) select ItemCode, ItemDesc, Cost from ItemDesc
+         * (Done) select distinct(InvoiceNum) from LineItems where ItemCode = 'A'
+         * (Done) Update ItemDesc Set ItemDesc = 'abcdef', Cost = 123 where ItemCode = 'A'
+         * (Done) Insert into ItemDesc (ItemCode, ItemDesc, Cost) Values ('ABC', 'blah', 321)
+         * (Done) Delete from ItemDesc Where ItemCode = 'ABC'
+        */
 
         /// <summary>
-        /// Gets all the items that are inside the DB.
+        /// Generates a SQL statement that allows you to query the DB to retrieve all the items inside it.
         /// </summary>
-        /// <returns>A list of object, of the type clsItem, for all of the Items inside the DB.</returns>
+        /// <returns>A string that represents the SQL statement.</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
-        public List<clsItem> GetAllItemsFromDB()
+        public string SelectAllItems()
         {
             try
             {
-                int rowsReturned = 0;
-
-                DataSet ds = DB.ExecuteSQLStatement("select ItemCode, ItemDesc, Cost from ItemDesc", ref rowsReturned);
-                List<clsItem> items = new List<clsItem>();
-
-                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-                {
-                    clsItem currentItem = new clsItem(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), ds.Tables[0].Rows[i][2].ToString());
-                    items.Add(currentItem);
-                }
-
-                return items;
+                return "select ItemCode, ItemDesc, Cost " +
+                    "from ItemDesc";
             }
             catch (Exception ex)
             {
@@ -70,26 +53,18 @@ namespace CS3280FinalProject.Items
         }
 
         /// <summary>
-        /// This gets a list all the invoice number that have the itemcode specified.
+        /// Generates a SQL statement that allows you to query the DB to retrieve all the invoice numbers that have the item inside it.
         /// </summary>
-        /// <param name="ItemCode">The item code you are looking for.</param>
-        /// <returns>A list of strings for all the invoice number that have "ItemCode" inside the invoice.</returns>
+        /// <param name="ItemCode">The ItemCode of the item you want to see if it is connected to any invoice.</param>
+        /// <returns>A string that represents the SQL statement.</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
-        public List<int> GetAllInvoiceNumsForItemCode(string ItemCode)
+        public string SelectAllInvoicesThatHaveItemCode(string ItemCode)
         {
             try
             {
-                int rowsReturned = 0;
-
-                DataSet ds = DB.ExecuteSQLStatement("select distinct(InvoiceNum) from LineItems where ItemCode = '" + ItemCode + "'", ref rowsReturned);
-                List<int> items = new List<int>();
-
-                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-                {
-                    items.Add((int)ds.Tables[0].Rows[i][0]);
-                }
-
-                return items;
+                return "select distinct(InvoiceNum) " +
+                    "from LineItems " +
+                    "where ItemCode = '" + ItemCode + "'";
             }
             catch (Exception ex)
             {
@@ -98,17 +73,21 @@ namespace CS3280FinalProject.Items
         }
 
         /// <summary>
-        /// Updates an item's data with the supplied data.
+        /// Generates a SQL statement that allows you to update an item's information inside the DB.
         /// </summary>
-        /// <param name="ItemCode">The item code of the item you are going to update.</param>
-        /// <param name="ItemDescription">The item's updated description.</param>
-        /// <param name="ItemCost">The item's updated cost.</param>
+        /// <param name="ItemCode">The ItemCode of the item you want to update.</param>
+        /// <param name="ItemDescription">The new description of the item.</param>
+        /// <param name="ItemCost">The new cost of the item.</param>
+        /// <returns>A string that represents the SQL statement.</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
-        public void UpdateItemData(string ItemCode, string ItemDescription, int ItemCost)
+        public string UpdateItemData(string ItemCode, string ItemDescription, int ItemCost)
         {
             try
             {
-                int rowsAffected = DB.ExecuteNonQuery("Update ItemDesc Set ItemDesc = " + "'" + ItemDescription + "', Cost = " + ItemCost + " where ItemCode = '" + ItemCode + "'");
+                return "Update ItemDesc " +
+                    "Set ItemDesc = " + "'" + ItemDescription + "', " +
+                    "Cost = " + ItemCost + " " +
+                    "where ItemCode = '" + ItemCode + "'";
             }
             catch (Exception ex)
             {
@@ -117,17 +96,19 @@ namespace CS3280FinalProject.Items
         }
 
         /// <summary>
-        /// Adds an item to the DB using the supplied data.
+        /// Generates a SQL statement that allows you to insert a new item into the DB.
         /// </summary>
-        /// <param name="ItemCode">The item code of the item you are going to update.</param>
-        /// <param name="ItemDescription">The item's updated description.</param>
-        /// <param name="ItemCost">The item's updated cost.</param>
+        /// <param name="ItemCode">The ItemCode of the new item.</param>
+        /// <param name="ItemDescription">The item's description.</param>
+        /// <param name="ItemCost">The item's cost.</param>
+        /// <returns>A string that represents the SQL statement.</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
-        public void AddItem(string ItemCode, string ItemDescription, int ItemCost)
+        public string InsertItemData(string ItemCode, string ItemDescription, float ItemCost)
         {
             try
             {
-                int rowsAffected = DB.ExecuteNonQuery("Insert into ItemDesc (ItemCode, ItemDesc, Cost) Values ('" + ItemCode + "', '" + ItemDescription + "', +m " + ItemCost + ")");
+                return "Insert into ItemDesc (ItemCode, ItemDesc, Cost) " +
+                    "Values ('" + ItemCode + "', '" + ItemDescription + "', " + ItemCost + ")";
             }
             catch (Exception ex)
             {
@@ -135,11 +116,18 @@ namespace CS3280FinalProject.Items
             }
         }
 
-        public void DeleteItem(string ItemCode)
+        /// <summary>
+        /// Generates a SQL statement that allows you to delete an item from the DB.
+        /// </summary>
+        /// <param name="ItemCode">The ItemCode of the item you want to delete.</param>
+        /// <returns>A string that represents the SQL statement.</returns>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
+        public string DeleteItemData(string ItemCode)
         {
             try
             {
-                int rowsAffected = DB.ExecuteNonQuery("Delete from ItemDesc Where ItemCode = '" + ItemCode + "'");
+                return "Delete from ItemDesc " +
+                    "Where ItemCode = '" + ItemCode + "'";
             }
             catch (Exception ex)
             {

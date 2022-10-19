@@ -1,9 +1,9 @@
 /*
- * Braxton Wright
+ * Braxton Wright, Hunter Olson, and Levi Bernards
  * CS 3280
- * Assignment #6 class clsDataAccess
+ * Final Project prototype class clsDataAccess
  * Shawn Cowder
- * Due: November 12, 2022 at 11:59 PM
+ * Due: November 19, 2022 at 11:59 PM
  * Version: 0.5
  *  ----------------------------------------------------------------------------------------------------------
  * This file contains the variables and functions that are required to make a query to the DB.  Like the
@@ -38,7 +38,7 @@ public class clsDataAccess
     {
         try
         {
-            sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\ReservationSystem.mdb";
+            sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\Invoice.mdb";
         }
         catch (Exception ex)
         {

@@ -21,23 +21,29 @@
             </Grid.RowDefinitions>
             <!--labels and user inputs-->
             <Label Grid.Row="0" Content="Code:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-            <Label Content="TDB" HorizontalAlignment="Left" Margin="55,10,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtItemCode" Text="" HorizontalAlignment="Left" Margin="52,14,0,0" VerticalAlignment="Top" Width="50"/>
 
             <Label Grid.Row="0" Content="Cost:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-            <Label Content="tempCost" HorizontalAlignment="Left" Margin="55,41,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtItemCost" Text="" HorizontalAlignment="Left" Margin="51,45,0,0" VerticalAlignment="Top" Width="50"/>
 
             <Label Grid.Row="0" Content="Description:" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
-            <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="A short description of the item" VerticalAlignment="Center" Height="22" Width="380"/>
+            <TextBox x:Name="txtItemDesc" HorizontalAlignment="Center" TextWrapping="Wrap" Text="A short description of the item" VerticalAlignment="Center" Height="22" Width="380"/>
 
             <!--button controls-->
-            <Button x:Name="btnAddItem" Grid.Row="1" Content="Add Item" HorizontalAlignment="Left" Click="btnAddItem_Click"/>
+            <Button x:Name="btnAddItem" Grid.Row="1" Content="Add New Item" HorizontalAlignment="Left" Click="btnAddItem_Click"/>
             <Button x:Name="btnEditItem" Grid.Row="1" Content="Edit Item" HorizontalAlignment="Center"/>
-            <Button x:Name="btnDeleteItem" Grid.Row="1" Content="Delete Item" HorizontalAlignment="Right"/>
-            <Button x:Name="btnSaveItem" Grid.Row="1" Content="Save Item" Margin="0,40,0,0" Click="btnSaveItem_Click"/>
+            <Button x:Name="btnDeleteItem" Grid.Row="1" Content="Delete Item" HorizontalAlignment="Right" Click="btnDeleteItem_Click"/>
+            <Button x:Name="btnSaveItem" Grid.Row="1" Content="Save Changes" Margin="0,40,0,0" Click="btnSaveItem_Click"/>
 
         </Grid>
 
-        <DataGrid x:Name="datagridItems" Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=5}" Width="380" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+        <DataGrid x:Name="datagridItems" Grid.Column="1" AutoGenerateColumns="False" Width="380" HorizontalAlignment="Center" Margin="0,10,0,0" CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Item Code" Binding="{Binding Path=itemCode}" />  <!--Sort the data by the Item code in ascending order (need to find how to implement)-->
+                <DataGridTextColumn Header="Item Cost" Binding="{Binding Path=itemCost}" />
+                <DataGridTextColumn Header="Item Description" Binding="{Binding Path=itemDesc}" />
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </Window>
