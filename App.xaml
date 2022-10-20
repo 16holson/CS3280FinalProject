@@ -8,12 +8,20 @@
             <GradientStop Color="#444" Offset="0.0" />
             <GradientStop Color="#888" Offset="1.0" />
         </LinearGradientBrush>
+        <SolidColorBrush x:Key="SolidGray" Color="#444"/>
+        <!--Window Style-->
+        <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
+            <Setter Property="Background" Value="DarkSlateGray"/>
+        </Style>
         <!--Button Style-->
         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Padding" Value="10,3,10,3"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Background" Value="{StaticResource SolidGray}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="Black"/>
         </Style>
         <!--DataGrid Style-->
         <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
@@ -35,7 +43,7 @@
             <Setter Property="Background" Value="{StaticResource gradient}"/>
             <Setter Property="Padding" Value="5"/>
         </Style>
-        <!--Lables Style-->
+        <!--Label Style-->
         <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
             <Setter Property="Margin" Value="10,10,0,0"/>
         </Style>
@@ -61,6 +69,12 @@
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Margin" Value="10,0,0,0"/>
+        </Style>
+        <!--TextBox Style-->
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Background" Value="{StaticResource gradient}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="Black"/>
         </Style>
     </Application.Resources>
 </Application>

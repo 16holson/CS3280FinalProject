@@ -21,6 +21,7 @@ using System.Windows.Controls;
 using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
+using CS3280FinalProject.Items.Custom_user_controls;
 
 namespace CS3280FinalProject.Items
 {
@@ -34,18 +35,13 @@ namespace CS3280FinalProject.Items
         private clsItemsLogic ItemLogic;
 
         /// <summary>
-        /// Tells if the user has made a change in the data stored.
-        /// </summary>
-        private bool bHasItemsBeenChanged;
-
-        /// <summary>
         /// Stores a ObservableCollection of clsItems to manipulate.
         /// </summary>
         private ObservableCollection<clsItem> Items;
 
         //properties
         /// <summary>
-        /// This Getter/Setter manipulates the variable HasItemsBeenChanged (not yet completed)
+        /// Tells if the user has made a change in the data stored.
         /// </summary>
         public bool HasItemsBeenChanged { get; set; }
         #endregion
@@ -59,12 +55,12 @@ namespace CS3280FinalProject.Items
         {
             InitializeComponent();
             ItemLogic = new clsItemsLogic();
-            bHasItemsBeenChanged = false;
+            HasItemsBeenChanged = false;
             FillDataGrid();
         }
 
         /// <summary>
-        /// Fills the data grid with the columns and data that is retrieved from the DB.
+        /// Fills the data grid with the rows of data that is retrieved from the DB.
         /// </summary>
         private void FillDataGrid()
         {
@@ -83,15 +79,8 @@ namespace CS3280FinalProject.Items
         {
             try
             {
-                //need to implement a check to make sure that the item for the codecode is not taken.
-                float cost;
-                if (float.TryParse(txtItemCost.Text, out cost))
-                {
-                    ItemLogic.AddItem(txtItemCode.Text, txtItemDesc.Text, cost);  //add the item to the DB
-                    //Add the item to the Items ObservableCollection (and because Items is a ObservableCollection, it is the source of the DataGrid "datagridItems", and the clsItems has the interface "INotifyPropertyChanged",
-                    //also to the DataGrid "datagridItems")
-                    Items.Add(new clsItem(txtItemCode.Text, txtItemDesc.Text, cost));
-                }
+                EditItemControl.Visibility = Visibility.Collapsed;
+                AddNewItemControl.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
             {
@@ -104,18 +93,33 @@ namespace CS3280FinalProject.Items
         /// </summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">Contains the event data for the event.</param>
-        private void btnSaveItem_Click(object sender, RoutedEventArgs e)
+        private void btnEditItem_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                //ItemLogic.UpdateItemData();
+                if (datagridItems.SelectedItem != null)
+                {
+                    AddNewItemControl.Visibility = Visibility.Collapsed;
+                    EditItemControl.Visibility = Visibility.Visible;
+                    //ItemLogic.UpdateItemData();
+
+                    clsItem SelectedItem = (clsItem)datagridItems.SelectedItem;  //get the selected item from the datagrid
+
+                    //populate the fields with the current data
+                    EditItemControl.lblItemCode.Content = SelectedItem.itemCode.ToString();
+                    EditItemControl.txtItemCost.Text = SelectedItem.itemCost.ToString();
+                    EditItemControl.txtItemDesc.Text = SelectedItem.itemDesc.ToString();
+
+                    //disable the add/delete item buttons until the user doesn't want to add another item
+                    btnAddItem.IsEnabled = false;
+                    btnDeleteItem.IsEnabled = false;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
-        #endregion
 
         /// <summary>
         /// This event listeners listens for when the user press a button to delete an item.
@@ -139,6 +143,8 @@ namespace CS3280FinalProject.Items
                         //remove the item from the Items ObservableCollection (and because Items is a ObservableCollection, it is the source of the DataGrid "datagridItems", and the clsItems has the interface "INotifyPropertyChanged",
                         //also from the DataGrid "datagridItems")
                         Items.Remove((clsItem)datagridItems.SelectedItem);
+
+                        HasItemsBeenChanged = true;  //set the changed variable to tell the user that the list of items has changed
                     }
                     else  //don't delete it because it is attached to at least one invoice
                     {
@@ -169,5 +175,26 @@ namespace CS3280FinalProject.Items
 
             return Result;
         }
+
+        private void AddNewItemControl_AddButtonClick()
+        {
+            //need to implement a check to make sure that the item for the codecode is not taken.
+            float cost;
+            if (float.TryParse(AddNewItemControl.txtItemCost.Text, out cost))
+            {
+                ItemLogic.AddItem(AddNewItemControl.txtItemCode.Text, AddNewItemControl.txtItemDesc.Text, cost);  //add the item to the DB
+                //Add the item to the Items ObservableCollection (and because Items is a ObservableCollection, it is the source of the DataGrid "datagridItems", and the clsItems has the interface "INotifyPropertyChanged",
+                //also to the DataGrid "datagridItems")
+                Items.Add(new clsItem(AddNewItemControl.txtItemCode.Text, AddNewItemControl.txtItemDesc.Text, cost));
+
+                HasItemsBeenChanged = true;  //set the changed variable to tell the user that the list of items has changed
+
+                //Set the contents of the user input to be empty so they can add a new item to it
+                AddNewItemControl.txtItemCode.Text = "";
+                AddNewItemControl.txtItemDesc.Text = "";
+                AddNewItemControl.txtItemCost.Text = "";
+            }
+        }
+        #endregion
     }
 }

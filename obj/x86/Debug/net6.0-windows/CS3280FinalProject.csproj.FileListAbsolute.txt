@@ -27,3 +27,9 @@ C:\Users\BraxtonWright\Desktop\CS3280FinalProject\bin\x86\Debug\net6.0-windows\S
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\bin\x86\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Data.OleDb.dll
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\App.baml
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\CS3280FinalProject.csproj.CopyComplete
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Theme.baml
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Items\Custom user controls\AddNewItem.g.cs
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Items\Custom user controls\EditCurrentItem.g.cs
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Items\Custom user controls\AddNewItem.baml
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Items\Custom user controls\EditCurrentItem.baml
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs

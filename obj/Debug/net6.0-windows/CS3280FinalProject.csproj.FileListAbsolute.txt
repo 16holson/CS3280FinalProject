@@ -24,3 +24,7 @@ C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\CS328
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.genruntimeconfig.cache
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\ref\CS3280FinalProject.dll
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\App.baml
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\Theme.baml
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\bin\Debug\net6.0-windows\System.Data.OleDb.dll
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Data.OleDb.dll
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.csproj.CopyComplete

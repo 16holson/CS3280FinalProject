@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\App.xaml
-3-1802646698
+61689532863
 
-16497656191
+181484343445
 196-1029718210
-Items\wndItems.xaml;Main\MainWindow.xaml;Search\wndSearch.xaml;
+Items\Custom user controls\AddNewItem.xaml;Items\Custom user controls\EditCurrentItem.xaml;Items\wndItems.xaml;Main\MainWindow.xaml;Search\wndSearch.xaml;Theme.xaml;
 
-False
+True
 
