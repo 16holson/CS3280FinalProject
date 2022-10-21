@@ -1,11 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*
+ * Braxton Wright, Hunter Olson, and Levi Bernards
+ * CS 3280
+ * Final Project prototype class clsItems
+ * Shawn Cowder
+ * Due: November 19, 2022 at 11:59 PM
+ * Version: 0.5
+ *  ----------------------------------------------------------------------------------------------------------
+ * This file contains the variables and functions that are required to make an instance of a item from the
+ * DB.  It contains the necessary constructors, variable, properties, and event to allow the user to
+ * manipulate a copy of the data from the DB instead of constantly querying it to get data.
+ * -----------------------------------------------------------------------------------------------------------
+ */
+
+using System;
 using System.ComponentModel;
-using System.Data.SqlTypes;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CS3280FinalProject.Shared
 {
@@ -28,7 +37,7 @@ namespace CS3280FinalProject.Shared
         /// </summary>
         private float sitemCost;
 
-        //properties for the event PropertyChanged.  This tells the DataGrid that data has changed.
+        //Properties for the event PropertyChanged.  This tells the DataGrid that is attached to the data that the data has changed.
         public string itemCode
         {
             get { return sitemCode; }
@@ -64,10 +73,10 @@ namespace CS3280FinalProject.Shared
                     PropertyChanged(this, new PropertyChangedEventArgs("itemCost"));
             }
         }
-
         #endregion
 
-        #region functions
+
+        #region Constructors and PropertyChangedEventHandler Event
         /// <summary>
         /// Default Constructor.
         /// </summary>
@@ -98,8 +107,7 @@ namespace CS3280FinalProject.Shared
         }
 
         /// <summary>
-        /// This is the contract you make with the compiler because we are implementing the interface so
-        /// we must have this event defined.  We will raise this event anytime one of our properties changes.
+        /// This is the contract we have to make with the compiler because we are implementing the interface "INotifyPropertyChanged".  So we must have this event defined.  We will raise this event anytime one of our properties changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion

@@ -1,9 +1,18 @@
-﻿using System;
+﻿/*
+ * Braxton Wright, Hunter Olson, and Levi Bernards
+ * CS 3280
+ * Final Project prototype class clsInvoice
+ * Shawn Cowder
+ * Due: November 19, 2022 at 11:59 PM
+ * Version: 0.5
+ *  ----------------------------------------------------------------------------------------------------------
+ * (Insert short description of what this class does)
+ * -----------------------------------------------------------------------------------------------------------
+ */
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace CS3280FinalProject.Shared

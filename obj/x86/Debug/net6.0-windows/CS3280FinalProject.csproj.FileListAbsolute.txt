@@ -5,13 +5,11 @@ C:\Users\BraxtonWright\Desktop\CS3280FinalProject\bin\x86\Debug\net6.0-windows\C
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\bin\x86\Debug\net6.0-windows\CS3280FinalProject.pdb
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\CS3280FinalProject.csproj.AssemblyReference.cache
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Items\wndItems.g.cs
-C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Main\MainWindow.g.cs
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Search\wndSearch.g.cs
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\App.g.cs
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\CS3280FinalProject_MarkupCompile.cache
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\CS3280FinalProject_MarkupCompile.lref
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Items\wndItems.baml
-C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Main\MainWindow.baml
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Search\wndSearch.baml
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\CS3280FinalProject.g.resources
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\CS3280FinalProject.GeneratedMSBuildEditorConfig.editorconfig
@@ -28,8 +26,5 @@ C:\Users\BraxtonWright\Desktop\CS3280FinalProject\bin\x86\Debug\net6.0-windows\r
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\App.baml
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\CS3280FinalProject.csproj.CopyComplete
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Theme.baml
-C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Items\Custom user controls\AddNewItem.g.cs
-C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Items\Custom user controls\EditCurrentItem.g.cs
-C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Items\Custom user controls\AddNewItem.baml
-C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Items\Custom user controls\EditCurrentItem.baml
-C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Main\wndMain.g.cs
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Main\wndMain.baml

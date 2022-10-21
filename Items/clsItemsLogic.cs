@@ -16,6 +16,7 @@ using System.Data;
 using System.Reflection;
 using System;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace CS3280FinalProject.Items
 {
@@ -111,11 +112,11 @@ namespace CS3280FinalProject.Items
         /// <param name="ItemDescription">The item's updated description.</param>
         /// <param name="ItemCost">The item's updated cost.</param>
         /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
-        public void UpdateItemData(string ItemCode, string ItemDescription, int ItemCost)
+        public void UpdateItemData(string ItemCode, string ItemDescription, float ItemCost)
         {
             try
             {
-                //int rowsAffected = DB.ExecuteNonQuery(SQL.UpdateItemData(ItemCode, ItemDescription, ItemCost));
+                int rowsAffected = DB.ExecuteNonQuery(SQL.UpdateItemData(ItemCode, ItemDescription, ItemCost));
             }
             catch (Exception ex)
             {
@@ -157,6 +158,58 @@ namespace CS3280FinalProject.Items
             {
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Performs a Regex pattern match to see if the supplied text matches "0_or_more_digits" followed by an optional section ".1_or_2_digits"
+        /// </summary>
+        /// <param name="CostToValidate">The text of the cost to be validated.</param>
+        /// <returns>True if the data supplied matches the desired format, and false otherwise.</returns>
+        public bool ValidateCostFormat(string CostToValidate)
+        {
+            bool test = Regex.Match(CostToValidate, @"^\d+(?:\.\d{1,2})?$").Success;
+            //where I found the Regex command with a few modifications https://stackoverflow.com/questions/52810865/regex-to-accept-number-in-fomat-00-00
+
+            return Regex.Match(CostToValidate, @"^\d+(?:\.\d{1,2})?$").Success;
+        }
+
+        /// <summary>
+        /// This convert a list that contains only 1 data type and set (No objects allowed) to a string.
+        /// </summary>
+        /// <typeparam name="T">The data type the list contains.</typeparam>
+        /// <param name="ListData">The list that contains the data.</param>
+        /// <returns>A string separated by a ',' for every item in the list.</returns>
+        public string ConvertSingleItemListToString<T>(List<T> ListData)
+        {
+            string Result = "";
+
+            for (int i = 0; i < ListData.Count; i++)
+            {
+                Result += ListData[i].ToString();
+
+                //if it is the last element to be added, don't add a ',' to the end
+                if (i == ListData.Count - 2)
+                {
+                    Result += ", ";
+                }
+            }
+
+            return Result;
+        }
+
+        /// <summary>
+        /// Check to see if the ItemCode is already used inside the DB. To prevent the program from crashing when attempting to add an item with the same identifier.
+        /// </summary>
+        /// <param name="ItemCode">The item code you are seeing if it exists inside the DB.</param>
+        /// <returns>True if it is used and False if it is not.</returns>
+        public bool ItemCodeIsTaken(string ItemCode)
+        {
+            string QuerryResult = DB.ExecuteScalarSQL(SQL.CheckItemCodeExist(ItemCode));
+
+            if (QuerryResult == "")
+                return false;
+            else
+                return true;
         }
         #endregion
     }

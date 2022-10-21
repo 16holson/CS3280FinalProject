@@ -2,18 +2,12 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="Items\Custom user controls\AddNewItem.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Items\Custom user controls\EditCurrentItem.xaml.cs">
+    <Compile Update="Main\wndMain.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Items\Custom user controls\AddNewItem.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Items\Custom user controls\EditCurrentItem.xaml">
+    <Page Update="Main\wndMain.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

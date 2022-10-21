@@ -3,45 +3,105 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CS3280FinalProject.Items"
-        xmlns:Custom_user_controls="clr-namespace:CS3280FinalProject.Items.Custom_user_controls" x:Class="CS3280FinalProject.Items.wndItems"
+        x:Class="CS3280FinalProject.Items.wndItems"
         mc:Ignorable="d"
-        Title="wndItems" Height="450" Width="800" WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize">
+        Title="wndItems" Height="auto" MaxHeight="450" Width="600" WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize">
     <Window.Resources>
         <Style x:Key="ItemsButtons" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Width" Value="110"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="10,10,10,10"/>
+        </Style>
+        <Style x:Key="Labels" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="right"/>
+        </Style>
+        <Style x:Key="TextInputs" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="10,0,10,0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
     </Window.Resources>
+
+    <!--Window creation-->
     <Grid ShowGridLines="True">
         <!--Split the window into two columns, the left for the controls and the right for the data-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
         <!--split the left column into two rows, the top for the labels and text boxes and the bottom for the buttons-->
         <Grid Grid.Column="0" ShowGridLines="True">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <!--Custom user controls for adding/editing an item-->
-            <Custom_user_controls:AddNewItem x:Name="AddNewItemControl" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" AddButtonClick="AddNewItemControl_AddButtonClick" Visibility="Collapsed"/>
-            <Custom_user_controls:EditCurrentItem x:Name="EditItemControl" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>
+            <!--controls for adding/editing an item-->
+            <!--Split the user control into three rows, the top/middle for user input and the bottom for the save/cancel buttons-->
+            <Grid Grid.Column="0" ShowGridLines="True" Height="auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <!--Section for user input-->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label x:Name="lblCode" Grid.Row="0" Content="Code:" Style="{StaticResource Labels}"/>
+                    <TextBox x:Name="txtItemCode" Text="" HorizontalAlignment="Left" Width="auto" MinWidth="75" MaxWidth="315" Style="{StaticResource TextInputs}" Grid.Column="1" MaxLength="4"/>
+
+                    <Label x:Name="lblCost" Grid.Row="1" Content="Cost:" Style="{StaticResource Labels}"/>
+                    <TextBox x:Name="txtItemCost" Text="" HorizontalAlignment="Left" Width="auto" MinWidth="75" MaxWidth="315" Style="{StaticResource TextInputs}" PreviewKeyDown="txtItemCost_PreviewKeyDown" Grid.Row="1" Grid.Column="1"/>
+                    
+                    <Label x:Name="lblDescription" Grid.Row="2" Content="Description:" HorizontalAlignment="Left" Style="{StaticResource Labels}"/>
+                    <TextBox x:Name="txtItemDesc" Style="{StaticResource TextInputs}" Grid.Row="4" Grid.ColumnSpan="2"/>
+                </Grid>
+
+                <!--Section for the buttons-->
+                <Grid Grid.Row="2" Height="auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnAddItem" Grid.Column="0" Grid.ColumnSpan="2" Content="Add New Item" Click="btnAddItem_Click" Style="{StaticResource ItemsButtons}"/>
+                    <!--Only the two buttons above or the button below will be active at any one time-->
+                    <Button x:Name="btnCancel" Grid.Column="0" Content="Cancel" Click="btnCancel_Click" Style="{StaticResource ItemsButtons}" Visibility="Collapsed"/>
+                    <Button x:Name="btnSaveChanges" Grid.Column="1" Content="Save Changes" Click="btnSaveChanges_Click" Style="{StaticResource ItemsButtons}" Visibility="Collapsed"/>
+                </Grid>
+            </Grid>
 
             <!--button controls-->
-            <Button x:Name="btnAddItem" Grid.Row="1" Content="Add a new item" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnAddItem_Click" Style="{StaticResource ItemsButtons}" Background="#FF444444"/>
-            <Button x:Name="btnEditItem" Grid.Row="1" Content="Edit item" HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource ItemsButtons}" Click="btnEditItem_Click"/>
-            <Button x:Name="btnDeleteItem" Grid.Row="1" Content="Delete item" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnDeleteItem_Click" Style="{StaticResource ItemsButtons}"/>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <Button x:Name="btnEditItem" Grid.Row="0" Content="Edit item" Click="btnEditItem_Click" IsEnabled="False" Style="{StaticResource ItemsButtons}"/>
+                <Button x:Name="btnDeleteItem" Grid.Row="1" Content="Delete item" Click="btnDeleteItem_Click" IsEnabled="False" Style="{StaticResource ItemsButtons}"/>
+            </Grid>
         </Grid>
 
-        <DataGrid x:Name="datagridItems" Grid.Column="1" AutoGenerateColumns="False" HorizontalAlignment="Center" Margin="0,10,0,0" CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False">
+        <DataGrid x:Name="datagridItems" Grid.Column="1" AutoGenerateColumns="False" HorizontalAlignment="Center" CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True"
+                  SelectionChanged="datagridItems_SelectionChanged" Margin="0,0,0,0">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Item Code" Binding="{Binding itemCode}" />
-                <!--Sort the data by the Item code in ascending order (need to find how to implement)-->
-                <DataGridTextColumn Header="Item Cost" Binding="{Binding itemCost}" />
-                <DataGridTextColumn Header="Item Description" Binding="{Binding itemDesc}" />
+                <DataGridTextColumn Header="Item Code" Binding="{Binding itemCode}"/>
+                <DataGridTextColumn Header="Item Cost" Binding="{Binding itemCost}"/>
+                <DataGridTextColumn Header="Item Description" Binding="{Binding itemDesc}"/>
             </DataGrid.Columns>
         </DataGrid>
 

@@ -6,7 +6,8 @@
  * Due: November 19, 2022 at 11:59 PM
  * Version: 0.5
  *  ----------------------------------------------------------------------------------------------------------
- * This file contains the functions that returns a string representing the SQL statment to querry the DB.
+ * This file contains the functions for the items window that returns a string representing the SQL statement
+ * to query the DB.
  * -----------------------------------------------------------------------------------------------------------
  */
 
@@ -80,7 +81,7 @@ namespace CS3280FinalProject.Items
         /// <param name="ItemCost">The new cost of the item.</param>
         /// <returns>A string that represents the SQL statement.</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
-        public string UpdateItemData(string ItemCode, string ItemDescription, int ItemCost)
+        public string UpdateItemData(string ItemCode, string ItemDescription, float ItemCost)
         {
             try
             {
@@ -127,6 +128,20 @@ namespace CS3280FinalProject.Items
             try
             {
                 return "Delete from ItemDesc " +
+                    "Where ItemCode = '" + ItemCode + "'";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        public string CheckItemCodeExist(string ItemCode)
+        {
+            try
+            {
+                return "Select ItemCode " +
+                    "From ItemDesc " +
                     "Where ItemCode = '" + ItemCode + "'";
             }
             catch (Exception ex)
