@@ -5,62 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CS3280FinalProject.Search"
         mc:Ignorable="d"
-<<<<<<< HEAD
-        Title="wndSearch" Height="450" Width="800"
-        Background="DarkSlateGray">
+        Title="wndSearch" 
+        Height="450" Width="800" 
+        WindowStartupLocation="CenterOwner" 
+        ResizeMode="CanMinimize"
+        Style="{StaticResource windowStyle}">
     <Window.Resources>
         <LinearGradientBrush x:Key="gradient" EndPoint="0,1" StartPoint="0,0">
             <GradientStop Color="#444" Offset="0.0" />
             <GradientStop Color="#888" Offset="1.0" />
         </LinearGradientBrush>
         <!--Button Style-->
-        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="Padding" Value="10,3,10,3"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource buttonStyle}"></Style>
         <!--DataGrid Style-->
-        <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
-            <Setter Property="AutoGenerateColumns" Value="False"/>
-            <Setter Property="Background" Value="{StaticResource gradient}"/>
-            <Setter Property="RowBackground" Value="{StaticResource gradient}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="CanUserReorderColumns" Value="False"/>
-            <Setter Property="CanUserSortColumns" Value="False"/>
-            <Setter Property="Margin" Value="10,10,0,0"/>
-            <Setter Property="SelectionMode" Value="Single"/>
-        </Style>
-        <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
-            <Setter Property="Background" Value="{StaticResource gradient}"/>
-            <Setter Property="Padding" Value="5"/>
-        </Style>
+        <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource dataGridStyle}"></Style>
+        <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource dataGridColumnHeaderStyle}"></Style>
         <!--Lables Style-->
-        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource labelStyle}">
             <Setter Property="Margin" Value="10,10,0,0"/>
         </Style>
-        <Style x:Key="topLbl" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+        <Style x:Key="topLbl" TargetType="{x:Type Label}" BasedOn="{StaticResource labelStyle}">
             <Setter Property="Margin" Value="0"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="FontSize" Value="20"/>
         </Style>
-        <Style x:Key="warningLbl" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+        <Style x:Key="warningLbl" TargetType="{x:Type Label}" BasedOn="{StaticResource labelStyle}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Foreground" Value="Red"/>
             <Setter Property="Visibility" Value="Hidden"/>
         </Style>
         <!--ComboBox Style-->
-        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="Margin" Value="0,10,0,0"/>
-        </Style>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource comboBoxStyle}"></Style>
         <!--Grid Style-->
         <Style x:Key="insideGrid" TargetType="{x:Type Grid}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -69,10 +46,6 @@
         </Style>
 
     </Window.Resources>
-    
-=======
-        Title="wndSearch" Height="450" Width="800" WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize">
->>>>>>> master
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width=".5*"/>

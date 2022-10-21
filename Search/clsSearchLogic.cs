@@ -1,5 +1,5 @@
-<<<<<<< HEAD
-﻿using System;
+
+using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Data;
@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using CS3280FinalProject.Shared;
-=======
 ﻿/*
  * (Insert your name here)
  * CS 3280
@@ -22,7 +21,6 @@ using CS3280FinalProject.Shared;
  * This file contains the logistic for the search window so that the logistics is not behind the UI.
  * -----------------------------------------------------------------------------------------------------------
  */
->>>>>>> master
 
 namespace CS3280FinalProject.Search
 {

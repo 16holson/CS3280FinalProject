@@ -50,23 +50,20 @@ namespace CS3280FinalProject.Items
         /// </summary>
         /// <returns>A list of objects, of the type clsItem, for all of the Items inside the DB.</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
-        public ObservableCollection<clsItem> GetAllItemsFromDB()
+        public ObservableCollection<Item> GetAllItemsFromDB()
         {
             try
             {
                 int rowsReturned = 0;
 
                 DataSet ds = DB.ExecuteSQLStatement(SQL.SelectAllItems(), ref rowsReturned);
-                ObservableCollection<clsItem> items = new ObservableCollection<clsItem>();
+                ObservableCollection<Item> items = new ObservableCollection<Item>();
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    float cost = 0;
-                    if (float.TryParse(ds.Tables[0].Rows[i][2].ToString(), out cost))
-                    {
-                        clsItem currentItem = new clsItem(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), cost);
-                        items.Add(currentItem);
-                    }
+                    Item currentItem = new Item(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), ds.Tables[0].Rows[i][2].ToString());
+                    items.Add(currentItem);
+                    
                 }
 
                 return items;

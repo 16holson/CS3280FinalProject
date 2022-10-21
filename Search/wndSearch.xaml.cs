@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ﻿using CS3280FinalProject.Shared;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-=======
 ﻿/*
  * (Insert your name here)
  * CS 3280
@@ -19,8 +18,8 @@ using System.Threading.Tasks;
  * -----------------------------------------------------------------------------------------------------------
  */
 
->>>>>>> master
 using System.Windows;
+using System.Windows.Controls;
 
 namespace CS3280FinalProject.Search
 {

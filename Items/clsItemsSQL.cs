@@ -88,7 +88,7 @@ namespace CS3280FinalProject.Items
                 return "Update ItemDesc " +
                     "Set ItemDesc = " + "'" + ItemDescription + "', " +
                     "Cost = " + ItemCost + " " +
-                    "where ItemCode = '" + ItemCode + "'";
+                    "where ItemCode = '" + ItemCode.ToString() + "'";
             }
             catch (Exception ex)
             {

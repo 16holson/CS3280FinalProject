@@ -5,25 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         x:Class="CS3280FinalProject.Items.wndItems"
         mc:Ignorable="d"
-        Title="wndItems" Height="auto" MaxHeight="450" Width="600" WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize">
+        Title="wndItems"
+        Height="auto" 
+        MaxHeight="450" 
+        Width="600" 
+        WindowStartupLocation="CenterOwner" 
+        ResizeMode="CanMinimize"
+        Style="{StaticResource windowStyle}">
     <Window.Resources>
-        <Style x:Key="ItemsButtons" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Style x:Key="ItemsButtons" TargetType="{x:Type Button}" BasedOn="{StaticResource buttonStyle}">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Margin" Value="10,10,10,10"/>
         </Style>
-        <Style x:Key="Labels" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+        <Style x:Key="Labels" TargetType="Label" BasedOn="{StaticResource labelStyle}">
             <Setter Property="Margin" Value="0,0,0,0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="right"/>
         </Style>
-        <Style x:Key="TextInputs" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Style x:Key="TextInputs" TargetType="TextBox" BasedOn="{StaticResource textBoxStyle}">
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Margin" Value="10,0,10,0"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
+        <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource dataGridStyle}"/>
+        <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource dataGridColumnHeaderStyle}"></Style>
     </Window.Resources>
 
     <!--Window creation-->

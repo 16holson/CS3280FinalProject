@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.IO;
-=======
 ﻿/*
  * (Insert your name here)
  * CS 3280
@@ -22,7 +21,6 @@ using System.IO;
  * to query the DB.
  * -----------------------------------------------------------------------------------------------------------
  */
->>>>>>> master
 
 namespace CS3280FinalProject.Search
 {
