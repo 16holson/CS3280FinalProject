@@ -48,7 +48,7 @@ namespace CS3280FinalProject.Items
         /// <summary>
         /// Gets all the items that are inside the DB.
         /// </summary>
-        /// <returns>A list of object, of the type clsItem, for all of the Items inside the DB.</returns>
+        /// <returns>A list of objects, of the type clsItem, for all of the Items inside the DB.</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
         public ObservableCollection<clsItem> GetAllItemsFromDB()
         {
@@ -167,7 +167,7 @@ namespace CS3280FinalProject.Items
         /// <returns>True if the data supplied matches the desired format, and false otherwise.</returns>
         public bool ValidateCostFormat(string CostToValidate)
         {
-            bool test = Regex.Match(CostToValidate, @"^\d+(?:\.\d{1,2})?$").Success;
+            //bool test = Regex.Match(CostToValidate, @"^\d+(?:\.\d{1,2})?$").Success;
             //where I found the Regex command with a few modifications https://stackoverflow.com/questions/52810865/regex-to-accept-number-in-fomat-00-00
 
             return Regex.Match(CostToValidate, @"^\d+(?:\.\d{1,2})?$").Success;
@@ -178,7 +178,7 @@ namespace CS3280FinalProject.Items
         /// </summary>
         /// <typeparam name="T">The data type the list contains.</typeparam>
         /// <param name="ListData">The list that contains the data.</param>
-        /// <returns>A string separated by a ',' for every item in the list.</returns>
+        /// <returns>A string separated by a ', ' for every item in the list.</returns>
         public string ConvertSingleItemListToString<T>(List<T> ListData)
         {
             string Result = "";

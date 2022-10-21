@@ -53,7 +53,7 @@ namespace CS3280FinalProject.Search {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/CS3280FinalProject;V1.0.0.0;component/search/wndsearch.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/CS3280FinalProject;component/search/wndsearch.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Search\wndSearch.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

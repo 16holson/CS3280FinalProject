@@ -6,7 +6,7 @@
  * Due: November 19, 2022 at 11:59 PM
  * Version: 0.5
  *  ----------------------------------------------------------------------------------------------------------
- * This file contains the event listeners for the Search window.
+ * This file contains the required event listeners for the Search window.
  * -----------------------------------------------------------------------------------------------------------
  */
 

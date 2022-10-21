@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="wndMain" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Menu>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
             <MenuItem x:Name="MenuSearch" Header="Search" Click="MenuSearch_Click"/>
             <MenuItem x:Name="MenuEditItems" Header="Edit Items" Click="MenuEditItems_Click"/>
         </Menu>

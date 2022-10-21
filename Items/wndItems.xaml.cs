@@ -6,7 +6,7 @@
  * Due: November 19, 2022 at 11:59 PM
  * Version: 0.5
  *  ----------------------------------------------------------------------------------------------------------
- * This file contains the event listeners for the Items window.
+ * This file contains the required event listeners and functions for the Items window.
  * -----------------------------------------------------------------------------------------------------------
  */
 
@@ -40,11 +40,22 @@ namespace CS3280FinalProject.Items
         /// </summary>
         private clsItem CurrentEditingItem;
 
+        /// <summary>
+        /// Stores a true/false value that will signify if item(s) inside the DB has been modified.
+        /// </summary>
+        private bool bItemsChanged;
+
         //properties
         /// <summary>
-        /// Tells the user if anything has been changed in the data stored inside the DB and if the main window needs to be refreshed.
+        /// This getter returns a boolean that represents if item(s) have been modified inside the database and a refresh of the data is required.
         /// </summary>
-        public bool HasItemsBeenChanged { get; set; }
+        public bool HasItemsBeenChanged
+        {
+            get
+            {
+                return bItemsChanged;
+            }
+        }
 
         /// <summary>
         /// Holds the mode of what the window is currently doing so it knows what to enable and what to disable.
@@ -61,7 +72,7 @@ namespace CS3280FinalProject.Items
         {
             InitializeComponent();
             ItemLogic = new clsItemsLogic();
-            HasItemsBeenChanged = false;
+            bItemsChanged = false;
             AddMode = true;
             FillDataGrid();
         }
@@ -136,7 +147,7 @@ namespace CS3280FinalProject.Items
                     //also to the DataGrid "datagridItems")
                     Items.Add(new clsItem(txtItemCode.Text, txtItemDesc.Text, cost));
 
-                    HasItemsBeenChanged = true;  //once everything has been added, set the changed variable to tell the user that there has been a change in the items
+                    bItemsChanged = true;  //once everything has been added, set the changed variable to tell the user that there has been a change in the items
 
                     //Set the contents of the user input to be empty so they can add a new item to it
                     txtItemCode.Text = "";
@@ -156,7 +167,7 @@ namespace CS3280FinalProject.Items
 
                     //display the appropriate error message(s)
                     string errorMessage = "Error: \n" + (ItemCodeEmpty ? "The item code can't be left blank.\n" : "");
-                    errorMessage += (!ItemCodeEmpty && ItemCodeTaken ? "The item code \"" + txtItemCode.Text + "\" is already being used inside the DB.\n" : "");
+                    errorMessage += (!ItemCodeEmpty && ItemCodeTaken ? "The item code \"" + txtItemCode.Text + "\" is already being, choose another for this item.\n" : "");
                     errorMessage += (CostFailed ? "The cost has to be in this format \"OneOrMoreDigits\" with an optional '.OneOrTwoDigits' after it.\n" : "");
                     errorMessage += (DescriptionFailed ? "The description can't be left empty.\n" : "");
                     errorMessage += "Please change the above field(s) and try again.";
@@ -232,7 +243,7 @@ namespace CS3280FinalProject.Items
 
                     ChangeMode();
 
-                    HasItemsBeenChanged = true;  //once everything has been added, set the changed variable to tell the user that there has been a change in the items
+                    bItemsChanged = true;  //once everything has been added, set the changed variable to tell the user that there has been a change in the items
                 }
                 else  //one or both of the conditions failed, so display a message box to the user to tell them what to do
                 {
@@ -325,7 +336,7 @@ namespace CS3280FinalProject.Items
                         //also from the DataGrid "datagridItems")
                         Items.Remove((clsItem)datagridItems.SelectedItem);  //remove the item from the datagrid
 
-                        HasItemsBeenChanged = true;  //set the changed variable to tell the user that the list of items has changed
+                        bItemsChanged = true;  //set the changed variable to tell the user that the list of items has changed
                     }
                     else  //don't delete it because it is attached to at least one invoice
                     {
