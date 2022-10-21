@@ -18,7 +18,7 @@ namespace CS3280FinalProject.Items
 {
     public class clsItemsSQL
     {
-        #region functions
+        #region Constructors
         /// <summary>
         /// Default constructor for the clsItemsSQL class.
         /// </summary>
@@ -26,15 +26,9 @@ namespace CS3280FinalProject.Items
         {
             //do nothing
         }
+        #endregion
 
-        /* Statements to implement:
-         * (Done) select ItemCode, ItemDesc, Cost from ItemDesc
-         * (Done) select distinct(InvoiceNum) from LineItems where ItemCode = 'A'
-         * (Done) Update ItemDesc Set ItemDesc = 'abcdef', Cost = 123 where ItemCode = 'A'
-         * (Done) Insert into ItemDesc (ItemCode, ItemDesc, Cost) Values ('ABC', 'blah', 321)
-         * (Done) Delete from ItemDesc Where ItemCode = 'ABC'
-        */
-
+        #region Functions
         /// <summary>
         /// Generates a SQL statement that allows you to query the DB to retrieve all the items inside it.
         /// </summary>

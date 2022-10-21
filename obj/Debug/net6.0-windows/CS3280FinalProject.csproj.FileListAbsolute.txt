@@ -60,3 +60,5 @@ D:\College Files\College Year 5\CS 3280\MyCopy\CS3280FinalProject\obj\Debug\net6
 D:\College Files\College Year 5\CS 3280\MyCopy\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.csproj.CopyComplete
 D:\College Files\College Year 5\CS 3280\MyCopy\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.genruntimeconfig.cache
 D:\College Files\College Year 5\CS 3280\MyCopy\CS3280FinalProject\obj\Debug\net6.0-windows\ref\CS3280FinalProject.dll
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\Main\wndMain.g.cs
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\Main\wndMain.baml

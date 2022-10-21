@@ -28,3 +28,5 @@ C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\C
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Theme.baml
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Main\wndMain.g.cs
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Main\wndMain.baml
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Main\MainWindow.g.cs
+C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\x86\Debug\net6.0-windows\Main\MainWindow.baml

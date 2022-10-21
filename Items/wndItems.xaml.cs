@@ -28,6 +28,9 @@ namespace CS3280FinalProject.Items
     {
         #region Variables
         //private variables
+        /// <summary>
+        /// An instance of the class clsItemsLogic used to contain non-UI based logic.
+        /// </summary>
         private clsItemsLogic ItemLogic;
 
         /// <summary>
@@ -36,7 +39,7 @@ namespace CS3280FinalProject.Items
         private ObservableCollection<Item> Items;
 
         /// <summary>
-        /// Stores the reference to the current item in the "Items" ObservableCollection so the program knows what to edit
+        /// Stores the reference to the current item in the "Items" ObservableCollection so the program knows what to edit.
         /// </summary>
         private Item CurrentEditingItem;
 
@@ -62,7 +65,6 @@ namespace CS3280FinalProject.Items
         /// </summary>
         private bool AddMode;
         #endregion
-
 
         #region Constructors
         /// <summary>
@@ -91,7 +93,7 @@ namespace CS3280FinalProject.Items
         }
 
         /// <summary>
-        /// This event listener 
+        /// This event listener listens for when a user press a key and validates that it is one of the following keys 0-9, '.', or the left and right arrows.
         /// </summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">Contains the event data for the event.</param>
@@ -103,10 +105,9 @@ namespace CS3280FinalProject.Items
             }
             else
             {
-                //Stop the character from being entered into the textbox because it neither a digit or a '.'.
+                //Stop the character from being entered into the textbox because it neither a digit, a '.', or a left or right arrow keystroke.
                 e.Handled = true;
             }
-
         }
 
         /// <summary>
@@ -173,7 +174,6 @@ namespace CS3280FinalProject.Items
                     errorMessage += "Please change the above field(s) and try again.";
 
                     MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
                 }
             }
             catch (Exception ex)
@@ -220,7 +220,6 @@ namespace CS3280FinalProject.Items
             }
         }
 
-        //STILL NEED TO TEST
         /// <summary>
         /// This event listener listens for when the user press a button to save the changes to an item.
         /// </summary>
@@ -254,7 +253,7 @@ namespace CS3280FinalProject.Items
                     string errorMessage = "Error: \n" + (CostFailed ? "The cost has to be in this format \"OneOrMoreDigits\" with an optional '.OneOrTwoDigits' after it.\n" : "");
                     errorMessage += (DescriptionFailed ? "The description can't be empty.\n" : "");
                     errorMessage += "Please change the above field(s) and try again.";
-                    
+
                     MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
@@ -270,7 +269,7 @@ namespace CS3280FinalProject.Items
         /// </summary>
         private void ChangeMode()
         {
-            if(AddMode)  //if the program is in the adding items mode, change to edit item mode
+            if (AddMode)  //if the program is in the adding items mode, change to edit item mode
             {
                 //hide/disable unnecessary buttons to editing an item
                 txtItemCode.IsReadOnly = true;  //prevent the user from altering the Item's code
