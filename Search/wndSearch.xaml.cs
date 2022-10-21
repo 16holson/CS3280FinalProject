@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using CS3280FinalProject.Shared;
 using System;
 using System.Collections.Generic;
@@ -5,14 +6,21 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+=======
+﻿/*
+ * (Insert your name here)
+ * CS 3280
+ * Final Project prototype Window wndSearch
+ * Shawn Cowder
+ * Due: November 19, 2022 at 11:59 PM
+ * Version: 0.5
+ *  ----------------------------------------------------------------------------------------------------------
+ * This file contains the required event listeners for the Search window.
+ * -----------------------------------------------------------------------------------------------------------
+ */
+
+>>>>>>> master
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CS3280FinalProject.Search
 {

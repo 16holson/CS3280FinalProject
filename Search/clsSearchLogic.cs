@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
@@ -9,6 +10,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using CS3280FinalProject.Shared;
+=======
+﻿/*
+ * (Insert your name here)
+ * CS 3280
+ * Final Project prototype class clsSearchLogic
+ * Shawn Cowder
+ * Due: November 19, 2022 at 11:59 PM
+ * Version: 0.5
+ *  ----------------------------------------------------------------------------------------------------------
+ * This file contains the logistic for the search window so that the logistics is not behind the UI.
+ * -----------------------------------------------------------------------------------------------------------
+ */
+>>>>>>> master
 
 namespace CS3280FinalProject.Search
 {
