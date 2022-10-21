@@ -28,17 +28,20 @@ namespace CS3280FinalProject.Items
     {
         #region Variables
         //private variables
+        /// <summary>
+        /// An instance of the class clsItemsLogic used to contain non-UI based logic.
+        /// </summary>
         private clsItemsLogic ItemLogic;
 
         /// <summary>
         /// Stores a ObservableCollection of clsItems to manipulate.
         /// </summary>
-        private ObservableCollection<clsItem> Items;
+        private ObservableCollection<Item> Items;
 
         /// <summary>
-        /// Stores the reference to the current item in the "Items" ObservableCollection so the program knows what to edit
+        /// Stores the reference to the current item in the "Items" ObservableCollection so the program knows what to edit.
         /// </summary>
-        private clsItem CurrentEditingItem;
+        private Item CurrentEditingItem;
 
         /// <summary>
         /// Stores a true/false value that will signify if item(s) inside the DB has been modified.
@@ -62,7 +65,6 @@ namespace CS3280FinalProject.Items
         /// </summary>
         private bool AddMode;
         #endregion
-
 
         #region Constructors
         /// <summary>
@@ -91,7 +93,7 @@ namespace CS3280FinalProject.Items
         }
 
         /// <summary>
-        /// This event listener 
+        /// This event listener listens for when a user press a key and validates that it is one of the following keys 0-9, '.', or the left and right arrows.
         /// </summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">Contains the event data for the event.</param>
@@ -103,10 +105,9 @@ namespace CS3280FinalProject.Items
             }
             else
             {
-                //Stop the character from being entered into the textbox because it neither a digit or a '.'.
+                //Stop the character from being entered into the textbox because it neither a digit, a '.', or a left or right arrow keystroke.
                 e.Handled = true;
             }
-
         }
 
         /// <summary>
@@ -145,7 +146,7 @@ namespace CS3280FinalProject.Items
                     ItemLogic.AddItem(txtItemCode.Text, txtItemDesc.Text, cost);  //add the item to the DB
                     //Add the item to the Items ObservableCollection (and because Items is a ObservableCollection, it is the source of the DataGrid "datagridItems", and the clsItems has the interface "INotifyPropertyChanged",
                     //also to the DataGrid "datagridItems")
-                    Items.Add(new clsItem(txtItemCode.Text, txtItemDesc.Text, cost));
+                    Items.Add(new Item(txtItemCode.Text, txtItemDesc.Text, txtItemCost.Text));
 
                     bItemsChanged = true;  //once everything has been added, set the changed variable to tell the user that there has been a change in the items
 
@@ -173,7 +174,6 @@ namespace CS3280FinalProject.Items
                     errorMessage += "Please change the above field(s) and try again.";
 
                     MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
                 }
             }
             catch (Exception ex)
@@ -194,7 +194,7 @@ namespace CS3280FinalProject.Items
                 if (datagridItems.SelectedItem != null)
                 {
                     ChangeMode();
-                    CurrentEditingItem = (clsItem)datagridItems.SelectedItem;
+                    CurrentEditingItem = (Item)datagridItems.SelectedItem;
                 }
             }
             catch (Exception ex)
@@ -220,7 +220,6 @@ namespace CS3280FinalProject.Items
             }
         }
 
-        //STILL NEED TO TEST
         /// <summary>
         /// This event listener listens for when the user press a button to save the changes to an item.
         /// </summary>
@@ -238,7 +237,7 @@ namespace CS3280FinalProject.Items
                     ItemLogic.UpdateItemData(txtItemCode.Text, txtItemDesc.Text, cost);  //save the changes to the database
                     //update the item from the Items ObservableCollection (and because Items is a ObservableCollection, it is the source of the DataGrid "datagridItems", and the clsItems has the interface "INotifyPropertyChanged",
                     //also from the DataGrid "datagridItems")
-                    CurrentEditingItem.itemCost = cost;
+                    CurrentEditingItem.itemCost = txtItemCost.Text;
                     CurrentEditingItem.itemDesc = txtItemDesc.Text;
 
                     ChangeMode();
@@ -254,7 +253,7 @@ namespace CS3280FinalProject.Items
                     string errorMessage = "Error: \n" + (CostFailed ? "The cost has to be in this format \"OneOrMoreDigits\" with an optional '.OneOrTwoDigits' after it.\n" : "");
                     errorMessage += (DescriptionFailed ? "The description can't be empty.\n" : "");
                     errorMessage += "Please change the above field(s) and try again.";
-                    
+
                     MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
@@ -270,7 +269,7 @@ namespace CS3280FinalProject.Items
         /// </summary>
         private void ChangeMode()
         {
-            if(AddMode)  //if the program is in the adding items mode, change to edit item mode
+            if (AddMode)  //if the program is in the adding items mode, change to edit item mode
             {
                 //hide/disable unnecessary buttons to editing an item
                 txtItemCode.IsReadOnly = true;  //prevent the user from altering the Item's code
@@ -284,7 +283,7 @@ namespace CS3280FinalProject.Items
                 AddMode = false;  //change the internal mode variable so that it knows what mode it is in
 
                 //populate the fields with the data for that item
-                clsItem SelectedItem = (clsItem)datagridItems.SelectedItem;  //get the selected item from the datagrid
+                Item SelectedItem = (Item)datagridItems.SelectedItem;  //get the selected item from the datagrid
                 txtItemCode.Text = SelectedItem.itemCode.ToString();
                 txtItemCost.Text = SelectedItem.itemCost.ToString();
                 txtItemDesc.Text = SelectedItem.itemDesc.ToString();
@@ -324,7 +323,7 @@ namespace CS3280FinalProject.Items
             {
                 if (datagridItems.SelectedItem != null)
                 {
-                    clsItem SelectedItem = (clsItem)datagridItems.SelectedItem;  //get the selected item from the datagrid
+                    Item SelectedItem = (Item)datagridItems.SelectedItem;  //get the selected item from the datagrid
 
                     List<int> InvoicesForGivenItemCode = ItemLogic.GetAllInvoiceNumsForItemCode(SelectedItem.itemCode);  //finds out if any invoices are connected to that item
 
@@ -334,7 +333,7 @@ namespace CS3280FinalProject.Items
                         ItemLogic.DeleteItem(SelectedItem.itemCode);  //remove the item from the DB
                         //remove the item from the Items ObservableCollection (and because Items is a ObservableCollection, it is the source of the DataGrid "datagridItems", and the clsItems has the interface "INotifyPropertyChanged",
                         //also from the DataGrid "datagridItems")
-                        Items.Remove((clsItem)datagridItems.SelectedItem);  //remove the item from the datagrid
+                        Items.Remove((Item)datagridItems.SelectedItem);  //remove the item from the datagrid
 
                         bItemsChanged = true;  //set the changed variable to tell the user that the list of items has changed
                     }

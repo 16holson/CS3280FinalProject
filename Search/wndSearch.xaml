@@ -5,8 +5,110 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CS3280FinalProject.Search"
         mc:Ignorable="d"
-        Title="wndSearch" Height="450" Width="800" WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize">
+        Title="wndSearch" 
+        Height="450" Width="800" 
+        WindowStartupLocation="CenterOwner" 
+        ResizeMode="CanMinimize"
+        Style="{StaticResource windowStyle}">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="gradient" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#444" Offset="0.0" />
+            <GradientStop Color="#888" Offset="1.0" />
+        </LinearGradientBrush>
+        <!--Button Style-->
+        <Style TargetType="Button" BasedOn="{StaticResource buttonStyle}"></Style>
+        <!--DataGrid Style-->
+        <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource dataGridStyle}"></Style>
+        <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource dataGridColumnHeaderStyle}"></Style>
+        <!--Lables Style-->
+        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource labelStyle}">
+            <Setter Property="Margin" Value="10,10,0,0"/>
+        </Style>
+        <Style x:Key="topLbl" TargetType="{x:Type Label}" BasedOn="{StaticResource labelStyle}">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        <Style x:Key="warningLbl" TargetType="{x:Type Label}" BasedOn="{StaticResource labelStyle}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="Visibility" Value="Hidden"/>
+        </Style>
+        <!--ComboBox Style-->
+        <Style TargetType="ComboBox" BasedOn="{StaticResource comboBoxStyle}"></Style>
+        <!--Grid Style-->
+        <Style x:Key="insideGrid" TargetType="{x:Type Grid}">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Margin" Value="10,0,0,0"/>
+        </Style>
+
+    </Window.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".5*"/>
+            <ColumnDefinition Width=".5*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.75*"/>
+            <RowDefinition Height="1.75*"/>
+            <RowDefinition Height="1.75*"/>
+            <RowDefinition Height="2.25*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
         
+        <Label Content="Search Invoices" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" Style="{StaticResource topLbl}"/>
+        
+        <!--Invoice Number Search-->
+        <Label Content="Invoice Number:" Grid.Row="1" Grid.Column="0"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" Name="numberCB" SelectionChanged="filter_SelectionChanged"/>
+        
+        <!--Invoice Date Search-->
+        <Label Content="Invoice Date" Grid.Row="2" Grid.Column="0"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" Name="dateCB" SelectionChanged="filter_SelectionChanged"/>
+        
+        <!--Invoice Total Cost Search-->
+        <Label Content="Total Invoice Charge" Grid.Row="3" />
+        <ComboBox Grid.Row="3" Grid.Column="1" Name="totalChargeCB" SelectionChanged="filter_SelectionChanged"/>
+        
+        <!--Every item in each invoice-->
+        <DataGrid Grid.Column="2" Grid.Row="1" Name="invoicesDataGrid" Grid.RowSpan="5">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Invoice Number" Binding="{Binding invoiceNum}"/>
+                <DataGridTextColumn Header="Invoice Date" Binding="{Binding invoiceDate}"/>
+                <DataGridTextColumn Header="Total Cost" Binding="{Binding totalCost}"/>
+            </DataGrid.Columns>
+
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <Grid Style="{StaticResource insideGrid}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding items}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Item Code" Binding="{Binding Path=itemCode}"/>
+                                <DataGridTextColumn Header="Item Description" Binding="{Binding Path=itemDesc}"/>
+                                <DataGridTextColumn Header="Item Cost" Binding="{Binding Path=itemCost}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+        
+        <!--Button Controls-->
+        <Button Content="Select Invoice" Name="selectInvoice" Grid.Column="0" Grid.Row="4" Click="selectInvoice_Click"/>
+        <Button Content="Clear Filters" Name="clearFilter" Grid.Column="1" Grid.Row="4" Click="clearFilter_Click"/>
+        <Label Content="Plese Select an Invoice" Name="selectInvoiceLbl" Grid.Row="5" Style="{StaticResource warningLbl}"/>
     </Grid>
 </Window>

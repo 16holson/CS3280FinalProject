@@ -22,7 +22,7 @@ namespace CS3280FinalProject.Items
 {
     public class clsItemsLogic
     {
-        #region variables
+        #region Variables
         /// <summary>
         /// Stores the connection the DB so that we can query it.
         /// </summary>
@@ -34,8 +34,7 @@ namespace CS3280FinalProject.Items
         clsItemsSQL SQL;
         #endregion
 
-
-        #region functions
+        #region Constructors
         /// <summary>
         /// Default constructor for the clsItemsLogic class.
         /// </summary>
@@ -44,29 +43,28 @@ namespace CS3280FinalProject.Items
             DB = new clsDataAccess();
             SQL = new clsItemsSQL();
         }
+        #endregion
 
+        #region Functions
         /// <summary>
         /// Gets all the items that are inside the DB.
         /// </summary>
         /// <returns>A list of objects, of the type clsItem, for all of the Items inside the DB.</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across.</exception>
-        public ObservableCollection<clsItem> GetAllItemsFromDB()
+        public ObservableCollection<Item> GetAllItemsFromDB()
         {
             try
             {
                 int rowsReturned = 0;
 
                 DataSet ds = DB.ExecuteSQLStatement(SQL.SelectAllItems(), ref rowsReturned);
-                ObservableCollection<clsItem> items = new ObservableCollection<clsItem>();
+                ObservableCollection<Item> items = new ObservableCollection<Item>();
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    float cost = 0;
-                    if (float.TryParse(ds.Tables[0].Rows[i][2].ToString(), out cost))
-                    {
-                        clsItem currentItem = new clsItem(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), cost);
-                        items.Add(currentItem);
-                    }
+                    Item currentItem = new Item(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), ds.Tables[0].Rows[i][2].ToString());
+                    items.Add(currentItem);
+                    
                 }
 
                 return items;
@@ -161,7 +159,7 @@ namespace CS3280FinalProject.Items
         }
 
         /// <summary>
-        /// Performs a Regex pattern match to see if the supplied text matches "0_or_more_digits" followed by an optional section ".1_or_2_digits"
+        /// Performs a Regex pattern match to see if the supplied text matches "1_or_more_digits" followed by an optional section ".1_or_2_digits"
         /// </summary>
         /// <param name="CostToValidate">The text of the cost to be validated.</param>
         /// <returns>True if the data supplied matches the desired format, and false otherwise.</returns>
@@ -174,7 +172,7 @@ namespace CS3280FinalProject.Items
         }
 
         /// <summary>
-        /// This convert a list that contains only 1 data type and set (No objects allowed) to a string.
+        /// This converts a list that contains only 1 data type and set (No objects allowed) to a string.
         /// </summary>
         /// <typeparam name="T">The data type the list contains.</typeparam>
         /// <param name="ListData">The list that contains the data.</param>

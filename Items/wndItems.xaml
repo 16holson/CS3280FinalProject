@@ -3,31 +3,40 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Name="wndManipulateItems"
         x:Class="CS3280FinalProject.Items.wndItems"
         mc:Ignorable="d"
-        Title="wndItems" Height="auto" MaxHeight="450" Width="600" WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize">
+        Title="wndItems"
+        Height="auto" 
+        MaxHeight="450" 
+        Width="600" 
+        WindowStartupLocation="CenterOwner" 
+        ResizeMode="CanMinimize"
+        Style="{StaticResource windowStyle}">
     <Window.Resources>
-        <Style x:Key="ItemsButtons" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Style x:Key="ItemsButtons" TargetType="{x:Type Button}" BasedOn="{StaticResource buttonStyle}">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Margin" Value="10,10,10,10"/>
         </Style>
-        <Style x:Key="Labels" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
-            <Setter Property="Margin" Value="0,0,0,0"/>
+        <Style x:Key="Labels" TargetType="Label" BasedOn="{StaticResource labelStyle}">
+            <Setter Property="Margin" Value="10,0,0,0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="right"/>
         </Style>
-        <Style x:Key="TextInputs" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Style x:Key="TextInputs" TargetType="TextBox" BasedOn="{StaticResource textBoxStyle}">
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Margin" Value="10,0,10,0"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
+        <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource dataGridStyle}"/>
+        <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource dataGridColumnHeaderStyle}"/>
     </Window.Resources>
 
     <!--Window creation-->
-    <Grid ShowGridLines="True">
+    <Grid ShowGridLines="False">
         <!--Split the window into two columns, the left for the controls and the right for the data-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -35,21 +44,22 @@
         </Grid.ColumnDefinitions>
 
         <!--split the left column into two rows, the top for the labels and text boxes and the bottom for the buttons-->
-        <Grid Grid.Column="0" ShowGridLines="True">
+        <Grid Grid.Column="0" ShowGridLines="False">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <!--controls for adding/editing an item-->
-            <!--Split the user control into three rows, the top/middle for user input and the bottom for the save/cancel buttons-->
-            <Grid Grid.Column="0" ShowGridLines="True" Height="auto">
+            <!--Split the user input section into three rows, the top/middle for user input and the bottom for the save/cancel/add buttons-->
+            <Grid Grid.Column="0" ShowGridLines="False" Height="auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
+
                 <!--Section for user input-->
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" ShowGridLines="False">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
@@ -66,26 +76,27 @@
 
                     <Label x:Name="lblCost" Grid.Row="1" Content="Cost:" Style="{StaticResource Labels}"/>
                     <TextBox x:Name="txtItemCost" Text="" HorizontalAlignment="Left" Width="auto" MinWidth="75" MaxWidth="315" Style="{StaticResource TextInputs}" PreviewKeyDown="txtItemCost_PreviewKeyDown" Grid.Row="1" Grid.Column="1"/>
-                    
+
                     <Label x:Name="lblDescription" Grid.Row="2" Content="Description:" HorizontalAlignment="Left" Style="{StaticResource Labels}"/>
                     <TextBox x:Name="txtItemDesc" Style="{StaticResource TextInputs}" Grid.Row="4" Grid.ColumnSpan="2"/>
                 </Grid>
 
-                <!--Section for the buttons-->
-                <Grid Grid.Row="2" Height="auto">
+                <!--Section for the buttons to save/cancel/add items to the DB-->
+                <Grid Grid.Row="2" Height="auto" ShowGridLines="False">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+
                     <Button x:Name="btnAddItem" Grid.Column="0" Grid.ColumnSpan="2" Content="Add New Item" Click="btnAddItem_Click" Style="{StaticResource ItemsButtons}"/>
-                    <!--Only the two buttons above or the button below will be active at any one time-->
+                    <!--Only the button above or the two buttons below will be active at any one time-->
                     <Button x:Name="btnCancel" Grid.Column="0" Content="Cancel" Click="btnCancel_Click" Style="{StaticResource ItemsButtons}" Visibility="Collapsed"/>
                     <Button x:Name="btnSaveChanges" Grid.Column="1" Content="Save Changes" Click="btnSaveChanges_Click" Style="{StaticResource ItemsButtons}" Visibility="Collapsed"/>
                 </Grid>
             </Grid>
 
-            <!--button controls-->
-            <Grid Grid.Row="1">
+            <!--button controls to edit/delete an item inside the DB-->
+            <Grid Grid.Row="1" ShowGridLines="False">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -96,6 +107,7 @@
             </Grid>
         </Grid>
 
+        <!--The DataGrid to hold the data from the DB (uses binding to bind the data from the DB to this DataGrid)-->
         <DataGrid x:Name="datagridItems" Grid.Column="1" AutoGenerateColumns="False" HorizontalAlignment="Center" CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True"
                   SelectionChanged="datagridItems_SelectionChanged" Margin="0,0,0,0">
             <DataGrid.Columns>
@@ -104,6 +116,5 @@
                 <DataGridTextColumn Header="Item Description" Binding="{Binding itemDesc}"/>
             </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
 </Window>

@@ -4,35 +4,37 @@
              xmlns:local="clr-namespace:CS3280FinalProject"
              StartupUri="Main/wndMain.xaml">
     <Application.Resources>
-        <LinearGradientBrush x:Key="gradient" EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="#444" Offset="0.0" />
-            <GradientStop Color="#888" Offset="1.0" />
-        </LinearGradientBrush>
-        <SolidColorBrush x:Key="SolidGray" Color="#444"/>
-        <!--Window Style-->
-        <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
-            <Setter Property="Background" Value="DarkSlateGray"/>
-        </Style>
-        <!--Button Style-->
-        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="Padding" Value="10,3,10,3"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Background" Value="{StaticResource SolidGray}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <!--Override the default template for a button so that we can control what it looks like when it is disabled-->
-            <!--Source code found here https://social.msdn.microsoft.com/Forums/vstudio/en-US/0d3d9b06-6855-4a91-bc2e-f1f0973e3b31/how-to-change-the-foreground-color-of-a-disabled-button-in-wpf?forum=wpf and I 
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <LinearGradientBrush x:Key="gradient" EndPoint="0,1" StartPoint="0,0">
+                <GradientStop Color="#444" Offset="0.0" />
+                <GradientStop Color="#888" Offset="1.0" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="SolidGray" Color="#444"/>
+            <!--Window Style-->
+            <Style x:Key="windowStyle" TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
+                <Setter Property="Background" Value="DarkSlateGray"/>
+            </Style>
+            <!--Button Style-->
+            <Style x:Key="buttonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Padding" Value="10,3,10,3"/>
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <!--Override the default template for a button so that we can control what it looks like when it is disabled-->
+                <!--Source code found here https://social.msdn.microsoft.com/Forums/vstudio/en-US/0d3d9b06-6855-4a91-bc2e-f1f0973e3b31/how-to-change-the-foreground-color-of-a-disabled-button-in-wpf?forum=wpf and I 
             modified it to fit my needs (removed all the other triggers for the properties but the "IsEnabled" and changed it to do what I want)-->
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ButtonBase}">
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" 
+                <!--<Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ButtonBase}">
+                            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" 
                             BorderThickness="{TemplateBinding BorderThickness}" 
                             Background="{TemplateBinding Background}"
                             SnapsToDevicePixels="True">
-                            <ContentPresenter x:Name="contentPresenter" 
+                                <ContentPresenter x:Name="contentPresenter" 
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           Content="{TemplateBinding Content}"
                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
@@ -40,70 +42,53 @@
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"
                                           RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <!--This is the set of properties that will be called when the property "IsEnabled" is changed to false-->
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Background" Value="gray"/>
-                                <Setter Property="Foreground" Value="LightGray"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <!--DataGrid Style-->
-        <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
-            <Setter Property="AutoGenerateColumns" Value="False"/>
-            <Setter Property="Background" Value="{StaticResource gradient}"/>
-            <Setter Property="RowBackground" Value="{StaticResource gradient}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="CanUserReorderColumns" Value="False"/>
-            <Setter Property="CanUserSortColumns" Value="False"/>
-            <Setter Property="Margin" Value="10,10,0,0"/>
-            <Setter Property="SelectionMode" Value="Single"/>
-        </Style>
-        <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
-            <Setter Property="Background" Value="{StaticResource gradient}"/>
-            <Setter Property="Padding" Value="5"/>
-        </Style>
-        <!--Label Style-->
-        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-            <Setter Property="Margin" Value="10,10,0,0"/>
-        </Style>
-        <Style x:Key="topLbl" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="FontSize" Value="20"/>
-        </Style>
-        <Style x:Key="warningLbl" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Foreground" Value="Red"/>
-            <Setter Property="Visibility" Value="Hidden"/>
-        </Style>
-        <!--ComboBox Style-->
-        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="Margin" Value="0,10,0,0"/>
-        </Style>
-        <!--Grid Style-->
-        <Style x:Key="insideGrid" TargetType="{x:Type Grid}">
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Margin" Value="10,0,0,0"/>
-        </Style>
-        <!--TextBox Style-->
-        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="Background" Value="{StaticResource gradient}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-        </Style>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                --><!--This is the set of properties that will be called when the property "IsEnabled" is changed to false--><!--
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Background" Value="gray"/>
+                                    <Setter Property="Foreground" Value="LightGray"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>-->
+            </Style>
+            <!--DataGrid Style-->
+            <Style x:Key="dataGridStyle" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="Background" Value="{StaticResource gradient}"/>
+                <Setter Property="RowBackground" Value="{StaticResource gradient}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="CanUserReorderColumns" Value="False"/>
+                <Setter Property="CanUserSortColumns" Value="False"/>
+                <Setter Property="Margin" Value="10,10,0,0"/>
+                <Setter Property="SelectionMode" Value="Single"/>
+            </Style>
+            <Style x:Key="dataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                <Setter Property="Background" Value="{StaticResource gradient}"/>
+                <Setter Property="Padding" Value="5"/>
+            </Style>
+            <!--Label Style-->
+            <Style x:Key="labelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                <Setter Property="Margin" Value="10,10,0,0"/>
+            </Style>
+            <!--ComboBox Style-->
+            <Style x:Key="comboBoxStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="Margin" Value="0,10,0,0"/>
+            </Style>
+            <!--TextBox Style-->
+            <Style x:Key="textBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="Background" Value="{StaticResource gradient}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
