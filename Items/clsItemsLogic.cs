@@ -17,6 +17,7 @@ using System.Reflection;
 using System;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
+using System.Windows;
 
 namespace CS3280FinalProject.Items
 {
@@ -64,7 +65,6 @@ namespace CS3280FinalProject.Items
                 {
                     Item currentItem = new Item(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), ds.Tables[0].Rows[i][2].ToString());
                     items.Add(currentItem);
-                    
                 }
 
                 return items;
@@ -165,10 +165,17 @@ namespace CS3280FinalProject.Items
         /// <returns>True if the data supplied matches the desired format, and false otherwise.</returns>
         public bool ValidateCostFormat(string CostToValidate)
         {
-            //bool test = Regex.Match(CostToValidate, @"^\d+(?:\.\d{1,2})?$").Success;
-            //where I found the Regex command with a few modifications https://stackoverflow.com/questions/52810865/regex-to-accept-number-in-fomat-00-00
+            try
+            {
+                //bool test = Regex.Match(CostToValidate, @"^\d+(?:\.\d{1,2})?$").Success;
+                //where I found the Regex command with a few modifications https://stackoverflow.com/questions/52810865/regex-to-accept-number-in-fomat-00-00
 
-            return Regex.Match(CostToValidate, @"^\d+(?:\.\d{1,2})?$").Success;
+                return Regex.Match(CostToValidate, @"^\d+(?:\.\d{1,2})?$").Success;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -179,20 +186,27 @@ namespace CS3280FinalProject.Items
         /// <returns>A string separated by a ', ' for every item in the list.</returns>
         public string ConvertSingleItemListToString<T>(List<T> ListData)
         {
-            string Result = "";
-
-            for (int i = 0; i < ListData.Count; i++)
+            try
             {
-                Result += ListData[i].ToString();
+                string Result = "";
 
-                //if it is the last element to be added, don't add a ',' to the end
-                if (i == ListData.Count - 2)
+                for (int i = 0; i < ListData.Count; i++)
                 {
-                    Result += ", ";
-                }
-            }
+                    Result += ListData[i].ToString();
 
-            return Result;
+                    //if it is the last element to be added, don't add a ',' to the end
+                    if (i == ListData.Count - 2)
+                    {
+                        Result += ", ";
+                    }
+                }
+
+                return Result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -202,12 +216,37 @@ namespace CS3280FinalProject.Items
         /// <returns>True if it is used and False if it is not.</returns>
         public bool ItemCodeIsTaken(string ItemCode)
         {
-            string QuerryResult = DB.ExecuteScalarSQL(SQL.CheckItemCodeExist(ItemCode));
+            try
+            {
+                string QuerryResult = DB.ExecuteScalarSQL(SQL.CheckItemCodeExist(ItemCode));
 
-            if (QuerryResult == "")
-                return false;
-            else
-                return true;
+                if (QuerryResult == "")
+                    return false;
+                else
+                    return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// This function will handle any errors that the Items window will come across.
+        /// </summary>
+        /// <param name="ErrorMessage">The error message that was generated.</param>
+        public void HandleException(string ErrorMessage)
+        {
+            try
+            {
+                MessageBox.Show(ErrorMessage.Substring(ErrorMessage.LastIndexOf("-> ")));
+            }
+            catch (Exception ex)
+            {
+                string SavePath = System.AppDomain.CurrentDomain.BaseDirectory + "Error.txt";
+
+                System.IO.File.AppendAllText(SavePath, Environment.NewLine + "HandleError Exception: " + ex.Message);
+            }
         }
         #endregion
     }

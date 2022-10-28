@@ -5,13 +5,11 @@ C:\Users\BraxtonWright\Desktop\CS3280FinalProject\bin\Debug\net6.0-windows\CS328
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\bin\Debug\net6.0-windows\CS3280FinalProject.pdb
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.csproj.AssemblyReference.cache
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\Items\wndItems.g.cs
-C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\Main\MainWindow.g.cs
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\Search\wndSearch.g.cs
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\App.g.cs
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject_MarkupCompile.cache
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject_MarkupCompile.lref
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\Items\wndItems.baml
-C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\Main\MainWindow.baml
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\Search\wndSearch.baml
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.g.resources
 C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.GeneratedMSBuildEditorConfig.editorconfig
