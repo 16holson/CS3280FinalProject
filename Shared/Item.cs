@@ -1,23 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data.SqlTypes;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CS3280FinalProject.Shared
 {
     public class Item : INotifyPropertyChanged
     {
-        #region Class Variables
+        #region Variables
         /// <summary>
-        /// Items code
+        /// Private item code
         /// </summary>
         private string sItemCode;
-        public string itemCode 
-        { 
+
+        /// <summary>
+        /// Private items description
+        /// </summary>
+        private string sItemDesc;
+
+        /// <summary>
+        /// Private items cost
+        /// </summary>
+        private string sItemCost;
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Public item code
+        /// </summary>
+        public string itemCode
+        {
             get
             {
                 return sItemCode;
@@ -30,17 +41,17 @@ namespace CS3280FinalProject.Shared
                     PropertyChanged(this, new PropertyChangedEventArgs("itemCode"));
             }
         }
+
         /// <summary>
-        /// Items description
+        /// Public item description
         /// </summary>
-        private string sItemDesc;
         public string itemDesc
-        { 
+        {
             get
             {
                 return sItemDesc;
             }
-                
+
             set
             {
                 sItemDesc = value;
@@ -49,16 +60,16 @@ namespace CS3280FinalProject.Shared
                     PropertyChanged(this, new PropertyChangedEventArgs("itemDesc"));
             }
         }
+
         /// <summary>
-        /// Items cost
+        /// Public item cost
         /// </summary>
-        private string sItemCost;
-        public string itemCost 
-        { 
+        public string itemCost
+        {
             get
             {
                 return sItemCost;
-            } 
+            }
             set
             {
                 sItemCost = value;
@@ -67,8 +78,6 @@ namespace CS3280FinalProject.Shared
                     PropertyChanged(this, new PropertyChangedEventArgs("itemCost"));
             }
         }
-
-
         #endregion
 
         #region Constructor
@@ -102,7 +111,7 @@ namespace CS3280FinalProject.Shared
         }
         #endregion
 
-        #region PropertyChanged Stuff
+        #region INotifyPropertyChanged Members
 
         /// <summary>
         /// This is the contract we have to make with the compiler because we are implementing the interface "INotifyPropertyChanged".  So we must have this event defined.  We will raise this event anytime one of our properties changes.
