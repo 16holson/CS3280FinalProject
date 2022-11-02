@@ -64,12 +64,12 @@ namespace CS3280FinalProject.Main
             EditItems.Owner = this;  //this sets it so that the edit items window owner is this window (so it loads where this window is currently)
 
             this.Hide();  //hide this from the user
-            //open the edit items window and pause here in the code until the window is closed (the stuff before the "EditItems.ShowDialog()" catches the dialogresult the window returns to determine if any items have been modified)
-            Nullable<bool> ItemsChanged = EditItems.ShowDialog();
+            //open the edit items window and pause here in the code until the window is closed
+            EditItems.ShowDialog();
             this.Show();  //shows this window to the user
 
             //see if there has been any changes to the items inside the DB so you can see if you are required to update this window's list of items
-            if (ItemsChanged == true)
+            if (EditItems.HasItemsChanged)
             {
                 //perform an update/reassign to your list
             }
