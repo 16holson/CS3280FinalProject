@@ -12,7 +12,7 @@
         Width="600" 
         WindowStartupLocation="CenterOwner" 
         ResizeMode="CanMinimize"
-        Style="{StaticResource windowStyle}" Closing="wndManipulateItems_Closing">
+        Style="{StaticResource windowStyle}">
     <Window.Resources>
         <Style x:Key="ItemsButtons" TargetType="{x:Type Button}" BasedOn="{StaticResource buttonStyle}">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
