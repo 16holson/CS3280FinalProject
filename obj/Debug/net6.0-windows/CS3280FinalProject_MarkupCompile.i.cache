@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\BraxtonWright\Desktop\CS3280FinalProject\obj\Debug\net6.0-windows\
+C:\Users\Levi\Documents\GitHub\CS3280FinalProject\obj\Debug\net6.0-windows\
 CS3280FinalProject
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\BraxtonWright\Desktop\CS3280FinalProject\App.xaml
+C:\Users\Levi\Documents\GitHub\CS3280FinalProject\App.xaml
 4-1951945842
 
 16986120486
-196-1029718210
+196-1157716430
 Items\wndItems.xaml;Main\wndMain.xaml;Search\wndSearch.xaml;Theme.xaml;
 
-False
+True
 

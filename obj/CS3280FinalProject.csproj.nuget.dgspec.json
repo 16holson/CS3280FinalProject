@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\BraxtonWright\\Desktop\\CS3280FinalProject\\CS3280FinalProject.csproj": {}
+    "C:\\Users\\Levi\\Documents\\GitHub\\CS3280FinalProject\\CS3280FinalProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\BraxtonWright\\Desktop\\CS3280FinalProject\\CS3280FinalProject.csproj": {
+    "C:\\Users\\Levi\\Documents\\GitHub\\CS3280FinalProject\\CS3280FinalProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\BraxtonWright\\Desktop\\CS3280FinalProject\\CS3280FinalProject.csproj",
+        "projectUniqueName": "C:\\Users\\Levi\\Documents\\GitHub\\CS3280FinalProject\\CS3280FinalProject.csproj",
         "projectName": "CS3280FinalProject",
-        "projectPath": "C:\\Users\\BraxtonWright\\Desktop\\CS3280FinalProject\\CS3280FinalProject.csproj",
-        "packagesPath": "C:\\Users\\BraxtonWright\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\BraxtonWright\\Desktop\\CS3280FinalProject\\obj\\",
+        "projectPath": "C:\\Users\\Levi\\Documents\\GitHub\\CS3280FinalProject\\CS3280FinalProject.csproj",
+        "packagesPath": "C:\\Users\\Levi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Levi\\Documents\\GitHub\\CS3280FinalProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\BraxtonWright\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Levi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -67,7 +68,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
