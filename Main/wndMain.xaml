@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
+            <Grid Grid.Column="0" HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -29,10 +29,12 @@
                 <Button Content="Create New Invoice" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial Black" FontSize="16" Width="200" Height="30" Margin="19,0,0,0"/>
                 <Button Content="Edit Existing Invoice" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial Black" FontSize="16" Margin="257,0,0,0"/>
                 <Label Grid.Row="1" Content="Invoice #:    " FontFamily="Arial Black" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0"/>
-                <Label Grid.Row="1" Content="Date: MM/DD/YYYY" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial Black" FontSize="18" Margin="264,0,0,0"/>
+                <Label Grid.Row="1" Content="Date: MM/DD/YYYY" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial Black" FontSize="18" Margin="237,0,0,0"/>
                 <Label Grid.Row="2" Content="Item: " HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Height="25" FontFamily="Arial Black" FontSize="16" Margin="44,28,0,0"/>
-                <ComboBox Grid.Row="2" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="30" Margin="119,21,0,0"/>
-                <Button Content="Add Item" Grid.Row="2"/>
+                <ComboBox Grid.Row="2" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="188" Height="30" Margin="119,21,0,0"/>
+                <Label Grid.Row="2" Content="Cost:" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial Black" FontSize="16" Width="45" Height="25" Margin="44,0,0,0"/>
+                <Label Grid.Row="2" Content="$"/>
+                <Button Content="Add Item" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" Width="90" FontFamily="Arial Black" FontSize="16" Margin="159,145,0,0" RenderTransformOrigin="0.557,1.62"/>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
