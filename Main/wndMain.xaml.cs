@@ -28,6 +28,8 @@ namespace CS3280FinalProject.Main
         /// string to hold the selected invoice num
         /// </summary>
         public string selectedInvoiceNum;
+
+        public bool bItemsChanged;
         #endregion
 
         #region Functions
@@ -37,6 +39,7 @@ namespace CS3280FinalProject.Main
         public wndMain()
         {
             InitializeComponent();
+            bItemsChanged = false;
         }
 
 
@@ -62,6 +65,8 @@ namespace CS3280FinalProject.Main
 
             // This is how the user gets the chosen invoice num from the user
             selectedInvoiceNum = Search.selectedNum;
+
+            InvoiceNumLabel.Content = "Invoice: " + selectedInvoiceNum;
         }
 
         //Created by Braxton Wright
@@ -77,11 +82,13 @@ namespace CS3280FinalProject.Main
 
             this.Hide();  //hide this from the user
             //open the edit items window and pause here in the code until the window is closed (the stuff before the "EditItems.ShowDialog()" catches the dialogresult the window returns to determine if any items have been modified)
-            Nullable<bool> ItemsChanged = EditItems.ShowDialog();
+            EditItems.ShowDialog();
             this.Show();  //shows this window to the user
 
+            bItemsChanged = EditItems.HasItemsChanged;
+
             //see if there has been any changes to the items inside the DB so you can see if you are required to update this window's list of items
-            if (ItemsChanged == true)
+            if (bItemsChanged == true)
             {
                 //perform an update/reassign to your list
             }
