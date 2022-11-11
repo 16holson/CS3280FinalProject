@@ -85,7 +85,7 @@ namespace CS3280FinalProject.Main
             EditItems.ShowDialog();
             this.Show();  //shows this window to the user
 
-            bItemsChanged = EditItems.HasItemsChanged;
+            bItemsChanged = EditItems.ItemsChanged;
 
             //see if there has been any changes to the items inside the DB so you can see if you are required to update this window's list of items
             if (bItemsChanged == true)
