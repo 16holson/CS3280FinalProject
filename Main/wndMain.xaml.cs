@@ -24,7 +24,10 @@ namespace CS3280FinalProject.Main
     public partial class wndMain : Window
     {
         #region Variables
-
+        /// <summary>
+        /// string to hold the selected invoice num
+        /// </summary>
+        public string selectedInvoiceNum;
         #endregion
 
         #region Functions
@@ -35,6 +38,12 @@ namespace CS3280FinalProject.Main
         {
             InitializeComponent();
         }
+
+
+        #endregion
+
+
+        #region UI Functions
 
         //Created by Braxton Wright
         /// <summary>
@@ -50,6 +59,9 @@ namespace CS3280FinalProject.Main
             this.Hide();  //hide this from the user
             Search.ShowDialog();  //open the search window and pause here in the code until the window is closed
             this.Show();  //shows this window to the user
+
+            // This is how the user gets the chosen invoice num from the user
+            selectedInvoiceNum = Search.selectedNum;
         }
 
         //Created by Braxton Wright
@@ -74,6 +86,54 @@ namespace CS3280FinalProject.Main
                 //perform an update/reassign to your list
             }
         }
+
+
+        private void CreateInvoiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Disable and Enable buttons that apply
+                CreateInvoiceButton.IsEnabled = false;
+                EditInvoiceButton.IsEnabled = false;
+                AddItemButton.IsEnabled = true;
+                SaveInvoiceButton.IsEnabled = true;
+
+                // Show TBD as the Invoice Num
+                InvoiceNumLabel.Content = "Invoice #: TBD";
+
+                // Enable the Combo Box for user use
+                InvoiceItemComboBox.IsEnabled = true;
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+
         #endregion
+
+        private void EditInvoiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Disable and Enable buttons that apply
+                CreateInvoiceButton.IsEnabled = false;
+                EditInvoiceButton.IsEnabled = false;
+                AddItemButton.IsEnabled = true;
+                SaveInvoiceButton.IsEnabled = true;
+
+                // Enable the Combo Box for user use
+                InvoiceItemComboBox.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }
