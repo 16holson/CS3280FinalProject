@@ -48,6 +48,14 @@ namespace CS3280FinalProject.Items
         private bool ItemsChanged;
 
         /// <summary>
+        /// This getter returns a boolean that represents if item(s) have been changed/added to the DB and a update is required.
+        /// </summary>
+        public bool HasItemsChanged
+        {
+            get { return ItemsChanged; }
+        }
+
+        /// <summary>
         /// Holds the mode of what the window is currently doing so it knows what to enable and what to disable.
         /// </summary>
         private bool AddMode;
@@ -358,31 +366,6 @@ namespace CS3280FinalProject.Items
                     {
                         MessageBox.Show("Unable to delete item, because it is attached to these invoice(s) \"" + ItemLogic.ConvertSingleItemListToString<int>(InvoicesForGivenItemCode) + "\"", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                }
-            }
-            catch (Exception ex)
-            {
-                ItemLogic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// This event listener listens for when the user press a button to close the this window.  When it is triggered, it determines if any items have been modified and there has been any modifications, it sets it's DialogResult to be true,
-        /// otherwise it is false.
-        /// </summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">Contains the event data for the event.</param>
-        private void wndManipulateItems_Closing(object sender, CancelEventArgs e)
-        {
-            try
-            {
-                if (ItemsChanged)
-                {
-                    DialogResult = true;
-                }
-                else
-                {
-                    DialogResult = false;
                 }
             }
             catch (Exception ex)
