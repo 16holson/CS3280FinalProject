@@ -13,6 +13,7 @@
 using CS3280FinalProject.Items;
 using CS3280FinalProject.Search;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -30,6 +31,10 @@ namespace CS3280FinalProject.Main
         public string selectedInvoiceNum;
 
         public bool bItemsChanged;
+
+        List<Shared.Item> lItemList;
+
+        clsMainLogic logic;
         #endregion
 
         #region Functions
@@ -40,6 +45,8 @@ namespace CS3280FinalProject.Main
         {
             InitializeComponent();
             bItemsChanged = false;
+            logic = new clsMainLogic();
+            fillItemCB();
         }
 
 
@@ -120,8 +127,27 @@ namespace CS3280FinalProject.Main
             }
         }
 
+        private void SaveInvoiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                /// Pulls information from Window
+                /// 
+                /// Queries Database for New Invoice Number
+                /// (Find biggest invoice Num, add 1)
+                /// 
+                /// Create New Invoice with invoiceNum, Date and TotalCost
+                /// (CreateInvoice)
+                /// 
+                /// Add Items to Invoice using ItemCode and InvoiceNum
+                /// AddToInvoice
+            }
+            catch (Exception)
+            {
 
-        #endregion
+                throw;
+            }
+        }
 
         private void EditInvoiceButton_Click(object sender, RoutedEventArgs e)
         {
@@ -142,5 +168,21 @@ namespace CS3280FinalProject.Main
                 throw;
             }
         }
+
+        #endregion
+
+
+        #region Screen Functions
+
+        public void fillItemCB()
+        {
+            lItemList = logic.ItemList();
+            InvoiceItemComboBox.ItemsSource = lItemList;
+        }
+
+        #endregion
+
+
+
     }
 }

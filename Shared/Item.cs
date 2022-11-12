@@ -111,6 +111,12 @@ namespace CS3280FinalProject.Shared
         }
         #endregion
 
+        public override string ToString()
+        {
+            string sReturnString = itemDesc;
+            return sReturnString;
+        }
+
         #region INotifyPropertyChanged Members
 
         /// <summary>

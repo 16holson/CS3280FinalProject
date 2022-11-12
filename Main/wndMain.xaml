@@ -6,51 +6,99 @@
         xmlns:local="clr-namespace:CS3280FinalProject.Main"
         mc:Ignorable="d"
         Title="wndMain" Height="450" Width="800" WindowStartupLocation="CenterScreen" Style="{StaticResource windowStyle}">
+    <Window.Resources>
+        <!--DataGrid Style-->
+        <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource dataGridStyle}"></Style>
+        <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource dataGridColumnHeaderStyle}"></Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
+        <!--Menu Items-->
         <Menu Grid.Row="0">
             <MenuItem x:Name="MenuSearch" Header="Search" Click="MenuSearch_Click"/>
             <MenuItem x:Name="MenuEditItems" Header="Edit Items" Click="MenuEditItems_Click"/>
         </Menu>
+        
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" HorizontalAlignment="Center">
+            <Grid Grid.Column="0" HorizontalAlignment="Left" Margin="27,-10,0,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+
+                <!--Create Invoice Button-->
+                <Button x:Name="CreateInvoiceButton" Content="Create Invoice" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="14" Width="150" Height="30" Margin="19,32,0,0" Click="CreateInvoiceButton_Click"/>
+
+                <!--Edit Invoice Button-->
+                <Button x:Name="EditInvoiceButton" Content="Edit Invoice" Width="150" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="14" Margin="19,96,0,0" Click="EditInvoiceButton_Click"/>
+
+                <!--Label for Invoice Num that is being viewed-->
+                <Label x:Name="InvoiceNumLabel" Grid.Row="1" Content="Invoice #:    " FontFamily="Arial Black" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="19,21,0,0"/>
                 
-                <Button x:Name="CreateInvoiceButton" Content="Create New Invoice" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial Black" FontSize="16" Width="200" Height="30" Margin="19,0,0,0" Click="CreateInvoiceButton_Click"/>
+                <!--Label for Invoice Date that is being viewed-->
+                <Label x:Name="InvoiceDateLabel" Grid.Row="1" Content="Date: MM/DD/YYYY" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial Black" FontSize="18" Margin="19,0,0,0"/>
                 
-                <Button x:Name="EditInvoiceButton" Content="Edit Existing Invoice" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial Black" FontSize="16" Margin="257,0,0,0" Click="EditInvoiceButton_Click"/>
+                <!--Label for Invoice Total Cost-->
+                <Label x:Name="TotalCostLabel" Grid.Row="1" Content="Total Cost: ___" FontFamily="Arial Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="19,97,0,0" FontSize="18"/>
                 
-                <Label x:Name="InvoiceNumLabel" Grid.Row="1" Content="Invoice #:    " FontFamily="Arial Black" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0"/>
-                <Label x:Name="InvoiceDateLabel" Grid.Row="1" Content="Date: MM/DD/YYYY" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial Black" FontSize="18" Margin="237,0,0,0"/>
+                <!--Label to Designate the CB is for Items-->
                 <Label Grid.Row="2" Content="Item: " HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Height="25" FontFamily="Arial Black" FontSize="16" Margin="44,28,0,0"/>
-                <ComboBox x:Name="InvoiceItemComboBox" Grid.Row="2" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="188" Height="30" Margin="119,21,0,0"/>
-                <Label Grid.Row="2" Content="Cost:" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="16" Width="45" Height="25" Margin="44,146,0,0"/>
-                <Label x:Name="ItemCostLabel" Grid.Row="2" Content="$" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="16" IsEnabled="False" Width="60" Height="25" Margin="168,144,0,0"/>
-                <Button x:Name="AddItemButton" Content="Add Item To Invoice" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" Width="200" FontFamily="Arial Black" FontSize="16" Margin="119,186,0,0" RenderTransformOrigin="0.557,1.62"/>
+                
+                <!--Combo Box to select Items from-->
+                <ComboBox x:Name="InvoiceItemComboBox" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="188" Height="30" Margin="119,21,0,0"/>
+                
+                <!--Button to Add an item to current invoice-->
+                <Button x:Name="AddItemButton" Content="Add Item" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="100" FontFamily="Arial Black" Margin="19,85,0,0" RenderTransformOrigin="0.557,1.62"/>
+                
+                <!--Button to Remove an item from current invoice-->
+                <Button x:Name="RemoveItemButton" Grid.Row="2" Content="Remove Item" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" Width="100" Height="30" Margin="181,85,0,0"/>
             </Grid>
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="5*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" Content="Invoice Information" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Black" FontSize="20"/>
-                <DataGrid x:Name="MainItemDisplay" Grid.Row="1" Margin="15,15,15,15"/>
-                <Button x:Name="RemoveItemButton" Grid.Row="2" Content="Remove Item" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" Width="100" Height="30" Margin="29,5,0,0"/>
-                <Label x:Name="TotalCostLabel" Grid.Row="2" Content="Total Cost: ___" FontFamily="Arial Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="160,13,0,0" FontSize="14"/>
-                <Button x:Name="SaveInvoiceButton" Grid.Row="3" Content="Save Invoice" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="30" FontFamily="Arial Black" FontSize="14"/>
+            <Grid Grid.ColumnSpan="2" Margin="456,0,24,0">
+
+                <Label Grid.Row="0" Content="Invoice Information" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="20" Margin="34,35,0,0"/>
+                
+                <!--DataGrid to Display Items in Invoice-->
+                <DataGrid x:Name="MainItemDisplay" Margin="15,74,0,132">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Line Number" Binding="{Binding lineItemNum}"/>
+                        <DataGridTextColumn Header="Item Code" Binding="{Binding invoiceNum}"/>
+                        <DataGridTextColumn Header="Item Description" Binding="{Binding invoiceDate}"/>
+                        <DataGridTextColumn Header="Item Cost" Binding="{Binding totalCost}"/>
+                    </DataGrid.Columns>
+
+                    <DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                            <Grid Style="{StaticResource insideGrid}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <DataGrid Grid.Column="1" ItemsSource="{Binding items}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Item Code" Binding="{Binding Path=itemCode}"/>
+                                        <DataGridTextColumn Header="Item Description" Binding="{Binding Path=itemDesc}"/>
+                                        <DataGridTextColumn Header="Item Cost" Binding="{Binding Path=itemCost}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGrid.RowDetailsTemplate>
+                    
+                </DataGrid>
+                <Button x:Name="SaveInvoiceButton" Content="Save Invoice" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Height="30" FontFamily="Arial Black" Margin="66,329,0,0" FontSize="14" Click="SaveInvoiceButton_Click"/>
             </Grid>
         </Grid>
     </Grid>

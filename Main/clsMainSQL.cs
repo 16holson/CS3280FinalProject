@@ -21,31 +21,37 @@ namespace CS3280FinalProject.Main
     public static class clsMainSQL
     {
 
-        public static string UpdateTotalCost(string sTotalCost, string sInvoiceNum)
+        #region InvoiceCreation
+
+        public static string CreateInvoice(string sInvoiceDate, string sTotalCost)
         {
-            string sSQL = "UPDATE Invoices Set TotalCost = " + sTotalCost + " WHERE InvoiceNum = " + sInvoiceNum;
+            string sSQL = "INSERT INTO Invoices(InvoiceDate, TotalCost) Values(#"
+                          + sInvoiceDate + ", " + sTotalCost + ")";
             return sSQL;
         }
 
-        public static string AddToInvoice(string sInvoiceNum, string sLineItemNum, string sItemCode)
+        public static string AddItemToInvoice(string sInvoiceNum, string sLineItemNum, string sItemCode)
         {
             string sSQL = "INSERT INTO LineItems(InvoiceNum, LineItemNum, ItemCode) Values(" +
                           sInvoiceNum + ", " + sLineItemNum + ", " + sItemCode + ")";
             return sSQL;
         }
 
-        public static string CreateInvoice(string sInvoiceDate, string sTotalCost)
+        public static string DeleteItemFromInvoice(string sInvoiceNum, string sItemCode)
         {
-            string sSQL = "INSERT INTO Invoices(InvoiceDate, TotalCost) Values(#" 
-                          + sInvoiceDate + ", " + sTotalCost + ")";
+            string sSQL = "DELETE FROM LineItems WHERE InvoiceNum = " + sInvoiceNum + " AND ItemCode = " + sItemCode;
             return sSQL;
         }
 
-        public static string GetInvoiceInfo(string sInvoiceNum)
+        public static string UpdateTotalCost(string sTotalCost, string sInvoiceNum)
         {
-            string sSQL = "SELECT InvoiceNum, InvoiceDate, TotalCost FROM Invoices WHERE InvoiceNum = " + sInvoiceNum;
+            string sSQL = "UPDATE Invoices Set TotalCost = " + sTotalCost + " WHERE InvoiceNum = " + sInvoiceNum;
             return sSQL;
         }
+
+        #endregion
+
+        #region Invoice Information
 
         public static string GetItems()
         {
@@ -53,6 +59,14 @@ namespace CS3280FinalProject.Main
             return sSQL;
         }
 
+
+        public static string GetInvoiceInfo(string sInvoiceNum)
+        {
+            string sSQL = "SELECT InvoiceNum, InvoiceDate, TotalCost FROM Invoices WHERE InvoiceNum = " + sInvoiceNum;
+            return sSQL;
+        }
+
+        
         public static string GetInvoiceItemInfo(string sInvoiceNum)
         {
             string sSQL = "SELECT LineItems.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost FROM LineItems, ItemDesc WHERE" +
@@ -60,10 +74,6 @@ namespace CS3280FinalProject.Main
             return sSQL;
         }
 
-        public static string DeleteLineItem(string sInvoiceNum, string sLineItemNum)
-        {
-            string sSQL = "DELETE FROM LineItems WHERE InvoiceNum = " + sInvoiceNum + " AND LineItemNum = " + sLineItemNum;
-            return sSQL;
-        }
+        #endregion
     }
 }

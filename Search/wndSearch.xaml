@@ -100,6 +100,28 @@
                                 <DataGridTextColumn Header="Item Description" Binding="{Binding Path=itemDesc}"/>
                                 <DataGridTextColumn Header="Item Cost" Binding="{Binding Path=itemCost}"/>
                             </DataGrid.Columns>
+                            
+                            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <Grid Style="{StaticResource insideGrid}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding items}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Item Code" Binding="{Binding Path=itemCode}"/>
+                                <DataGridTextColumn Header="Item Description" Binding="{Binding Path=itemDesc}"/>
+                                <DataGridTextColumn Header="Item Cost" Binding="{Binding Path=itemCost}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
                         </DataGrid>
                     </Grid>
                 </DataTemplate>
