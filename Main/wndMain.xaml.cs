@@ -26,17 +26,30 @@ namespace CS3280FinalProject.Main
     public partial class wndMain : Window
     {
         #region Variables
+
         /// <summary>
         /// string to hold the selected invoice num
         /// </summary>
         public string selectedInvoiceNum;
 
+        /// <summary>
+        /// Bool value to know whether items were changed in the Item Window
+        /// </summary>
         public bool bItemsChanged;
 
+        /// <summary>
+        /// List to hold all saved items for an invoice
+        /// </summary>
         List<Shared.Item> lItemList;
 
+        /// <summary>
+        /// Object to perform logic class operations
+        /// </summary>
         clsMainLogic logic;
 
+        /// <summary>
+        /// Invoice object to store information for the current invoice
+        /// </summary>
         Shared.Invoice currentInvoice;
         #endregion
 
@@ -145,7 +158,6 @@ namespace CS3280FinalProject.Main
             
         }
 
-
         private void CreateInvoiceButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -153,12 +165,17 @@ namespace CS3280FinalProject.Main
                 // Disable and Enable buttons that apply
                 CreateInvoiceButton.IsEnabled = false;
                 EditInvoiceButton.IsEnabled = false;
-                AddItemButton.IsEnabled = true;
                 SaveInvoiceButton.IsEnabled = true;
 
                 // Show TBD as the Invoice Num
                 InvoiceNumLabel.Content = "Invoice Num: TBD";
                 TotalCostLabel.Content = "Total Cost: __";
+
+                //Empty DataGrid
+                MainItemDisplay.ItemsSource = null;
+                lItemList = new List<Shared.Item>();
+
+                selectedInvoiceNum = "-1";
                 if(currentInvoice != null)
                 {
                     currentInvoice = new Shared.Invoice();
@@ -168,6 +185,36 @@ namespace CS3280FinalProject.Main
                 InvoiceItemComboBox.IsEnabled = true;
 
 
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Opens up Combo Box and allows addition and subtraction
+        /// of items from the invoice.  Add Invoice and Edit Invoice
+        /// Buttons are locked as well
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditInvoiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Disable buttons that apply
+                CreateInvoiceButton.IsEnabled = false;
+                EditInvoiceButton.IsEnabled = false;
+                MenuSearch.IsEnabled = false;
+                MenuEditItems.IsEnabled = false;
+
+                // Enable buttons that apply
+                SaveInvoiceButton.IsEnabled = true;
+
+                // Enable the Combo Box for user use
+                InvoiceItemComboBox.IsEnabled = true;
             }
             catch (Exception ex)
             {
@@ -198,25 +245,6 @@ namespace CS3280FinalProject.Main
             }
         }
 
-        private void EditInvoiceButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                // Disable and Enable buttons that apply
-                CreateInvoiceButton.IsEnabled = false;
-                EditInvoiceButton.IsEnabled = false;
-                AddItemButton.IsEnabled = true;
-                SaveInvoiceButton.IsEnabled = true;
-
-                // Enable the Combo Box for user use
-                InvoiceItemComboBox.IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
 
         #endregion
 
@@ -237,6 +265,7 @@ namespace CS3280FinalProject.Main
                 }
                 lItemList = logic.ItemList();
                 InvoiceItemComboBox.ItemsSource = lItemList;
+                InvoiceItemComboBox.SelectedIndex = -1;
             }
             catch (Exception)
             {
@@ -274,6 +303,7 @@ namespace CS3280FinalProject.Main
         {
             try
             {
+                MainItemDisplay.ItemsSource = null;
                 MainItemDisplay.ItemsSource = itemList;
             }
             catch (Exception)
@@ -307,9 +337,67 @@ namespace CS3280FinalProject.Main
             }
 
         }
+
+
+
         #endregion
 
+        private void AddItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //Object to hold item selected
+                Shared.Item tempItem = (Shared.Item)InvoiceItemComboBox.SelectedItem;
 
+                // Add item to the temporary list
+                lItemList.Add(tempItem);
 
+                // If the invoice still isn't in the database
+                if(selectedInvoiceNum == "-1")
+                {
+                    // Cast list to Datagrid
+                    updateDataGrid(lItemList);
+                    int totalCost = 0;
+                    //Update Cost on Main Menu
+                    foreach(Shared.Item item in lItemList)
+                    {
+                        totalCost += Int32.Parse(item.itemCost);
+                    }
+                    TotalCostLabel.Content = "Total Cost: $" + totalCost.ToString();
+                }
+                // If invoice already exists
+                else
+                {
+                    int count = lItemList.Count;
+
+                    // Add item to the database record
+                    logic.AddLineItem(selectedInvoiceNum, count.ToString(), tempItem.itemCode);
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void RemoveItemButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ItemSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                AddItemButton.IsEnabled = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
