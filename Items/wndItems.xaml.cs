@@ -1,11 +1,11 @@
 ﻿/*
  * Braxton Wright
  * CS 3280
- * Final Project prototype Window wndItems
+ * Final Project Window wndItems
  * Shawn Cowder
- * Due: November 19, 2022 at 11:59 PM
- * Version: 0.5
- *  ----------------------------------------------------------------------------------------------------------
+ * Due: December 10, 2022 at 11:59 PM
+ * Version: 1.0
+ * -----------------------------------------------------------------------------------------------------------
  * This file contains the required event listeners and functions for the Items window.
  * -----------------------------------------------------------------------------------------------------------
  */
