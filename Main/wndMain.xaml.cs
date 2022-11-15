@@ -118,13 +118,26 @@ namespace CS3280FinalProject.Main
                 this.Show();  //shows this window to the user
 
                 // This is how the user gets the chosen invoice num from the user
+                bool bVerify = false;
                 if (Search.selectedNum != null)
                 {
-                    selectedInvoiceNum = Search.selectedNum;
-                    updateScreen(selectedInvoiceNum);
+                    List<Shared.Invoice> lInvoiceList = logic.GetInvoices();
 
-                    //Allow the option to edit the invoice
-                    EditInvoiceButton.IsEnabled = true;
+                    foreach(Shared.Invoice currInvoice in lInvoiceList)
+                    {
+                        if(currInvoice.invoiceNum == Search.selectedNum)
+                        {
+                            bVerify = true;
+                        }
+                    }
+                    if (bVerify == true)
+                    {
+                        selectedInvoiceNum = Search.selectedNum;
+                        updateScreen(selectedInvoiceNum);
+
+                        //Allow the option to edit the invoice
+                        EditInvoiceButton.IsEnabled = true;
+                    }
                 }
             }
             catch (Exception ex)
@@ -241,9 +254,6 @@ namespace CS3280FinalProject.Main
                 // Enable buttons that apply
                 SaveInvoiceButton.IsEnabled = true;
                 bRemove = true;
-
-
-                selectedInvoiceNum = "-1";
 
                 // Enable the Combo Box for user use
                 InvoiceItemComboBox.IsEnabled = true;
@@ -451,7 +461,7 @@ namespace CS3280FinalProject.Main
         {
             try
             {
-                if (MainItemDisplay.SelectedIndex > 0)
+                if (MainItemDisplay.SelectedIndex >= 0)
                 {
                     //Object to hold item selected
                     Shared.Item tempItem = (Shared.Item)MainItemDisplay.SelectedItem;
@@ -577,7 +587,7 @@ namespace CS3280FinalProject.Main
 
                 //Update Screen
                 updateInvoiceLabels(currentInvoice);
-                updateDataGrid(currentInvoice.items);
+                updateDataGrid(lInvoiceItems);
             }
             catch (Exception ex)
             {
@@ -587,6 +597,7 @@ namespace CS3280FinalProject.Main
         }
 
         #endregion
+
 
         #region Error Handling
         /// <summary>

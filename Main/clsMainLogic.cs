@@ -24,8 +24,14 @@ namespace CS3280FinalProject.Main
 
         #region Variables
 
+        /// <summary>
+        /// Data Access object to perform SQL operations
+        /// </summary>
         clsDataAccess cDataAccess;
 
+        /// <summary>
+        /// Int Variable to store number of rows returned in DataSets
+        /// </summary>
         public int rowsReturned;
 
         #endregion
@@ -41,6 +47,35 @@ namespace CS3280FinalProject.Main
         #endregion
 
         #region Invoice Information
+
+        /// <summary>
+        /// Returns a list of invoice Numbers
+        /// for all the invoices in the database
+        /// </summary>
+        /// <returns>List of Invoice Nums</returns>
+        /// <exception cref="Exception"></exception>
+        public List<Shared.Invoice> GetInvoices()
+        {
+            try
+            {
+                List<Shared.Invoice> invoiceList = new List<Shared.Invoice>();
+
+                DataSet ds = cDataAccess.ExecuteSQLStatement(clsMainSQL.GetInvoices(), ref rowsReturned);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    Invoice currentInvoice = new Invoice();
+                    currentInvoice.invoiceNum = ds.Tables[0].Rows[i][0].ToString();
+                    invoiceList.Add(currentInvoice);
+                }
+                return invoiceList;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
 
         /// <summary>
         /// Creates a list of all items available for sale
@@ -68,9 +103,46 @@ namespace CS3280FinalProject.Main
             catch (System.Exception ex)
             {
 
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message); ; 
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
            
+        }
+
+        /// <summary>
+        /// Gets the Invoice information returned from the database
+        /// </summary>
+        /// <param name="sInvoiceNum">The invoice num</param>
+        /// <returns>Invoice Object</returns>
+        /// <exception cref="Exception"></exception>
+        public Shared.Invoice GetInvoice(string sInvoiceNum)
+        {
+            try
+            {
+                Shared.Invoice iInvoice = new Shared.Invoice();
+
+                DataSet ds = cDataAccess.ExecuteSQLStatement(clsMainSQL.GetInvoiceInfo(sInvoiceNum), ref rowsReturned);
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    Shared.Invoice invoice = new Shared.Invoice();
+                    invoice.invoiceNum = dr[0].ToString();
+                    invoice.invoiceDate = dr[1].ToString();
+                    //Get the date not the time
+                    invoice.invoiceDate = invoice.invoiceDate.Substring(0, invoice.invoiceDate.IndexOf(" "));
+                    invoice.totalCost = dr[2].ToString();
+                    iInvoice = invoice;
+                }
+
+                return iInvoice;
+
+            }
+            catch (System.Exception ex)
+            {
+
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+
+
         }
 
         /// <summary>
@@ -99,15 +171,27 @@ namespace CS3280FinalProject.Main
             catch (System.Exception ex)
             {
 
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message); ;
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
             
         }
 
+        /// <summary>
+        /// Returns the Number of line items on a specific Invoice
+        /// </summary>
+        /// <param name="sInvoiceNum">Current Invoice</param>
+        /// <returns>Num Line Items</returns>
         public string GetNumLineItems(string sInvoiceNum)
         {
-            string lineItemsNum = cDataAccess.ExecuteScalarSQL(clsMainSQL.GetNumLineItems(sInvoiceNum));
-            return lineItemsNum;
+            try
+            {
+                string lineItemsNum = cDataAccess.ExecuteScalarSQL(clsMainSQL.GetNumLineItems(sInvoiceNum));
+                return lineItemsNum;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         #endregion
@@ -195,42 +279,7 @@ namespace CS3280FinalProject.Main
             }
         }
 
-        /// <summary>
-        /// Gets the Invoice information returned from the database
-        /// </summary>
-        /// <param name="sInvoiceNum">The invoice num</param>
-        /// <returns>Invoice Object</returns>
-        /// <exception cref="Exception"></exception>
-        public Shared.Invoice GetInvoice(string sInvoiceNum)
-        {
-            try
-            {
-                Shared.Invoice iInvoice = new Shared.Invoice();
-
-                DataSet ds = cDataAccess.ExecuteSQLStatement(clsMainSQL.GetInvoiceInfo(sInvoiceNum), ref rowsReturned);
-
-                foreach (DataRow dr in ds.Tables[0].Rows)
-                {
-                    Shared.Invoice invoice = new Shared.Invoice();
-                    invoice.invoiceNum = dr[0].ToString();
-                    invoice.invoiceDate = dr[1].ToString();
-                    //Get the date not the time
-                    invoice.invoiceDate = invoice.invoiceDate.Substring(0, invoice.invoiceDate.IndexOf(" "));
-                    invoice.totalCost = dr[2].ToString();
-                    iInvoice = invoice;
-                }
-
-                return iInvoice;
-
-            }
-            catch (System.Exception ex)
-            {
-
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message); ;
-            }
-            
-            
-        }
+       
         #endregion
 
     }
