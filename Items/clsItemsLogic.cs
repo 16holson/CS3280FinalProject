@@ -18,6 +18,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Media.TextFormatting;
+using System.Windows.Controls;
+using System.Linq.Expressions;
+using System.Security.Policy;
+using System.Windows.Automation;
 
 namespace CS3280FinalProject.Items
 {
@@ -159,6 +164,69 @@ namespace CS3280FinalProject.Items
         }
 
         /// <summary>
+        /// This function determines what failed in the user input when editing an item so the program can display the appropriate error message to them.
+        /// </summary>
+        /// <param name="Cost">The item's cost the user inputed.</param>
+        /// <param name="Description">The item's description the user inputed.</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">Catches any exceptions that this function comes across.</exception>
+        public string GenerateErrorMessage(string Cost, string Description)
+        {
+            try
+            {
+                bool CostFailed = !ValidateCostFormat(Cost);  //condition reversed because it returns false if it fails
+                bool DescriptionFailed = Description == "" ? true : false;
+
+                //generate the appropriate error message
+                string message = "Error: \n" + (CostFailed ? "The cost has meet the following pattern, \"1 to 5 digits\" with an optional \".1 or 2 digits\" after it.\n" : "");
+                message += (DescriptionFailed ? "The description can't be empty.\n" : "");
+                message += "Please change the above field(s) and try again.";
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// This overloaded function determines what failed in the user input when adding an item so the program can display the appropriate error message to them.
+        /// </summary>
+        /// <param name="Code">The item's code the user inputed.</param>
+        /// <param name="Cost">The item's cost the user inputed.</param>
+        /// <param name="Description">The item's description the user inputed.</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">Catches any exceptions that this function comes across.</exception>
+        public string GenerateErrorMessage(string Code, string Cost, string Description)
+        {
+            try
+            {
+                bool ItemCodeEmpty = Code == "" ? true : false;
+                bool ItemCodeTaken = false;
+                if (!ItemCodeEmpty)  //this is because we don't want to query the DB for an empty item code.
+                {
+                    ItemCodeTaken = ItemCodeIsTaken(Code);
+                }
+                bool CostFailed = !ValidateCostFormat(Cost);  //condition reversed because it returns false if it fails
+                bool DescriptionFailed = Description == "" ? true : false;
+
+                //generate the appropriate error message
+                string message = "Error: \n" + (ItemCodeEmpty ? "The item code can't be left blank.\n" : "");
+                message += (!ItemCodeEmpty && ItemCodeTaken ? "The item code \"" + Code + "\" is already used.\n" : "");
+                message += (CostFailed ? "The cost has meet the following pattern, \"1 to 5 digits\" with an optional \".1 or 2 digits\" after it.\n" : "");
+                message += (DescriptionFailed ? "The description can't be left empty.\n" : "");
+                message += "Please change the above field(s) and try again.";
+
+                return message;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Performs a Regex pattern match to see if the supplied text matches "1_or_more_digits" followed by an optional section ".1_or_2_digits"
         /// </summary>
         /// <param name="CostToValidate">The text of the cost to be validated.</param>
@@ -169,8 +237,8 @@ namespace CS3280FinalProject.Items
             {
                 //bool test = Regex.Match(CostToValidate, @"^\d+(?:\.\d{1,2})?$").Success;
                 //where I found the Regex command with a few modifications https://stackoverflow.com/questions/52810865/regex-to-accept-number-in-fomat-00-00
-
-                return Regex.Match(CostToValidate, @"^\d+(?:\.\d{1,2})?$").Success;
+                
+                return Regex.Match(CostToValidate, @"^\d{1,5}(?:\.\d{1,2})?$").Success; //Number pattern this is searching for, 1-5 digits(.67) what is inclosed inside the () is optional
             }
             catch (Exception ex)
             {
@@ -239,7 +307,7 @@ namespace CS3280FinalProject.Items
         {
             try
             {
-                MessageBox.Show(ErrorMessage.Substring(ErrorMessage.LastIndexOf("-> ")));
+                MessageBox.Show(ErrorMessage.Substring(ErrorMessage.LastIndexOf("-> ") + 3));
             }
             catch (Exception ex)
             {
