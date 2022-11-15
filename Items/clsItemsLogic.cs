@@ -1,11 +1,11 @@
 ﻿/*
  * Braxton Wright
  * CS 3280
- * Final Project prototype class clsItemsLogic
+ * Final Project class clsItemsLogic
  * Shawn Cowder
- * Due: November 19, 2022 at 11:59 PM
- * Version: 0.5
- *  ----------------------------------------------------------------------------------------------------------
+ * Due: December 10, 2022 at 11:59 PM
+ * Version: 1.0
+ * -----------------------------------------------------------------------------------------------------------
  * This file contains the logistic for the items window so that the logistics is not behind the UI.
  * -----------------------------------------------------------------------------------------------------------
  */
@@ -18,11 +18,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Media.TextFormatting;
-using System.Windows.Controls;
-using System.Linq.Expressions;
-using System.Security.Policy;
-using System.Windows.Automation;
 
 namespace CS3280FinalProject.Items
 {
