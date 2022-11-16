@@ -29,11 +29,6 @@ namespace CS3280FinalProject.Main
         #region Variables
 
         /// <summary>
-        /// string to hold the selected invoice num
-        /// </summary>
-        public string selectedInvoiceNum;
-
-        /// <summary>
         /// Bool value to know whether items were changed in the Item Window
         /// </summary>
         public bool bItemsChanged;
@@ -53,8 +48,6 @@ namespace CS3280FinalProject.Main
         /// </summary>
         List<Shared.Item> lItemList;
 
-        List<Shared.Item> lInvoiceItems;
-
         /// <summary>
         /// Object to perform logic class operations
         /// </summary>
@@ -64,12 +57,6 @@ namespace CS3280FinalProject.Main
         /// Invoice object to store information for the current invoice
         /// </summary>
         Shared.Invoice currentInvoice;
-
-        /// <summary>
-        /// Integer to hold the total cost for an invoice that
-        /// is being created
-        /// </summary>
-        int totalcost;
         #endregion
 
 
@@ -132,7 +119,7 @@ namespace CS3280FinalProject.Main
                     }
                     if (bVerify == true)
                     {
-                        selectedInvoiceNum = Search.selectedNum;
+                        string selectedInvoiceNum = Search.selectedNum;
                         updateScreen(selectedInvoiceNum);
 
                         //Allow the option to edit the invoice
@@ -142,13 +129,13 @@ namespace CS3280FinalProject.Main
             }
             catch (Exception ex)
             {
-                HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                logic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
 
         }
 
         /// <summary>
-        /// (Braxton Wright, Created to allow the window to open when button is clicked)
+        ///  (Braxton Wright, Created to allow the window to open when button is clicked)
         /// This event listener listens for when the user clicks the Edit Items item inside the menu.  
         /// It will then take them to the Items window.
         /// 
@@ -178,15 +165,15 @@ namespace CS3280FinalProject.Main
                 {
                     //Refill Combo Box
                     fillItemCB();
-                    if (selectedInvoiceNum != null)
+                    if (currentInvoice != null)
                     {
-                        updateScreen(selectedInvoiceNum);
+                        updateScreen(currentInvoice.invoiceNum);
                     }
                 }
             }
             catch (Exception ex)
             {
-                HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                logic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
 
         }
@@ -201,8 +188,8 @@ namespace CS3280FinalProject.Main
         /// is TBD and the Cost is blank.  No other functionalities
         /// available until a date is chosen
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">Contains the event data for the event.</param>
         private void CreateInvoiceButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -221,16 +208,16 @@ namespace CS3280FinalProject.Main
 
                 // Show TBD as the Invoice Num
                 InvoiceNumLabel.Content = "Invoice Num: TBD";
-                selectedInvoiceNum = "-1";
                 TotalCostLabel.Content = "Total Cost: __";
 
                 //Empty DataGrid
                 MainItemDisplay.ItemsSource = null;
-                lInvoiceItems = new List<Shared.Item>();
+                currentInvoice = new Shared.Invoice();
+                currentInvoice.invoiceNum = "-1";
             }
             catch (Exception ex)
             {
-                HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                logic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
@@ -239,8 +226,8 @@ namespace CS3280FinalProject.Main
         /// of items from the invoice.  Add Invoice and Edit Invoice
         /// Buttons are locked as well
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">Contains the event data for the event.</param>
         private void EditInvoiceButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -260,7 +247,7 @@ namespace CS3280FinalProject.Main
             }
             catch (Exception ex)
             {
-                HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                logic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
@@ -269,28 +256,22 @@ namespace CS3280FinalProject.Main
         /// and adds all the selected items to the LineItem grid.
         /// Disables all buttons that aren't needed at this time
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">Contains the event data for the event.</param>
         private void SaveInvoiceButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (selectedInvoiceNum == "-1")
+                if (currentInvoice.invoiceNum == "-1")
                 {
-                    //Save total cost to object
-                    currentInvoice.totalCost = totalcost.ToString();
-
                     // Create Invoice in Database, and get invoice Number back
-                    selectedInvoiceNum = logic.SaveNewInvoice(currentInvoice);
-
-                    //Save current Invoice Number in object
-                    currentInvoice.invoiceNum = selectedInvoiceNum;
+                    currentInvoice.invoiceNum = logic.SaveNewInvoice(currentInvoice);
 
                     // Update Items associated with Invoice in database
                     int count = 1;
-                    foreach (Shared.Item item in lInvoiceItems)
+                    foreach (Shared.Item item in currentInvoice.items)
                     {
-                        logic.AddItemToInvoice(selectedInvoiceNum, count.ToString(), item.itemCode);
+                        logic.AddItemToInvoice(currentInvoice.invoiceNum, count.ToString(), item.itemCode);
                         count++;
                     }
                 }
@@ -313,7 +294,7 @@ namespace CS3280FinalProject.Main
             }
             catch (Exception ex)
             {
-                HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                logic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
@@ -326,8 +307,8 @@ namespace CS3280FinalProject.Main
         /// Creates a new invoice object and saves the selected date
         /// Also enables use of buttons for invoice creation
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">Contains the event data for the event.</param>
         private void DateChange(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -348,7 +329,7 @@ namespace CS3280FinalProject.Main
             }
             catch (Exception ex)
             {
-                HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                logic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
             
         }
@@ -357,8 +338,8 @@ namespace CS3280FinalProject.Main
         /// Listener for if an item is selected in the Data Grid
         /// Enables the Remove Item Button
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">Contains the event data for the event.</param>
         private void DataGridSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -368,7 +349,7 @@ namespace CS3280FinalProject.Main
             }
             catch (Exception ex)
             {
-                HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                logic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
@@ -376,19 +357,22 @@ namespace CS3280FinalProject.Main
         /// Listener for if a selection is changed in the combo box
         /// Enables the Add Item Button
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">Contains the event data for the event.</param>
         private void ItemSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                // Enable Add Item button
-                AddItemButton.IsEnabled = true;
+                if (InvoiceItemComboBox.SelectedItem != null)
+                {
+                    // Enable Add Item button
+                    AddItemButton.IsEnabled = true;
+                }
             }
             catch (Exception ex)
             {
 
-                HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                logic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
@@ -398,8 +382,8 @@ namespace CS3280FinalProject.Main
         /// the changes are made.
         /// Corresponding labels are updated as well
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">Contains the event data for the event.</param>
         private void AddItemButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -410,42 +394,47 @@ namespace CS3280FinalProject.Main
                     Shared.Item tempItem = (Shared.Item)InvoiceItemComboBox.SelectedItem;
 
                     // Add item to the temporary list
-                    lInvoiceItems.Add(tempItem);
+                    currentInvoice.items.Add(tempItem);
 
                     // If the invoice still isn't in the database
-                    if (selectedInvoiceNum == "-1")
+                    if (currentInvoice.invoiceNum == "-1")
                     {
                         // Cast list to Datagrid
-                        updateDataGrid(lInvoiceItems);
-                        totalcost = 0;
+                        updateDataGrid(currentInvoice.items);
+                        int totalcost = 0;
                         //Update Cost on Main Menu
-                        foreach (Shared.Item item in lInvoiceItems)
+                        foreach (Shared.Item item in currentInvoice.items)
                         {
                             totalcost += Int32.Parse(item.itemCost);
                         }
                         TotalCostLabel.Content = "Total Cost: $" + totalcost.ToString();
+                        currentInvoice.totalCost = totalcost.ToString();
                     }
                     // If invoice already exists
                     else
                     {
-                        int count = Int32.Parse(logic.GetNumLineItems(selectedInvoiceNum));
+                        int count = Int32.Parse(logic.GetNumLineItems(currentInvoice.invoiceNum));
                         count++;
 
                         // Add item to the database record
-                        logic.AddItemToInvoice(selectedInvoiceNum, count.ToString(), tempItem.itemCode);
+                        logic.AddItemToInvoice(currentInvoice.invoiceNum, count.ToString(), tempItem.itemCode);
 
                         // Update Cost in the Database Record
-                        currentInvoice = logic.GetInvoice(selectedInvoiceNum);
+                        currentInvoice = logic.GetInvoice(currentInvoice.invoiceNum);
                         currentInvoice.totalCost = (Int32.Parse(currentInvoice.totalCost) + Int32.Parse(tempItem.itemCost)).ToString();
                         logic.UpdateInvoiceCost(currentInvoice);
+                        currentInvoice.items.Clear();
+                        currentInvoice.items = logic.GetInvoiceItems(currentInvoice.invoiceNum);
+                        updateScreen(currentInvoice.invoiceNum);
                     }
 
                     AddItemButton.IsEnabled = false;
+                    InvoiceItemComboBox.SelectedIndex = -1;
                 }
             }
             catch (Exception ex)
             {
-                HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                logic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
@@ -455,45 +444,48 @@ namespace CS3280FinalProject.Main
         /// the change is made.
         /// Labels updated accordingly
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">Contains the event data for the event.</param>
         private void RemoveItemButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (MainItemDisplay.SelectedIndex >= 0)
                 {
+                    int index = MainItemDisplay.SelectedIndex;
                     //Object to hold item selected
                     Shared.Item tempItem = (Shared.Item)MainItemDisplay.SelectedItem;
 
-                    lInvoiceItems.Remove(tempItem);
+                    currentInvoice.items.Remove(currentInvoice.items[index]);
 
-                    if (selectedInvoiceNum == "-1")
+                    if (currentInvoice.invoiceNum == "-1")
                     {
-                        updateDataGrid(lInvoiceItems);
-                        totalcost = 0;
-                        foreach (Shared.Item item in lInvoiceItems)
+                        updateDataGrid(currentInvoice.items);
+                        int totalcost = 0;
+                        foreach (Shared.Item item in currentInvoice.items)
                         {
                             totalcost += Int32.Parse(item.itemCost);
                         }
                         TotalCostLabel.Content = "Total Cost: $" + totalcost.ToString();
+                        currentInvoice.totalCost = totalcost.ToString();
                     }
                     else
                     {
+                        
                         // Remove Item from line Items
-                        logic.RemoveLineItem(selectedInvoiceNum, tempItem.itemCode);
+                        logic.RemoveLineItem(currentInvoice.invoiceNum, tempItem.itemCode, (MainItemDisplay.SelectedIndex + 1).ToString());
 
                         // Find correct cost for invoice
                         currentInvoice.totalCost = (Int32.Parse(currentInvoice.totalCost) - Int32.Parse(tempItem.itemCost)).ToString();
 
                         // Update Cost in Database
                         logic.UpdateInvoiceCost(currentInvoice);
-                        currentInvoice = logic.GetInvoice(selectedInvoiceNum);
+                        currentInvoice = logic.GetInvoice(currentInvoice.invoiceNum);
                         TotalCostLabel.Content = "Total Cost: " + currentInvoice.totalCost;
 
                         // Update Datagrid
-                        lInvoiceItems = logic.GetInvoiceItems(currentInvoice.invoiceNum);
-                        updateDataGrid(lInvoiceItems);
+                        currentInvoice.items = logic.GetInvoiceItems(currentInvoice.invoiceNum);
+                        updateDataGrid(currentInvoice.items);
                     }
                     RemoveItemButton.IsEnabled = false;
                 }
@@ -501,7 +493,7 @@ namespace CS3280FinalProject.Main
             catch (Exception ex)
             {
 
-                HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                logic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
 
         }
@@ -517,6 +509,7 @@ namespace CS3280FinalProject.Main
         /// Empties and fills the General Item List
         /// It then casts it onto the ItemComboBox
         /// </summary>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public void fillItemCB()
         {
             try
@@ -540,12 +533,13 @@ namespace CS3280FinalProject.Main
         /// Labels in the main screen
         /// </summary>
         /// <param name="currentInvoice">Shared.Invoice currentInvoice</param>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public void updateInvoiceLabels(Shared.Invoice currentInvoice)
         {
             try
             {
                 //Update Labels
-                InvoiceNumLabel.Content = "Invoice: " + selectedInvoiceNum;
+                InvoiceNumLabel.Content = "Invoice: " + currentInvoice.invoiceNum;
                 InvoiceDatePicker.SelectedDate = DateTime.Parse(currentInvoice.invoiceDate);
                 TotalCostLabel.Content = "Total Cost: $" + currentInvoice.totalCost;
             }
@@ -559,6 +553,7 @@ namespace CS3280FinalProject.Main
         /// Displays the selected invoice on the screen
         /// </summary>
         /// <param name="itemList">List of items in the invoice</param>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public void updateDataGrid(List<Shared.Item> itemList)
         {
             try
@@ -577,17 +572,18 @@ namespace CS3280FinalProject.Main
         /// screen by callilng updateInvoiceLabels() and updateDataGrid()
         /// </summary>
         /// <param name="sInvoiceNum">string currentInvoiceNum</param>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public void updateScreen(string sInvoiceNum)
         {
             try
             {
                 //Update the Datagrid with the invoice selected
-                currentInvoice = logic.GetInvoice(selectedInvoiceNum);
-                lInvoiceItems = logic.GetInvoiceItems(selectedInvoiceNum);
+                currentInvoice = logic.GetInvoice(sInvoiceNum);
+                currentInvoice.items = logic.GetInvoiceItems(sInvoiceNum);
 
                 //Update Screen
                 updateInvoiceLabels(currentInvoice);
-                updateDataGrid(lInvoiceItems);
+                updateDataGrid(currentInvoice.items);
             }
             catch (Exception ex)
             {
@@ -599,25 +595,5 @@ namespace CS3280FinalProject.Main
         #endregion
 
 
-        #region Error Handling
-        /// <summary>
-        /// Function to handle error messages
-        /// </summary>
-        /// <param name="ErrorMessage">Error Message</param>
-        public void HandleException(string ErrorMessage)
-        {
-            try
-            {
-                MessageBox.Show(ErrorMessage.Substring(ErrorMessage.LastIndexOf("-> ")));
-            }
-            catch (Exception ex)
-            {
-                string SavePath = System.AppDomain.CurrentDomain.BaseDirectory + "Error.txt";
-
-                System.IO.File.AppendAllText(SavePath, Environment.NewLine + "HandleError Exception: " + ex.Message);
-            }
-        }
-
-        #endregion
     }
 }

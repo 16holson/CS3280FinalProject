@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Documents;
 
 namespace CS3280FinalProject.Main
@@ -38,6 +39,9 @@ namespace CS3280FinalProject.Main
 
         #region Constructor
 
+        /// <summary>
+        /// Logic class constructor
+        /// </summary>
         public clsMainLogic()
         {
             cDataAccess = new clsDataAccess();
@@ -53,7 +57,7 @@ namespace CS3280FinalProject.Main
         /// for all the invoices in the database
         /// </summary>
         /// <returns>List of Invoice Nums</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public List<Shared.Invoice> GetInvoices()
         {
             try
@@ -82,7 +86,7 @@ namespace CS3280FinalProject.Main
         /// in the database
         /// </summary>
         /// <returns>List of all Items</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public List<Shared.Item> ItemList()
         {
             try
@@ -110,30 +114,23 @@ namespace CS3280FinalProject.Main
 
         /// <summary>
         /// Gets the Invoice information returned from the database
+        /// Also creates the list of items included in the invoice
         /// </summary>
         /// <param name="sInvoiceNum">The invoice num</param>
         /// <returns>Invoice Object</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public Shared.Invoice GetInvoice(string sInvoiceNum)
         {
             try
             {
-                Shared.Invoice iInvoice = new Shared.Invoice();
-
                 DataSet ds = cDataAccess.ExecuteSQLStatement(clsMainSQL.GetInvoiceInfo(sInvoiceNum), ref rowsReturned);
 
-                foreach (DataRow dr in ds.Tables[0].Rows)
-                {
-                    Shared.Invoice invoice = new Shared.Invoice();
-                    invoice.invoiceNum = dr[0].ToString();
-                    invoice.invoiceDate = dr[1].ToString();
-                    //Get the date not the time
-                    invoice.invoiceDate = invoice.invoiceDate.Substring(0, invoice.invoiceDate.IndexOf(" "));
-                    invoice.totalCost = dr[2].ToString();
-                    iInvoice = invoice;
-                }
+                
+                Shared.Invoice invoice = new Shared.Invoice(ds.Tables[0].Rows[0][0].ToString(), ds.Tables[0].Rows[0][1].ToString(), ds.Tables[0].Rows[0][2].ToString());
 
-                return iInvoice;
+                invoice.items = GetInvoiceItems(invoice.invoiceNum);
+
+                return invoice;
 
             }
             catch (System.Exception ex)
@@ -150,7 +147,7 @@ namespace CS3280FinalProject.Main
         /// </summary>
         /// <param name="sInvoiceNum">Selected invoice Num</param>
         /// <returns>Invoice Items List</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public List<Shared.Item> GetInvoiceItems(string sInvoiceNum)
         {
             try
@@ -181,6 +178,7 @@ namespace CS3280FinalProject.Main
         /// </summary>
         /// <param name="sInvoiceNum">Current Invoice</param>
         /// <returns>Num Line Items</returns>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public string GetNumLineItems(string sInvoiceNum)
         {
             try
@@ -204,7 +202,7 @@ namespace CS3280FinalProject.Main
         /// </summary>
         /// <param name="iNewInvoice">Object with Invoice Date and Cost</param>\
         /// <returns>New Invoice Num</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public string SaveNewInvoice(Shared.Invoice iNewInvoice)
         {
             try
@@ -224,7 +222,7 @@ namespace CS3280FinalProject.Main
         /// Updates the total cost of the invoice created
         /// </summary>
         /// <param name="iEditedInvoice">Invoice Object</param>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public void UpdateInvoiceCost(Shared.Invoice iEditedInvoice)
         {
             try
@@ -245,7 +243,7 @@ namespace CS3280FinalProject.Main
         /// <param name="sInvoiceNum">Current Invoice Number</param>
         /// <param name="sLineItemNum">Line Item Num</param>
         /// <param name="sItemCode">Item Code</param>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public void AddItemToInvoice(string sInvoiceNum, string sLineItemNum, string sItemCode)
         {
             try
@@ -264,12 +262,12 @@ namespace CS3280FinalProject.Main
         /// </summary>
         /// <param name="sInvoiceNum">Invoice Num</param>
         /// <param name="sItemCode">Item Code</param>
-        /// <exception cref="Exception"></exception>
-        public void RemoveLineItem(string sInvoiceNum, string sItemCode)
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
+        public void RemoveLineItem(string sInvoiceNum, string sItemCode, string sLineItemNum)
         {
             try
             {
-                int success = cDataAccess.ExecuteNonQuery(clsMainSQL.DeleteItemFromInvoice(sInvoiceNum, sItemCode));
+                int success = cDataAccess.ExecuteNonQuery(clsMainSQL.DeleteItemFromInvoice(sInvoiceNum, sItemCode, sLineItemNum));
 
             }
             catch (System.Exception ex)
@@ -279,7 +277,28 @@ namespace CS3280FinalProject.Main
             }
         }
 
-       
+
+        #endregion
+
+        #region Error Handling
+        /// <summary>
+        /// Function to handle error messages
+        /// </summary>
+        /// <param name="ErrorMessage">Error Message</param>
+        public void HandleException(string ErrorMessage)
+        {
+            try
+            {
+                MessageBox.Show(ErrorMessage.Substring(ErrorMessage.LastIndexOf("-> ") +3));
+            }
+            catch (Exception ex)
+            {
+                string SavePath = System.AppDomain.CurrentDomain.BaseDirectory + "Error.txt";
+
+                System.IO.File.AppendAllText(SavePath, Environment.NewLine + "HandleError Exception: " + ex.Message);
+            }
+        }
+
         #endregion
 
     }
