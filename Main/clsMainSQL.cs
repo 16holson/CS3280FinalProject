@@ -31,7 +31,7 @@ namespace CS3280FinalProject.Main
         /// <param name="sInvoiceDate">New Invoice Date</param>
         /// <param name="sTotalCost">New Invoice Cost</param>
         /// <returns>string sSQL</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public static string CreateInvoice(string sInvoiceDate, string sTotalCost)
         {
             try
@@ -56,7 +56,7 @@ namespace CS3280FinalProject.Main
         /// <param name="sLineItemNum">Line Item Number</param>
         /// <param name="sItemCode">New Item Code</param>
         /// <returns>string sSQL</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public static string AddItemToInvoice(string sInvoiceNum, string sLineItemNum, string sItemCode)
         {
             try
@@ -80,12 +80,13 @@ namespace CS3280FinalProject.Main
         /// <param name="sInvoiceNum">Current Invoice num</param>
         /// <param name="sItemCode">Item Code to Delete</param>
         /// <returns>string sSQL</returns>
-        /// <exception cref="Exception"></exception>
-        public static string DeleteItemFromInvoice(string sInvoiceNum, string sItemCode)
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
+        public static string DeleteItemFromInvoice(string sInvoiceNum, string sItemCode, string sLineItemNum)
         {
             try
             {
-                string sSQL = "DELETE FROM LineItems WHERE InvoiceNum = " + sInvoiceNum + " AND ItemCode = '" + sItemCode + "'";
+                string sSQL = "DELETE FROM LineItems WHERE InvoiceNum = " + sInvoiceNum + " AND ItemCode = '" + sItemCode + "'" +
+                              " AND LineItemNum = " + sLineItemNum;
                 return sSQL;
 
             }
@@ -103,7 +104,7 @@ namespace CS3280FinalProject.Main
         /// <param name="sTotalCost">New Cost of Invoice</param>
         /// <param name="sInvoiceNum">Current Invoice Num</param>
         /// <returns>string sSQL</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public static string UpdateTotalCost(string sTotalCost, string sInvoiceNum)
         {
             try
@@ -128,7 +129,7 @@ namespace CS3280FinalProject.Main
         /// List of all Invoice Numbers in the database
         /// </summary>
         /// <returns>string sSQL</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public static string GetInvoices()
         {
             try
@@ -147,7 +148,7 @@ namespace CS3280FinalProject.Main
         /// all the Items in the database
         /// </summary>
         /// <returns>string sSQL</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public static string GetItems()
         {
             try
@@ -169,7 +170,7 @@ namespace CS3280FinalProject.Main
         /// </summary>
         /// <param name="sInvoiceNum">Current Invoice</param>
         /// <returns>string sSQL</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public static string GetInvoiceInfo(string sInvoiceNum)
         {
             try
@@ -191,7 +192,7 @@ namespace CS3280FinalProject.Main
         /// </summary>
         /// <param name="sInvoiceNum">Current Invoice</param>
         /// <returns>string sSQL</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public static string GetNumLineItems(string sInvoiceNum)
         {
             try
@@ -212,7 +213,7 @@ namespace CS3280FinalProject.Main
         /// </summary>
         /// <param name="sInvoiceNum">Current Invoice</param>
         /// <returns>string sSQL</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public static string GetInvoiceItemInfo(string sInvoiceNum)
         {
             try
@@ -234,7 +235,7 @@ namespace CS3280FinalProject.Main
         /// invoice number in the database
         /// </summary>
         /// <returns>string sSQL</returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
         public static string GetHighestInvoiceNum()
         {
             try

@@ -41,10 +41,33 @@ namespace CS3280FinalProject.Shared
             }
             catch(Exception ex)
             {
-                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                           MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
 
+        }
+
+        /// <summary>
+        /// Constructor to create an invoice when the follow
+        /// parameters are passed through the parenthesis
+        /// </summary>
+        /// <param name="sInvoiceNum">Invoice Num</param>
+        /// <param name="sInvoiceDate">Invoice Date</param>
+        /// <param name="sInvoiceCost">Invoice Cost</param>
+        public Invoice(string sInvoiceNum, string sInvoiceDate, string sInvoiceCost)
+        {
+            try
+            {
+                items = new List<Item>();
+                invoiceNum = sInvoiceNum;
+                invoiceDate = sInvoiceDate;
+                totalCost = sInvoiceCost;
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
         #endregion
 
