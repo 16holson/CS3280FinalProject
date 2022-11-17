@@ -81,7 +81,7 @@ namespace CS3280FinalProject.Main
         #region Menu Buttons
 
         /// <summary>
-        /// (Braxton Wright, created in order to let his portion be completed)
+        /// (Braxton Wright, added the code to hide the main window and display the search window)
         /// This event listener listens for when the user clicks the Search item inside the menu.  
         /// It will then take them to the Search window.
         /// 
@@ -135,7 +135,7 @@ namespace CS3280FinalProject.Main
         }
 
         /// <summary>
-        ///  (Braxton Wright, Created to allow the window to open when button is clicked)
+        ///  (Braxton Wright, Created to allow the Edit Items window to open when button is clicked)
         /// This event listener listens for when the user clicks the Edit Items item inside the menu.  
         /// It will then take them to the Items window.
         /// 
@@ -154,7 +154,7 @@ namespace CS3280FinalProject.Main
                 EditItems.Owner = this;  //this sets it so that the edit items window owner is this window (so it loads where this window is currently)
 
                 this.Hide();  //hide this from the user
-                              //open the edit items window and pause here in the code until the window is closed (the stuff before the "EditItems.ShowDialog()" catches the dialogresult the window returns to determine if any items have been modified)
+                              //open the edit items window and pause here in the code until the window is closed
                 EditItems.ShowDialog();
                 this.Show();  //shows this window to the user
 
@@ -427,9 +427,6 @@ namespace CS3280FinalProject.Main
                         currentInvoice.items = logic.GetInvoiceItems(currentInvoice.invoiceNum);
                         updateScreen(currentInvoice.invoiceNum);
                     }
-
-                    AddItemButton.IsEnabled = false;
-                    InvoiceItemComboBox.SelectedIndex = -1;
                 }
             }
             catch (Exception ex)
