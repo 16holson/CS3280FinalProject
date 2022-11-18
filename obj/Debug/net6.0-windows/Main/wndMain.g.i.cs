@@ -157,7 +157,7 @@ namespace CS3280FinalProject.Main {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/CS3280FinalProject;component/main/wndmain.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/CS3280FinalProject;V1.0.0.0;component/main/wndmain.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Main\wndMain.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
