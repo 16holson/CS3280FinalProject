@@ -1,9 +1,18 @@
-﻿using System;
+﻿/*
+ * Braxton Wright, Hunter Olson, and Levi Bernards
+ * CS 3280
+ * Final Project class Invoice
+ * Shawn Cowder
+ * Due: December 10, 2022 at 11:59 PM
+ * Version: 1.0
+ * -----------------------------------------------------------------------------------------------------------
+ * This file contains the variables and functions that are required make an invoice.
+ * -----------------------------------------------------------------------------------------------------------
+ */
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace CS3280FinalProject.Shared

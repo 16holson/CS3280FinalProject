@@ -1,11 +1,11 @@
 ﻿/*
  * Braxton Wright
  * CS 3280
- * Final Project prototype Window wndItems
+ * Final Project Window wndItems
  * Shawn Cowder
- * Due: November 19, 2022 at 11:59 PM
- * Version: 0.5
- *  ----------------------------------------------------------------------------------------------------------
+ * Due: December 10, 2022 at 11:59 PM
+ * Version: 1.0
+ * -----------------------------------------------------------------------------------------------------------
  * This file contains the required event listeners and functions for the Items window.
  * -----------------------------------------------------------------------------------------------------------
  */
@@ -160,13 +160,13 @@ namespace CS3280FinalProject.Items
         {
             try
             {
-                if (((e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) || (e.Key == Key.Decimal || e.Key == Key.OemPeriod)) && e.Key != Key.Space || e.Key == Key.Back || e.Key == Key.Right || e.Key == Key.Left)
+                if (((e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) || (e.Key == Key.Decimal || e.Key == Key.OemPeriod)) && e.Key != Key.Space || e.Key == Key.Back || e.Key == Key.Right || e.Key == Key.Left || e.Key == Key.Tab)
                 {
                     //do nothing allow the key to be accepted
                 }
                 else
                 {
-                    //Stop the character from being entered into the textbox because it neither a digit, a '.', or a left or right arrow keystroke.
+                    //Stop the character from being entered into the textbox because it neither a digit, a '.', a left or right arrow, or a tab keystroke.
                     e.Handled = true;
                 }
             }
@@ -230,23 +230,10 @@ namespace CS3280FinalProject.Items
                 }
                 else
                 {
-                    bool ItemCodeEmpty = txtItemCode.Text == "" ? true : false;
-                    bool ItemCodeTaken = false;
-                    if (!ItemCodeEmpty)  //this is because we don't want to query the DB for an empty item code.
-                    {
-                        ItemCodeTaken = ItemLogic.ItemCodeIsTaken(txtItemCode.Text);
-                    }
-                    bool CostFailed = !ItemLogic.ValidateCostFormat(txtItemCost.Text);  //condition reversed because it returns false if it fails
-                    bool DescriptionFailed = txtItemDesc.Text == "" ? true : false;
-
                     //display the appropriate error message(s)
-                    string errorMessage = "Error: \n" + (ItemCodeEmpty ? "The item code can't be left blank.\n" : "");
-                    errorMessage += (!ItemCodeEmpty && ItemCodeTaken ? "The item code \"" + txtItemCode.Text + "\" is already being, choose another for this item.\n" : "");
-                    errorMessage += (CostFailed ? "The cost has to be in this format \"OneOrMoreDigits\" with an optional '.OneOrTwoDigits' after it.\n" : "");
-                    errorMessage += (DescriptionFailed ? "The description can't be left empty.\n" : "");
-                    errorMessage += "Please change the above field(s) and try again.";
+                    string ErrorMessage = ItemLogic.GenerateErrorMessage(txtItemCode.Text, txtItemCost.Text, txtItemDesc.Text);
 
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(ErrorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
@@ -319,13 +306,8 @@ namespace CS3280FinalProject.Items
                 }
                 else  //one or both of the conditions failed, so display a message box to the user to tell them what to do
                 {
-                    bool CostFailed = !ItemLogic.ValidateCostFormat(txtItemCost.Text);  //condition reversed because it returns false if it fails
-                    bool DescriptionFailed = txtItemDesc.Text == "" ? true : false;
-
                     //display the appropriate error message(s)
-                    string errorMessage = "Error: \n" + (CostFailed ? "The cost has to be in this format \"OneOrMoreDigits\" with an optional '.OneOrTwoDigits' after it.\n" : "");
-                    errorMessage += (DescriptionFailed ? "The description can't be empty.\n" : "");
-                    errorMessage += "Please change the above field(s) and try again.";
+                    string errorMessage = ItemLogic.GenerateErrorMessage(txtItemCost.Text, txtItemDesc.Text);
 
                     MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -364,7 +346,7 @@ namespace CS3280FinalProject.Items
                     }
                     else  //don't delete it because it is attached to at least one invoice
                     {
-                        MessageBox.Show("Unable to delete item, because it is attached to these invoice(s) \"" + ItemLogic.ConvertSingleItemListToString<int>(InvoicesForGivenItemCode) + "\"", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Unable to delete item, because it is attached to these invoice number(s) \"" + ItemLogic.ConvertSingleItemListToString<int>(InvoicesForGivenItemCode) + "\"", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }

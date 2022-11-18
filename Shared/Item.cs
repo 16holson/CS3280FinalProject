@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*
+ * Braxton Wright, Hunter Olson, and Levi Bernards
+ * CS 3280
+ * Final Project class Item
+ * Shawn Cowder
+ * Due: December 10, 2022 at 11:59 PM
+ * Version: 1.0
+ * -----------------------------------------------------------------------------------------------------------
+ * This file contains the variables and functions that are required make an item.
+ * -----------------------------------------------------------------------------------------------------------
+ */
+
+using System;
 using System.ComponentModel;
 using System.Reflection;
 
