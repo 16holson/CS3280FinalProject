@@ -12,6 +12,7 @@
 
 using CS3280FinalProject.Shared;
 using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
@@ -69,7 +70,7 @@ namespace CS3280FinalProject.Main
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     Invoice currentInvoice = new Invoice();
-                    currentInvoice.invoiceNum = ds.Tables[0].Rows[i][0].ToString();
+                    currentInvoice.invoiceNum = Int32.Parse(ds.Tables[0].Rows[i][0].ToString());
                     invoiceList.Add(currentInvoice);
                 }
                 return invoiceList;
@@ -97,7 +98,7 @@ namespace CS3280FinalProject.Main
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    Item currentItem = new Item(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), ds.Tables[0].Rows[i][2].ToString());
+                    Item currentItem = new Item(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), float.Parse(ds.Tables[0].Rows[i][2].ToString()));
                     itemList.Add(currentItem);
                 }
 
@@ -119,14 +120,14 @@ namespace CS3280FinalProject.Main
         /// <param name="sInvoiceNum">The invoice num</param>
         /// <returns>Invoice Object</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public Shared.Invoice GetInvoice(string sInvoiceNum)
+        public Shared.Invoice GetInvoice(int sInvoiceNum)
         {
             try
             {
                 DataSet ds = cDataAccess.ExecuteSQLStatement(clsMainSQL.GetInvoiceInfo(sInvoiceNum), ref rowsReturned);
 
                 
-                Shared.Invoice invoice = new Shared.Invoice(ds.Tables[0].Rows[0][0].ToString(), ds.Tables[0].Rows[0][1].ToString(), ds.Tables[0].Rows[0][2].ToString());
+                Shared.Invoice invoice = new Shared.Invoice(Int32.Parse(ds.Tables[0].Rows[0][0].ToString()), ds.Tables[0].Rows[0][1].ToString(), float.Parse(ds.Tables[0].Rows[0][2].ToString()));
 
                 invoice.items = GetInvoiceItems(invoice.invoiceNum);
 
@@ -148,17 +149,17 @@ namespace CS3280FinalProject.Main
         /// <param name="sInvoiceNum">Selected invoice Num</param>
         /// <returns>Invoice Items List</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public List<Shared.Item> GetInvoiceItems(string sInvoiceNum)
+        public ObservableCollection<Item> GetInvoiceItems(int sInvoiceNum)
         {
             try
             {
-                List<Shared.Item> lItems = new List<Shared.Item>();
+                ObservableCollection<Item> lItems = new ObservableCollection<Item>();
 
                 DataSet ds = cDataAccess.ExecuteSQLStatement(clsMainSQL.GetInvoiceItemInfo(sInvoiceNum), ref rowsReturned);
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    Item currentItem = new Item(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), ds.Tables[0].Rows[i][2].ToString());
+                    Item currentItem = new Item(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), float.Parse(ds.Tables[0].Rows[i][2].ToString()));
                     lItems.Add(currentItem);
                 }
 
@@ -179,11 +180,11 @@ namespace CS3280FinalProject.Main
         /// <param name="sInvoiceNum">Current Invoice</param>
         /// <returns>Num Line Items</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public string GetNumLineItems(string sInvoiceNum)
+        public string GetNumLineItems(int iInvoiceNum)
         {
             try
             {
-                string lineItemsNum = cDataAccess.ExecuteScalarSQL(clsMainSQL.GetNumLineItems(sInvoiceNum));
+                string lineItemsNum = cDataAccess.ExecuteScalarSQL(clsMainSQL.GetNumLineItems(iInvoiceNum));
                 return lineItemsNum;
             }
             catch (Exception ex)
@@ -244,11 +245,11 @@ namespace CS3280FinalProject.Main
         /// <param name="sLineItemNum">Line Item Num</param>
         /// <param name="sItemCode">Item Code</param>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public void AddItemToInvoice(string sInvoiceNum, string sLineItemNum, string sItemCode)
+        public void AddItemToInvoice(int iInvoiceNum, int iLineItemNum, string sItemCode)
         {
             try
             {
-                int success = cDataAccess.ExecuteNonQuery(clsMainSQL.AddItemToInvoice(sInvoiceNum, sLineItemNum, sItemCode));
+                int success = cDataAccess.ExecuteNonQuery(clsMainSQL.AddItemToInvoice(iInvoiceNum, iLineItemNum, sItemCode));
             }
             catch (System.Exception ex)
             {
@@ -263,11 +264,11 @@ namespace CS3280FinalProject.Main
         /// <param name="sInvoiceNum">Invoice Num</param>
         /// <param name="sItemCode">Item Code</param>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public void RemoveLineItem(string sInvoiceNum, string sItemCode, string sLineItemNum)
+        public void RemoveLineItem(int iInvoiceNum, int iLineItemNum)
         {
             try
             {
-                int success = cDataAccess.ExecuteNonQuery(clsMainSQL.DeleteItemFromInvoice(sInvoiceNum, sItemCode, sLineItemNum));
+                int success = cDataAccess.ExecuteNonQuery(clsMainSQL.DeleteItemFromInvoice(iInvoiceNum, iLineItemNum));
 
             }
             catch (System.Exception ex)

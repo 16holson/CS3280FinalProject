@@ -28,16 +28,16 @@ namespace CS3280FinalProject.Main
         /// <summary>
         /// Returns a SQL String to create a new invoice
         /// </summary>
-        /// <param name="sInvoiceDate">New Invoice Date</param>
-        /// <param name="sTotalCost">New Invoice Cost</param>
+        /// <param name="iInvoiceDate">New Invoice Date</param>
+        /// <param name="fTotalCost">New Invoice Cost</param>
         /// <returns>string sSQL</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public static string CreateInvoice(string sInvoiceDate, string sTotalCost)
+        public static string CreateInvoice(string sInvoiceDate, float fTotalCost)
         {
             try
             {
                 string sSQL = "INSERT INTO Invoices(InvoiceDate, TotalCost) Values(#"
-                              + sInvoiceDate + "#, " + sTotalCost + ")";
+                              + sInvoiceDate + "#, " + fTotalCost + ")";
                 return sSQL;
 
             }
@@ -52,17 +52,17 @@ namespace CS3280FinalProject.Main
         /// Returns a SQL String to add a specific Item to 
         /// and invoice.
         /// </summary>
-        /// <param name="sInvoiceNum">Current Invoice Num</param>
-        /// <param name="sLineItemNum">Line Item Number</param>
+        /// <param name="iInvoiceNum">Current Invoice Num</param>
+        /// <param name="iLineItemNum">Line Item Number</param>
         /// <param name="sItemCode">New Item Code</param>
         /// <returns>string sSQL</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public static string AddItemToInvoice(string sInvoiceNum, string sLineItemNum, string sItemCode)
+        public static string AddItemToInvoice(int iInvoiceNum, int iLineItemNum, string sItemCode)
         {
             try
             {
                 string sSQL = "INSERT INTO LineItems(InvoiceNum, LineItemNum, ItemCode) Values(" +
-                              sInvoiceNum + ", " + sLineItemNum + ", '" + sItemCode + "')";
+                              iInvoiceNum + ", " + iLineItemNum + ", '" + sItemCode + "')";
                 return sSQL;
 
             }
@@ -77,16 +77,15 @@ namespace CS3280FinalProject.Main
         /// Returns a SQL String to remove a specific
         /// item from an invoice
         /// </summary>
-        /// <param name="sInvoiceNum">Current Invoice num</param>
-        /// <param name="sItemCode">Item Code to Delete</param>
+        /// <param name="iInvoiceNum">Current Invoice num</param>
+        /// <param name="iLineItem">Line Item to Delete</param>
         /// <returns>string sSQL</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public static string DeleteItemFromInvoice(string sInvoiceNum, string sItemCode, string sLineItemNum)
+        public static string DeleteItemFromInvoice(int iInvoiceNum, int iLineItemNum)
         {
             try
             {
-                string sSQL = "DELETE FROM LineItems WHERE InvoiceNum = " + sInvoiceNum + " AND ItemCode = '" + sItemCode + "'" +
-                              " AND LineItemNum = " + sLineItemNum;
+                string sSQL = "DELETE FROM LineItems WHERE InvoiceNum = " + iInvoiceNum + " AND LineItemNum = " + iLineItemNum;
                 return sSQL;
 
             }
@@ -101,15 +100,15 @@ namespace CS3280FinalProject.Main
         /// Returns a string to update the 
         /// Total Cost of an invoice
         /// </summary>
-        /// <param name="sTotalCost">New Cost of Invoice</param>
-        /// <param name="sInvoiceNum">Current Invoice Num</param>
+        /// <param name="fTotalCost">New Cost of Invoice</param>
+        /// <param name="iInvoiceNum">Current Invoice Num</param>
         /// <returns>string sSQL</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public static string UpdateTotalCost(string sTotalCost, string sInvoiceNum)
+        public static string UpdateTotalCost(float fTotalCost, int iInvoiceNum)
         {
             try
             {
-                string sSQL = "UPDATE Invoices Set TotalCost = " + sTotalCost + " WHERE InvoiceNum = " + sInvoiceNum;
+                string sSQL = "UPDATE Invoices Set TotalCost = " + fTotalCost + " WHERE InvoiceNum = " + iInvoiceNum;
                 return sSQL;
 
             }
@@ -168,14 +167,14 @@ namespace CS3280FinalProject.Main
         /// Returns a SQL string to get the information
         /// regarding a specific invoice from the database
         /// </summary>
-        /// <param name="sInvoiceNum">Current Invoice</param>
+        /// <param name="iInvoiceNum">Current Invoice</param>
         /// <returns>string sSQL</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public static string GetInvoiceInfo(string sInvoiceNum)
+        public static string GetInvoiceInfo(int iInvoiceNum)
         {
             try
             {
-                string sSQL = "SELECT InvoiceNum, InvoiceDate, TotalCost FROM Invoices WHERE InvoiceNum = " + sInvoiceNum;
+                string sSQL = "SELECT InvoiceNum, InvoiceDate, TotalCost FROM Invoices WHERE InvoiceNum = " + iInvoiceNum;
                 return sSQL;
 
             }
@@ -190,14 +189,14 @@ namespace CS3280FinalProject.Main
         /// Returns a SQL string to get the total number of 
         /// line items on a specific invoice num
         /// </summary>
-        /// <param name="sInvoiceNum">Current Invoice</param>
+        /// <param name="iInvoiceNum">Current Invoice</param>
         /// <returns>string sSQL</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public static string GetNumLineItems(string sInvoiceNum)
+        public static string GetNumLineItems(int iInvoiceNum)
         {
             try
             {
-                string sSQL = "SELECT COUNT(*) FROM LineItems WHERE InvoiceNum = " + sInvoiceNum;
+                string sSQL = "SELECT COUNT(*) FROM LineItems WHERE InvoiceNum = " + iInvoiceNum;
                 return sSQL;
             }
             catch (Exception ex)
@@ -211,15 +210,15 @@ namespace CS3280FinalProject.Main
         /// Returns a SQL string to get the specific item
         /// info for a specific invoices
         /// </summary>
-        /// <param name="sInvoiceNum">Current Invoice</param>
+        /// <param name="iInvoiceNum">Current Invoice</param>
         /// <returns>string sSQL</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public static string GetInvoiceItemInfo(string sInvoiceNum)
+        public static string GetInvoiceItemInfo(int iInvoiceNum)
         {
             try
             {
                 string sSQL = "SELECT LineItems.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost FROM LineItems, ItemDesc WHERE" +
-                              " LineItems.ItemCode = ItemDesc.ItemCode AND LineItems.InvoiceNum = " + sInvoiceNum;
+                              " LineItems.ItemCode = ItemDesc.ItemCode AND LineItems.InvoiceNum = " + iInvoiceNum;
                 return sSQL;
 
             }

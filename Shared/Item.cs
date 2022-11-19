@@ -32,7 +32,12 @@ namespace CS3280FinalProject.Shared
         /// <summary>
         /// Private items cost
         /// </summary>
-        private string sItemCost;
+        private float fItemCost;
+
+        /// <summary>
+        /// private line item number
+        /// </summary>
+        private int sLineItemNum;
         #endregion
 
         #region Properties
@@ -76,18 +81,36 @@ namespace CS3280FinalProject.Shared
         /// <summary>
         /// Public item cost
         /// </summary>
-        public string itemCost
+        public float itemCost
         {
             get
             {
-                return sItemCost;
+                return fItemCost;
             }
             set
             {
-                sItemCost = value;
+                fItemCost = value;
 
                 if (PropertyChanged != null)
                     PropertyChanged(this, new PropertyChangedEventArgs("itemCost"));
+            }
+        }
+
+        /// <summary>
+        /// Public line item number
+        /// </summary>
+        public int lineItemNum
+        {
+            get
+            {
+                return sLineItemNum;
+            }
+            set
+            {
+                sLineItemNum = value;
+
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs("lineItemNum"));
             }
         }
         #endregion
@@ -108,7 +131,7 @@ namespace CS3280FinalProject.Shared
         /// <param name="itemDesc">The item's description.</param>
         /// <param name="itemCost">The item's cost.</param>
         /// <exception cref="Exception"></exception>
-        public Item(string itemCode, string itemDesc, string itemCost)
+        public Item(string itemCode, string itemDesc, float ftemCost)
         {
             try
             {
@@ -123,11 +146,13 @@ namespace CS3280FinalProject.Shared
         }
         #endregion
 
+        #region Overloaded functions
         public override string ToString()
         {
             string sReturnString = itemDesc;
             return sReturnString;
         }
+        #endregion
 
         #region INotifyPropertyChanged Members
 

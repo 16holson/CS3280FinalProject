@@ -14,6 +14,7 @@ using CS3280FinalProject.Items;
 using CS3280FinalProject.Search;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Reflection;
 using System.Windows;
@@ -213,8 +214,8 @@ namespace CS3280FinalProject.Main
                 //Empty DataGrid
                 MainItemDisplay.ItemsSource = null;
                 currentInvoice = new Shared.Invoice();
-                currentInvoice.invoiceNum = "-1";
-                currentInvoice.totalCost = "0";
+                currentInvoice.invoiceNum = -1;
+                currentInvoice.totalCost = 0;
             }
             catch (Exception ex)
             {
@@ -263,7 +264,7 @@ namespace CS3280FinalProject.Main
         {
             try
             {
-                if (currentInvoice.invoiceNum == "-1")
+                if (currentInvoice.invoiceNum == -1)
                 {
                     // Create Invoice in Database, and get invoice Number back
                     currentInvoice.invoiceNum = logic.SaveNewInvoice(currentInvoice);
@@ -272,7 +273,7 @@ namespace CS3280FinalProject.Main
                     int count = 1;
                     foreach (Shared.Item item in currentInvoice.items)
                     {
-                        logic.AddItemToInvoice(currentInvoice.invoiceNum, count.ToString(), item.itemCode);
+                        logic.AddItemToInvoice(currentInvoice.invoiceNum, count, item.itemCode);
                         count++;
                     }
                 }
@@ -346,8 +347,11 @@ namespace CS3280FinalProject.Main
         {
             try
             {
-                // Enable Remove Item Button
-                RemoveItemButton.IsEnabled = true;
+                if (bRemove == true)
+                {
+                    // Enable Remove Item Button
+                    RemoveItemButton.IsEnabled = true;
+                }
             }
             catch (Exception ex)
             {
@@ -399,18 +403,10 @@ namespace CS3280FinalProject.Main
                     currentInvoice.items.Add(tempItem);
 
                     // If the invoice still isn't in the database
-                    if (currentInvoice.invoiceNum == "-1")
+                    if (currentInvoice.invoiceNum == -1)
                     {
-                        // Cast list to Datagrid
-                        updateDataGrid(currentInvoice.items);
-                        int totalcost = 0;
-                        //Update Cost on Main Menu
-                        foreach (Shared.Item item in currentInvoice.items)
-                        {
-                            totalcost += Int32.Parse(item.itemCost);
-                        }
-                        TotalCostLabel.Content = "Total Cost: $" + totalcost.ToString();
-                        currentInvoice.totalCost = totalcost.ToString();
+                        currentInvoice.totalCost += tempItem.itemCost;
+                        TotalCostLabel.Content = "Total Cost: $" + currentInvoice.totalCost;
                     }
                     // If invoice already exists
                     else
@@ -419,15 +415,11 @@ namespace CS3280FinalProject.Main
                         count++;
 
                         // Add item to the database record
-                        logic.AddItemToInvoice(currentInvoice.invoiceNum, count.ToString(), tempItem.itemCode);
+                        logic.AddItemToInvoice(currentInvoice.invoiceNum, count, tempItem.itemCode);
 
                         // Update Cost in the Database Record
-                        currentInvoice = logic.GetInvoice(currentInvoice.invoiceNum);
-                        currentInvoice.totalCost = (Int32.Parse(currentInvoice.totalCost) + Int32.Parse(tempItem.itemCost)).ToString();
-                        logic.UpdateInvoiceCost(currentInvoice);
-                        currentInvoice.items.Clear();
-                        currentInvoice.items = logic.GetInvoiceItems(currentInvoice.invoiceNum);
-                        updateScreen(currentInvoice.invoiceNum);
+                        currentInvoice.totalCost += tempItem.itemCost;
+                        TotalCostLabel.Content = "Total Cost: $" + currentInvoice.totalCost;
                     }
                 }
             }
@@ -451,11 +443,10 @@ namespace CS3280FinalProject.Main
             {
                 if (MainItemDisplay.SelectedIndex >= 0)
                 {
-                    int index = MainItemDisplay.SelectedIndex;
                     //Object to hold item selected
                     Shared.Item tempItem = (Shared.Item)MainItemDisplay.SelectedItem;
 
-                    List<Shared.Item> tempList = new List<Shared.Item>();
+                    ObservableCollection<Shared.Item> tempList = new ObservableCollection<Shared.Item>();
                     bool itemRemoved = false;
                     foreach(Shared.Item currItem in currentInvoice.items)
                     {
@@ -475,32 +466,28 @@ namespace CS3280FinalProject.Main
                     currentInvoice.items.Clear();
                     currentInvoice.items = tempList;
 
-                    if (currentInvoice.invoiceNum == "-1")
+                    if (currentInvoice.invoiceNum == -1)
                     {
-                        updateDataGrid(currentInvoice.items);
-                        int totalcost = 0;
+                        float totalcost = 0;
                         foreach (Shared.Item item in currentInvoice.items)
                         {
-                            totalcost += Int32.Parse(item.itemCost);
+                            totalcost += (item.itemCost);
                         }
                         TotalCostLabel.Content = "Total Cost: $" + totalcost.ToString();
-                        currentInvoice.totalCost = totalcost.ToString();
+                        currentInvoice.totalCost = totalcost;
                     }
                     else
                     {
                         
                         // Remove Item from line Items
-                        logic.RemoveLineItem(currentInvoice.invoiceNum, tempItem.itemCode, (MainItemDisplay.SelectedIndex + 1).ToString());
+                        logic.RemoveLineItem(currentInvoice.invoiceNum, (MainItemDisplay.SelectedIndex + 1));
 
                         // Find correct cost for invoice
-                        currentInvoice.totalCost = (Int32.Parse(currentInvoice.totalCost) - Int32.Parse(tempItem.itemCost)).ToString();
+                        currentInvoice.totalCost = (currentInvoice.totalCost - tempItem.itemCost);
 
                         // Update Cost in Database
                         logic.UpdateInvoiceCost(currentInvoice);
                         TotalCostLabel.Content = "Total Cost: " + currentInvoice.totalCost;
-
-                        // Update Datagrid
-                        updateDataGrid(currentInvoice.items);
                     }
                     RemoveItemButton.IsEnabled = false;
                 }
@@ -569,7 +556,7 @@ namespace CS3280FinalProject.Main
         /// </summary>
         /// <param name="itemList">List of items in the invoice</param>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public void updateDataGrid(List<Shared.Item> itemList)
+        public void fillDataGrid(ObservableCollection<Shared.Item> itemList)
         {
             try
             {
@@ -588,17 +575,17 @@ namespace CS3280FinalProject.Main
         /// </summary>
         /// <param name="sInvoiceNum">string currentInvoiceNum</param>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public void updateScreen(string sInvoiceNum)
+        public void updateScreen(int iInvoiceNum)
         {
             try
             {
                 //Update the Datagrid with the invoice selected
-                currentInvoice = logic.GetInvoice(sInvoiceNum);
-                currentInvoice.items = logic.GetInvoiceItems(sInvoiceNum);
+                currentInvoice = logic.GetInvoice(iInvoiceNum);
+                currentInvoice.items = logic.GetInvoiceItems(iInvoiceNum);
 
                 //Update Screen
                 updateInvoiceLabels(currentInvoice);
-                updateDataGrid(currentInvoice.items);
+                fillDataGrid(currentInvoice.items);
             }
             catch (Exception ex)
             {

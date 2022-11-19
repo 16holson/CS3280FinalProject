@@ -12,30 +12,35 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace CS3280FinalProject.Shared
 {
-    public class Invoice
+    public class Invoice : INotifyPropertyChanged
     {
         #region Class Variables
         /// <summary>
         /// Invoices Number
         /// </summary>
-        public string invoiceNum { get; set; }
+        public int invoiceNum { get; set; }
         /// <summary>
         /// Invoices Date
         /// </summary>
-        public string invoiceDate { get; set;}
+        public string invoiceDate { get; set; }
         /// <summary>
         /// Invoices Total Cost
         /// </summary>
-        public string totalCost { get; set; }
+        public float totalCost { get; set; }
         /// <summary>
         /// List of items in the invoice
         /// </summary>
-        public List<Item> items { get; set; }
+        public ObservableCollection<Item> items { get; set; }
         #endregion
 
         #region Constructor
@@ -46,9 +51,9 @@ namespace CS3280FinalProject.Shared
         {
             try
             {
-                items = new List<Item>();
+                items = new ObservableCollection<Item>();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
                            MethodInfo.GetCurrentMethod().Name, ex.Message);
@@ -63,14 +68,14 @@ namespace CS3280FinalProject.Shared
         /// <param name="sInvoiceNum">Invoice Num</param>
         /// <param name="sInvoiceDate">Invoice Date</param>
         /// <param name="sInvoiceCost">Invoice Cost</param>
-        public Invoice(string sInvoiceNum, string sInvoiceDate, string sInvoiceCost)
+        public Invoice(int iInvoiceNum, string sInvoiceDate, float fInvoiceCost)
         {
             try
             {
-                items = new List<Item>();
-                invoiceNum = sInvoiceNum;
+                items = new ObservableCollection<Item>();
+                invoiceNum = iInvoiceNum;
                 invoiceDate = sInvoiceDate;
-                totalCost = sInvoiceCost;
+                totalCost = fInvoiceCost;
             }
             catch (Exception ex)
             {
@@ -99,6 +104,13 @@ namespace CS3280FinalProject.Shared
                                              "HandleError Exception: " + ex.Message);
             }
         }
+        #endregion
+
+        #region INotifyPropertyChanged Members
+        /// <summary>
+        /// This is the contract we have to make with the compiler because we are implementing the interface "INotifyPropertyChanged".  So we must have this event defined.  We will raise this event anytime one of our properties changes.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
         #endregion
     }
 }
