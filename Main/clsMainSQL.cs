@@ -32,12 +32,12 @@ namespace CS3280FinalProject.Main
         /// <param name="fTotalCost">New Invoice Cost</param>
         /// <returns>string sSQL</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public static string CreateInvoice(string sInvoiceDate, float fTotalCost)
+        public static string CreateInvoice(string sInvoiceDate, int iTotalCost)
         {
             try
             {
                 string sSQL = "INSERT INTO Invoices(InvoiceDate, TotalCost) Values(#"
-                              + sInvoiceDate + "#, " + fTotalCost + ")";
+                              + sInvoiceDate + "#, " + iTotalCost + ")";
                 return sSQL;
 
             }
@@ -104,11 +104,11 @@ namespace CS3280FinalProject.Main
         /// <param name="iInvoiceNum">Current Invoice Num</param>
         /// <returns>string sSQL</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public static string UpdateTotalCost(float fTotalCost, int iInvoiceNum)
+        public static string UpdateTotalCost(int iTotalCost, int iInvoiceNum)
         {
             try
             {
-                string sSQL = "UPDATE Invoices Set TotalCost = " + fTotalCost + " WHERE InvoiceNum = " + iInvoiceNum;
+                string sSQL = "UPDATE Invoices Set TotalCost = " + iTotalCost + " WHERE InvoiceNum = " + iInvoiceNum;
                 return sSQL;
 
             }

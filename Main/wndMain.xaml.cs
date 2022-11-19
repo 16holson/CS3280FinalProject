@@ -70,7 +70,6 @@ namespace CS3280FinalProject.Main
         Shared.Invoice currentInvoice;
         #endregion
 
-
         #region Constructor
         /// <summary>
         /// Default constructor for the wndMain window.
@@ -90,7 +89,6 @@ namespace CS3280FinalProject.Main
 
 
         #endregion
-
 
         #region UI Functions
 
@@ -525,6 +523,13 @@ namespace CS3280FinalProject.Main
 
         }
 
+        /// <summary>
+        /// When pressed, the current invoice resets to the
+        /// copy stored in the database and the screen updates.
+        /// Buttons and other functionalities change as well.
+        /// </summary>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">Contains the event data for the event.</param>
         private void CancelInvoiceBtn_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -579,7 +584,6 @@ namespace CS3280FinalProject.Main
         #endregion
 
         #endregion
-
 
         #region Screen Functions
 
