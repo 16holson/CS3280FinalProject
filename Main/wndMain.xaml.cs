@@ -128,14 +128,14 @@ namespace CS3280FinalProject.Main
 
                     foreach(Shared.Invoice currInvoice in lInvoiceList)
                     {
-                        if(currInvoice.invoiceNum == Int32.Parse(Search.selectedNum))
+                        if(currInvoice.invoiceNum == Search.selectedNum)
                         {
                             bVerify = true;
                         }
                     }
                     if (bVerify == true)
                     {
-                        int selectedInvoiceNum = Int32.Parse(Search.selectedNum);
+                        int selectedInvoiceNum = Search.selectedNum;
                         currentInvoice = logic.GetInvoice(selectedInvoiceNum);
                         updateInvoiceLabels(currentInvoice);
                         MainItemDisplay.ItemsSource = currentInvoice.items;

@@ -63,7 +63,7 @@ namespace CS3280FinalProject.Items
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    Item currentItem = new Item(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), ds.Tables[0].Rows[i][2].ToString());
+                    Item currentItem = new Item(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), Int32.Parse(ds.Tables[0].Rows[i][2].ToString()));
                     items.Add(currentItem);
                 }
 
