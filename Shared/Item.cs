@@ -32,7 +32,7 @@ namespace CS3280FinalProject.Shared
         /// <summary>
         /// Private items cost
         /// </summary>
-        private float fItemCost;
+        private int iItemCost;
 
         /// <summary>
         /// private line item number
@@ -81,15 +81,15 @@ namespace CS3280FinalProject.Shared
         /// <summary>
         /// Public item cost
         /// </summary>
-        public float itemCost
+        public int itemCost
         {
             get
             {
-                return fItemCost;
+                return iItemCost;
             }
             set
             {
-                fItemCost = value;
+                iItemCost = value;
 
                 if (PropertyChanged != null)
                     PropertyChanged(this, new PropertyChangedEventArgs("itemCost"));
@@ -131,7 +131,7 @@ namespace CS3280FinalProject.Shared
         /// <param name="itemDesc">The item's description.</param>
         /// <param name="itemCost">The item's cost.</param>
         /// <exception cref="Exception"></exception>
-        public Item(string itemCode, string itemDesc, float ftemCost)
+        public Item(string itemCode, string itemDesc, int itemCost)
         {
             try
             {

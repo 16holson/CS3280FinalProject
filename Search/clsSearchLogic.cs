@@ -105,7 +105,7 @@ namespace CS3280FinalProject.Search
             try
             { 
                 return  (from invoice in invoices
-                         orderby Int32.Parse(invoice.totalCost)
+                         orderby invoice.totalCost
                          select invoice.totalCost).Distinct()
                                                   .OrderBy(i => Int32.Parse(i))
                                                   .ToList();

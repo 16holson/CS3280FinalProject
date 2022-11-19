@@ -192,11 +192,11 @@ namespace CS3280FinalProject.Main
         /// <param name="iInvoiceNum">Current Invoice</param>
         /// <returns>string sSQL</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public static string GetNumLineItems(int iInvoiceNum)
+        public static string GetMaxLineItem(int iInvoiceNum)
         {
             try
             {
-                string sSQL = "SELECT COUNT(*) FROM LineItems WHERE InvoiceNum = " + iInvoiceNum;
+                string sSQL = "SELECT MAX(LineItemNum) FROM LineItems WHERE InvoiceNum = " + iInvoiceNum;
                 return sSQL;
             }
             catch (Exception ex)
@@ -217,7 +217,7 @@ namespace CS3280FinalProject.Main
         {
             try
             {
-                string sSQL = "SELECT LineItems.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost FROM LineItems, ItemDesc WHERE" +
+                string sSQL = "SELECT LineItems.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost, LineItems.LineItemNum FROM LineItems, ItemDesc WHERE" +
                               " LineItems.ItemCode = ItemDesc.ItemCode AND LineItems.InvoiceNum = " + iInvoiceNum;
                 return sSQL;
 

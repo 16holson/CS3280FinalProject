@@ -36,7 +36,7 @@ namespace CS3280FinalProject.Shared
         /// <summary>
         /// Invoices Total Cost
         /// </summary>
-        public float totalCost { get; set; }
+        public int totalCost { get; set; }
         /// <summary>
         /// List of items in the invoice
         /// </summary>
@@ -65,17 +65,17 @@ namespace CS3280FinalProject.Shared
         /// Constructor to create an invoice when the follow
         /// parameters are passed through the parenthesis
         /// </summary>
-        /// <param name="sInvoiceNum">Invoice Num</param>
+        /// <param name="iInvoiceNum">Invoice Num</param>
         /// <param name="sInvoiceDate">Invoice Date</param>
-        /// <param name="sInvoiceCost">Invoice Cost</param>
-        public Invoice(int iInvoiceNum, string sInvoiceDate, float fInvoiceCost)
+        /// <param name="iInvoiceCost">Invoice Cost</param>
+        public Invoice(int iInvoiceNum, string sInvoiceDate, int iInvoiceCost)
         {
             try
             {
                 items = new ObservableCollection<Item>();
                 invoiceNum = iInvoiceNum;
                 invoiceDate = sInvoiceDate;
-                totalCost = fInvoiceCost;
+                totalCost = iInvoiceCost;
             }
             catch (Exception ex)
             {

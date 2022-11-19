@@ -219,7 +219,7 @@ namespace CS3280FinalProject.Items
                     ItemLogic.AddItem(txtItemCode.Text, txtItemDesc.Text, cost);  //add the item to the DB
                     //Add the item to the Items ObservableCollection (and because Items is a ObservableCollection, it is the source of the DataGrid "datagridItems", and the clsItems has the interface "INotifyPropertyChanged",
                     //also to the DataGrid "datagridItems")
-                    Items.Add(new Item(txtItemCode.Text, txtItemDesc.Text, txtItemCost.Text));
+                    Items.Add(new Item(txtItemCode.Text, txtItemDesc.Text, Int32.Parse(txtItemCost.Text)));
 
                     ItemsChanged = true;  //once everything has been added, set the changed variable to tell the user that there has been a change in the items
 
@@ -297,7 +297,7 @@ namespace CS3280FinalProject.Items
                     ItemLogic.UpdateItemData(txtItemCode.Text, txtItemDesc.Text, cost);  //save the changes to the database
                     //update the item from the Items ObservableCollection (and because Items is a ObservableCollection, it is the source of the DataGrid "datagridItems", and the clsItems has the interface "INotifyPropertyChanged",
                     //also from the DataGrid "datagridItems")
-                    CurrentEditingItem.itemCost = txtItemCost.Text;
+                    CurrentEditingItem.itemCost = Int32.Parse(txtItemCost.Text);
                     CurrentEditingItem.itemDesc = txtItemDesc.Text;
 
                     ChangeMode();
