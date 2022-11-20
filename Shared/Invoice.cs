@@ -6,24 +6,25 @@
  * Due: December 10, 2022 at 11:59 PM
  * Version: 1.0
  * -----------------------------------------------------------------------------------------------------------
- * This file contains the variables and functions that are required make an invoice.
+ * This file contains the variables and functions that are required make an invoice for the UI.
  * -----------------------------------------------------------------------------------------------------------
  */
 
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
 
 namespace CS3280FinalProject.Shared
 {
-    public class Invoice
+    public class Invoice : INotifyPropertyChanged
     {
         #region Class Variables
         /// <summary>
         /// Invoices Number
         /// </summary>
-        public string invoiceNum { get; set; }
+        public int invoiceNum { get; set; }
         /// <summary>
         /// Invoices Date
         /// </summary>
@@ -31,11 +32,11 @@ namespace CS3280FinalProject.Shared
         /// <summary>
         /// Invoices Total Cost
         /// </summary>
-        public string totalCost { get; set; }
+        public int totalCost { get; set; }
         /// <summary>
         /// List of items in the invoice
         /// </summary>
-        public List<Item> items { get; set; }
+        public ObservableCollection<Item> items { get; set; }
         #endregion
 
         #region Constructor
@@ -46,14 +47,37 @@ namespace CS3280FinalProject.Shared
         {
             try
             {
-                items = new List<Item>();
+                items = new ObservableCollection<Item>();
             }
             catch(Exception ex)
             {
-                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                           MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
 
+        }
+
+        /// <summary>
+        /// Constructor to create an invoice when the follow
+        /// parameters are passed through the parenthesis
+        /// </summary>
+        /// <param name="sInvoiceNum">Invoice Num</param>
+        /// <param name="sInvoiceDate">Invoice Date</param>
+        /// <param name="sInvoiceCost">Invoice Cost</param>
+        public Invoice(int sInvoiceNum, string sInvoiceDate, int sInvoiceCost)
+        {
+            try
+            {
+                items = new ObservableCollection<Item>();
+                invoiceNum = sInvoiceNum;
+                invoiceDate = sInvoiceDate;
+                totalCost = sInvoiceCost;
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
         #endregion
 
@@ -76,6 +100,13 @@ namespace CS3280FinalProject.Shared
                                              "HandleError Exception: " + ex.Message);
             }
         }
+        #endregion
+
+        #region INotifyPropertyChanged Members
+        /// <summary>
+        /// This is the contract we have to make with the compiler because we are implementing the interface "INotifyPropertyChanged".  So we must have this event defined.  We will raise this event anytime one of our properties changes.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
         #endregion
     }
 }

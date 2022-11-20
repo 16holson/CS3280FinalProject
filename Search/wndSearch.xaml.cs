@@ -33,7 +33,7 @@ namespace CS3280FinalProject.Search
         /// <summary>
         /// Holds the value of the selected invoice
         /// </summary>
-        public string selectedNum { get; set; }
+        public int selectedNum { get; set; }
         /// <summary>
         /// Logic used for this window
         /// </summary>
@@ -50,7 +50,7 @@ namespace CS3280FinalProject.Search
             try
             {
                 InitializeComponent();
-                selectedNum = "";
+                selectedNum = -1;
                 logic = new clsSearchLogic();
                 populateWindow();
             }

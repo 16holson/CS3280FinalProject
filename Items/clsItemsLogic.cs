@@ -63,7 +63,7 @@ namespace CS3280FinalProject.Items
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    Item currentItem = new Item(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), ds.Tables[0].Rows[i][2].ToString());
+                    Item currentItem = new Item(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), int.Parse(ds.Tables[0].Rows[i][2].ToString()));
                     items.Add(currentItem);
                 }
 
@@ -169,12 +169,12 @@ namespace CS3280FinalProject.Items
         {
             try
             {
-                bool CostFailed = !ValidateCostFormat(Cost);  //condition reversed because it returns false if it fails
-                bool DescriptionFailed = Description == "" ? true : false;
+                bool CostFailed = Cost == "";
+                bool DescriptionFailed = Description == "";
 
                 //generate the appropriate error message
-                string message = "Error: \n" + (CostFailed ? "The cost has meet the following pattern, \"1 to 5 digits\" with an optional \".1 or 2 digits\" after it.\n" : "");
-                message += (DescriptionFailed ? "The description can't be empty.\n" : "");
+                string message = "Error: \n" + (CostFailed ? "The cost can't be left blank.\n" : "");
+                message += (DescriptionFailed ? "The description can't be left blank.\n" : "");
                 message += "Please change the above field(s) and try again.";
 
                 return message;
@@ -197,43 +197,23 @@ namespace CS3280FinalProject.Items
         {
             try
             {
-                bool ItemCodeEmpty = Code == "" ? true : false;
+                bool ItemCodeEmpty = Code == "";
                 bool ItemCodeTaken = false;
                 if (!ItemCodeEmpty)  //this is because we don't want to query the DB for an empty item code.
                 {
                     ItemCodeTaken = ItemCodeIsTaken(Code);
                 }
-                bool CostFailed = !ValidateCostFormat(Cost);  //condition reversed because it returns false if it fails
-                bool DescriptionFailed = Description == "" ? true : false;
+                bool CostFailed = Cost == "";
+                bool DescriptionFailed = Description == "";
 
                 //generate the appropriate error message
-                string message = "Error: \n" + (ItemCodeEmpty ? "The item code can't be left blank.\n" : "");
-                message += (!ItemCodeEmpty && ItemCodeTaken ? "The item code \"" + Code + "\" is already used.\n" : "");
-                message += (CostFailed ? "The cost has meet the following pattern, \"1 to 5 digits\" with an optional \".1 or 2 digits\" after it.\n" : "");
-                message += (DescriptionFailed ? "The description can't be left empty.\n" : "");
-                message += "Please change the above field(s) and try again.";
+                string errorMessage = "Error: \n" + (ItemCodeEmpty ? "The item code can't be left blank.\n" : "");
+                errorMessage += (!ItemCodeEmpty && ItemCodeTaken ? "The item code \"" + Code + "\" is already being, choose another for this item.\n" : "");
+                errorMessage += (CostFailed ? "The cost can't be left blank.\n" : "");
+                errorMessage += (DescriptionFailed ? "The description can't be left blank.\n" : "");
+                errorMessage += "Please change the above field(s) and try again.";
 
-                return message;
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Performs a Regex pattern match to see if the supplied text matches "1_or_more_digits" followed by an optional section ".1_or_2_digits"
-        /// </summary>
-        /// <param name="CostToValidate">The text of the cost to be validated.</param>
-        /// <returns>True if the data supplied matches the desired format, and false otherwise.</returns>
-        public bool ValidateCostFormat(string CostToValidate)
-        {
-            try
-            {
-                //bool test = Regex.Match(CostToValidate, @"^\d+(?:\.\d{1,2})?$").Success;
-                //where I found the Regex command with a few modifications https://stackoverflow.com/questions/52810865/regex-to-accept-number-in-fomat-00-00
-                
-                return Regex.Match(CostToValidate, @"^\d{1,5}(?:\.\d{1,2})?$").Success; //Number pattern this is searching for, 1-5 digits(.67) what is inclosed inside the () is optional
+                return errorMessage;
             }
             catch (Exception ex)
             {
