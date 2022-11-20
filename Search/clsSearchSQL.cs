@@ -47,7 +47,7 @@ namespace CS3280FinalProject.Search
         /// </summary>
         /// <param name="invoiceNum"></param>
         /// <returns></returns>
-        public string getItems(string invoiceNum)
+        public string getItems(int invoiceNum)
         {
             try
             { 

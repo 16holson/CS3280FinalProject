@@ -64,13 +64,13 @@ namespace CS3280FinalProject.Search
         /// Returns a list of distinct invoiceNums
         /// </summary>
         /// <returns></returns>
-        public List<String> getInvoiceNumList()
+        public List<int> getInvoiceNumList()
         {
             try
             { 
                 return  (from invoice in invoices
                     select invoice.invoiceNum).Distinct()
-                                              .OrderBy(i => Int32.Parse(i))
+                                              .OrderBy(i => i)
                                               .ToList();
             }
             catch (Exception ex)
@@ -100,14 +100,14 @@ namespace CS3280FinalProject.Search
         /// Returns a list of distinct invoiceTotals
         /// </summary>
         /// <returns></returns>
-        public List<String> getInvoiceTotalList()
+        public List<int> getInvoiceTotalList()
         {
             try
             { 
                 return  (from invoice in invoices
-                         orderby Int32.Parse(invoice.totalCost)
+                         orderby invoice.totalCost
                          select invoice.totalCost).Distinct()
-                                                  .OrderBy(i => Int32.Parse(i))
+                                                  .OrderBy(i => i)
                                                   .ToList();
             }
             catch (Exception ex)
@@ -129,7 +129,7 @@ namespace CS3280FinalProject.Search
                 var filteredList = invoices;
                 if(num != "")
                 {
-                    filteredList = filteredList.Where(i => i.invoiceNum == num).ToList();
+                    filteredList = filteredList.Where(i => i.invoiceNum.ToString() == num).ToList();
                 }
                 if(date != "")
                 {
@@ -137,7 +137,7 @@ namespace CS3280FinalProject.Search
                 }
                 if(total != "")
                 {
-                    filteredList = filteredList.Where(i => i.totalCost == total).ToList();
+                    filteredList = filteredList.Where(i => i.totalCost.ToString() == total).ToList();
                 }
                 return filteredList;
             }
@@ -161,11 +161,11 @@ namespace CS3280FinalProject.Search
                 foreach(DataRow dr in invoicesDS.Tables[0].Rows)
                 {
                     Shared.Invoice invoice = new Shared.Invoice();
-                    invoice.invoiceNum = dr[0].ToString();
+                    invoice.invoiceNum = int.Parse(dr[0].ToString());
                     invoice.invoiceDate = dr[1].ToString();
                     //Get the date not the time
                     invoice.invoiceDate = invoice.invoiceDate.Substring(0, invoice.invoiceDate.IndexOf(" "));
-                    invoice.totalCost = dr[2].ToString();
+                    invoice.totalCost = int.Parse(dr[2].ToString());
                     invoices.Add(invoice);
                 }
                 //Populate each invoice in invoices with their items
@@ -178,7 +178,7 @@ namespace CS3280FinalProject.Search
                         Shared.Item item = new Shared.Item();
                         item.itemCode = dr[0].ToString();
                         item.itemDesc = dr[1].ToString();
-                        item.itemCost = dr[2].ToString();
+                        item.itemCost = int.Parse(dr[2].ToString());
                         invoice.items.Add(item);
                     }
                 }
