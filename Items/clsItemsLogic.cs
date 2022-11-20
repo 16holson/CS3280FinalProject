@@ -169,12 +169,12 @@ namespace CS3280FinalProject.Items
         {
             try
             {
-                bool CostFailed = !ValidateCostFormat(Cost);  //condition reversed because it returns false if it fails
-                bool DescriptionFailed = Description == "" ? true : false;
+                bool CostFailed = Cost == "";
+                bool DescriptionFailed = Description == "";
 
                 //generate the appropriate error message
-                string message = "Error: \n" + (CostFailed ? "The cost has meet the following pattern, \"1 to 5 digits\" with an optional \".1 or 2 digits\" after it.\n" : "");
-                message += (DescriptionFailed ? "The description can't be empty.\n" : "");
+                string message = "Error: \n" + (CostFailed ? "The cost can't be left blank.\n" : "");
+                message += (DescriptionFailed ? "The description can't be left blank.\n" : "");
                 message += "Please change the above field(s) and try again.";
 
                 return message;
@@ -197,14 +197,14 @@ namespace CS3280FinalProject.Items
         {
             try
             {
-                bool ItemCodeEmpty = Code == "" ? true : false;
+                bool ItemCodeEmpty = Code == "";
                 bool ItemCodeTaken = false;
                 if (!ItemCodeEmpty)  //this is because we don't want to query the DB for an empty item code.
                 {
                     ItemCodeTaken = ItemCodeIsTaken(Code);
                 }
-                bool CostFailed = !ValidateCostFormat(Cost);  //condition reversed because it returns false if it fails
-                bool DescriptionFailed = Description == "" ? true : false;
+                bool CostFailed = Cost == "";
+                bool DescriptionFailed = Description == "";
 
                 //generate the appropriate error message
                 string errorMessage = "Error: \n" + (ItemCodeEmpty ? "The item code can't be left blank.\n" : "");
@@ -213,10 +213,6 @@ namespace CS3280FinalProject.Items
                 errorMessage += (DescriptionFailed ? "The description can't be left blank.\n" : "");
                 errorMessage += "Please change the above field(s) and try again.";
 
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
                 return errorMessage;
             }
             catch (Exception ex)
