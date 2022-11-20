@@ -8,8 +8,9 @@
         mc:Ignorable="d"
         Title="wndItems"
         Height="auto" 
-        MaxHeight="450" 
-        Width="600" 
+        MaxHeight="450"
+        Width="{Binding Width, ElementName=SplitWindowInto2Columns, Mode=OneWay}"
+        SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner" 
         ResizeMode="CanMinimize"
         Style="{StaticResource windowStyle}">
@@ -36,29 +37,28 @@
     </Window.Resources>
 
     <!--Window creation-->
-    <Grid ShowGridLines="False">
+    <Grid x:Name="SplitWindowInto2Columns" ShowGridLines="False">
         <!--Split the window into two columns, the left for the controls and the right for the data-->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="376"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <!--split the left column into two rows, the top for the labels and text boxes and the bottom for the buttons-->
+        <!--split the left column into two rows, the top for adding/editing items and the bottom for the buttons-->
         <Grid Grid.Column="0" ShowGridLines="False">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <!--controls for adding/editing an item-->
-            <!--Split the user input section into three rows, the top/middle for user input and the bottom for the save/cancel/add buttons-->
+            <!--Split the user input section into two rows, the top for adding/editing items and the bottom for the edit and delete buttons-->
             <Grid Grid.Column="0" ShowGridLines="False" Height="auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <!--Section for user input-->
+                <!--Section for adding/editing items-->
                 <Grid Grid.Row="0" ShowGridLines="False">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -72,17 +72,17 @@
                     </Grid.RowDefinitions>
 
                     <Label x:Name="lblCode" Grid.Row="0" Content="Code:" Style="{StaticResource Labels}"/>
-                    <TextBox x:Name="txtItemCode" Text="" HorizontalAlignment="Left" Width="auto" MinWidth="75" MaxWidth="315" Style="{StaticResource TextInputs}" Grid.Column="1" MaxLength="4"/>
+                    <TextBox x:Name="txtItemCode" Text="" HorizontalAlignment="Left" Width="auto" MinWidth="75" MaxWidth="315" Style="{StaticResource TextInputs}" Grid.Column="1" MaxLength="4" CharacterCasing="Upper"/>
 
                     <Label x:Name="lblCost" Grid.Row="1" Content="Cost:" Style="{StaticResource Labels}"/>
-                    <TextBox x:Name="txtItemCost" Text="" HorizontalAlignment="Left" Width="auto" MinWidth="75" MaxWidth="315" Style="{StaticResource TextInputs}" PreviewKeyDown="txtItemCost_PreviewKeyDown" Grid.Row="1" Grid.Column="1"/>
+                    <TextBox x:Name="txtItemCost" Text="" HorizontalAlignment="Left" Width="auto" MinWidth="75" MaxWidth="315" Style="{StaticResource TextInputs}" PreviewKeyDown="txtItemCost_PreviewKeyDown" Grid.Row="1" Grid.Column="1" MaxLength="8"/>
 
                     <Label x:Name="lblDescription" Grid.Row="2" Content="Description:" HorizontalAlignment="Left" Style="{StaticResource Labels}"/>
-                    <TextBox x:Name="txtItemDesc" Style="{StaticResource TextInputs}" Grid.Row="4" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="txtItemDesc" Style="{StaticResource TextInputs}" Grid.Row="4" Grid.ColumnSpan="2" MaxLength="50"/>
                 </Grid>
 
-                <!--Section for the buttons to save/cancel/add items to the DB-->
-                <Grid Grid.Row="2" Height="auto" ShowGridLines="False">
+                <!--Section for the buttons to save/cancel edits and add items inside the DB-->
+                <Grid Grid.Row="1" Height="auto" ShowGridLines="False">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -109,7 +109,7 @@
 
         <!--The DataGrid to hold the data from the DB (uses binding to bind the data from the DB to this DataGrid)-->
         <DataGrid x:Name="datagridItems" Grid.Column="1" AutoGenerateColumns="False" HorizontalAlignment="Center" CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True"
-                  SelectionChanged="datagridItems_SelectionChanged" Margin="0,0,0,0">
+                  SelectionChanged="datagridItems_SelectionChanged" Margin="0,0,0,0" Width="auto">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Item Code" Binding="{Binding itemCode}"/>
                 <DataGridTextColumn Header="Item Cost" Binding="{Binding itemCost}"/>

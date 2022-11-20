@@ -32,9 +32,9 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" HorizontalAlignment="Left" Margin="27,-10,0,10" Grid.ColumnSpan="3">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="136.027"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
                 <!--Create Invoice Button-->
@@ -53,31 +53,33 @@
                 <Label x:Name="TotalCostLabel" Grid.Row="1" Content="Total Cost: ___" FontFamily="Arial Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="19,97,0,0" FontSize="18" IsEnabled="False"/>
 
                 <!--Label to Designate the CB is for Items-->
-                <Label Grid.Row="2" Content="Item: " HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Height="25" FontFamily="Arial Black" FontSize="16" Margin="44,28,0,0"/>
+                <Label Grid.Row="1" Content="Item: " HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Height="25" FontFamily="Arial Black" FontSize="16" Margin="22,136,0,0" Grid.RowSpan="2"/>
 
                 <!--Combo Box to select Items from-->
-                <ComboBox x:Name="InvoiceItemComboBox" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="188" Height="30" Margin="119,21,0,0" IsEnabled="False" SelectionChanged="ItemSelectionChanged"/>
+                <ComboBox x:Name="InvoiceItemComboBox" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="188" Height="30" Margin="84,131,0,0" IsEnabled="False" SelectionChanged="ItemSelectionChanged" Grid.RowSpan="2"/>
 
                 <!--Button to Add an item to current invoice-->
                 <Button x:Name="AddItemButton" Content="Add Item" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="100" FontFamily="Arial Black" Margin="19,85,0,0" RenderTransformOrigin="0.557,1.62" IsEnabled="False" Click="AddItemButton_Click"/>
 
                 <!--Button to Remove an item from current invoice-->
-                <Button x:Name="RemoveItemButton" Grid.Row="2" Content="Remove Item" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" Width="100" Height="30" Margin="181,85,0,0" IsEnabled="False" Click="RemoveItemButton_Click"/>
+                <Button x:Name="RemoveItemButton" Grid.Row="2" Content="Remove Item" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" Width="100" Height="30" Margin="154,85,0,0" IsEnabled="False" Click="RemoveItemButton_Click"/>
                 <DatePicker x:Name="InvoiceDatePicker" HorizontalAlignment="Left" Margin="84,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="160" FontFamily="Arial Black" IsEnabled="False" SelectedDateChanged="DateChange" FontSize="14"/>
+                <Label x:Name="ItemCostLabel" Content="Item Cost: $" HorizontalAlignment="Left" Margin="22,44,0,0" Grid.Row="2" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="14" Width="130" Height="20"/>
             </Grid>
             <Grid Margin="56,0,24,0" Grid.Column="3">
 
                 <Label Grid.Row="0" Content="Invoice Information" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="20" Margin="34,35,0,0"/>
 
                 <!--DataGrid to Display Items in Invoice-->
-                <DataGrid x:Name="MainItemDisplay" Margin="15,74,0,132" SelectionChanged="DataGridSelectionChanged">
+                <DataGrid x:Name="MainItemDisplay" Margin="15,74,0,132" SelectionChanged="DataGridSelectionChanged" CanUserResizeColumns="False" CanUserAddRows="False" HorizontalAlignment="Center">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Item Code" Binding="{Binding itemCode}"/>
                         <DataGridTextColumn Header="Item Description" Binding="{Binding itemDesc}"/>
                         <DataGridTextColumn Header="Item Cost" Binding="{Binding itemCost}"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button x:Name="SaveInvoiceButton" Content="Save Invoice" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Height="30" FontFamily="Arial Black" Margin="66,329,0,0" FontSize="14" Click="SaveInvoiceButton_Click" IsEnabled="False"/>
+                <Button x:Name="SaveInvoiceButton" Content="Save Invoice" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Height="30" FontFamily="Arial Black" Margin="15,335,0,0" FontSize="14" Click="SaveInvoiceButton_Click" IsEnabled="False"/>
+                <Button x:Name="CancelInvoiceBtn" Content="Cancel Invoice" HorizontalAlignment="Left" Margin="176,335,0,0" VerticalAlignment="Top" Width="120" Height="30" FontFamily="Arial Black" FontSize="14" IsEnabled="False" Click="CancelInvoiceBtn_Click"/>
             </Grid>
         </Grid>
     </Grid>

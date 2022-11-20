@@ -50,7 +50,7 @@ namespace CS3280FinalProject.Search
             try
             {
                 InitializeComponent();
-                selectedNum = -1;
+                selectedNum = 0;
                 logic = new clsSearchLogic();
                 populateWindow();
             }

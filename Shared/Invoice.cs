@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*
+ * Braxton Wright, Hunter Olson, and Levi Bernards
+ * CS 3280
+ * Final Project class Invoice
+ * Shawn Cowder
+ * Due: December 10, 2022 at 11:59 PM
+ * Version: 1.0
+ * -----------------------------------------------------------------------------------------------------------
+ * This file contains the variables and functions that are required make an invoice.
+ * -----------------------------------------------------------------------------------------------------------
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -20,7 +32,7 @@ namespace CS3280FinalProject.Shared
         /// <summary>
         /// Invoices Date
         /// </summary>
-        public string invoiceDate { get; set;}
+        public string invoiceDate { get; set; }
         /// <summary>
         /// Invoices Total Cost
         /// </summary>
@@ -41,7 +53,7 @@ namespace CS3280FinalProject.Shared
             {
                 items = new ObservableCollection<Item>();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
                            MethodInfo.GetCurrentMethod().Name, ex.Message);
@@ -53,17 +65,17 @@ namespace CS3280FinalProject.Shared
         /// Constructor to create an invoice when the follow
         /// parameters are passed through the parenthesis
         /// </summary>
-        /// <param name="sInvoiceNum">Invoice Num</param>
+        /// <param name="iInvoiceNum">Invoice Num</param>
         /// <param name="sInvoiceDate">Invoice Date</param>
-        /// <param name="sInvoiceCost">Invoice Cost</param>
-        public Invoice(int sInvoiceNum, string sInvoiceDate, int sInvoiceCost)
+        /// <param name="iInvoiceCost">Invoice Cost</param>
+        public Invoice(int iInvoiceNum, string sInvoiceDate, int iInvoiceCost)
         {
             try
             {
                 items = new ObservableCollection<Item>();
-                invoiceNum = sInvoiceNum;
+                invoiceNum = iInvoiceNum;
                 invoiceDate = sInvoiceDate;
-                totalCost = sInvoiceCost;
+                totalCost = iInvoiceCost;
             }
             catch (Exception ex)
             {
