@@ -90,3 +90,33 @@ C:\Users\Levi\Documents\GitHub\CS3280FinalProject\obj\Debug\net6.0-windows\refin
 C:\Users\Levi\Documents\GitHub\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.pdb
 C:\Users\Levi\Documents\GitHub\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.genruntimeconfig.cache
 C:\Users\Levi\Documents\GitHub\CS3280FinalProject\obj\Debug\net6.0-windows\ref\CS3280FinalProject.dll
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\bin\Debug\net6.0-windows\CS3280FinalProject.exe
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\bin\Debug\net6.0-windows\CS3280FinalProject.deps.json
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\bin\Debug\net6.0-windows\CS3280FinalProject.runtimeconfig.json
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\bin\Debug\net6.0-windows\CS3280FinalProject.dll
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\bin\Debug\net6.0-windows\CS3280FinalProject.pdb
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\bin\Debug\net6.0-windows\System.Data.OleDb.dll
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Data.OleDb.dll
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.csproj.AssemblyReference.cache
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\Items\wndItems.baml
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\Theme.baml
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\Items\wndItems.g.cs
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\Main\wndMain.g.cs
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\Search\wndSearch.g.cs
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\App.g.cs
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject_MarkupCompile.cache
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject_MarkupCompile.lref
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\App.baml
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\Main\wndMain.baml
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\Search\wndSearch.baml
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.g.resources
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.GeneratedMSBuildEditorConfig.editorconfig
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.AssemblyInfoInputs.cache
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.AssemblyInfo.cs
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.csproj.CoreCompileInputs.cache
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.csproj.CopyComplete
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.dll
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\refint\CS3280FinalProject.dll
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.pdb
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\CS3280FinalProject.genruntimeconfig.cache
+D:\College Files\College Year 5\CS 3280\Another Final\CS3280FinalProject\obj\Debug\net6.0-windows\ref\CS3280FinalProject.dll

@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Levi\\Documents\\GitHub\\CS3280FinalProject\\CS3280FinalProject.csproj": {}
+    "D:\\College Files\\College Year 5\\CS 3280\\Another Final\\CS3280FinalProject\\CS3280FinalProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Levi\\Documents\\GitHub\\CS3280FinalProject\\CS3280FinalProject.csproj": {
+    "D:\\College Files\\College Year 5\\CS 3280\\Another Final\\CS3280FinalProject\\CS3280FinalProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Levi\\Documents\\GitHub\\CS3280FinalProject\\CS3280FinalProject.csproj",
+        "projectUniqueName": "D:\\College Files\\College Year 5\\CS 3280\\Another Final\\CS3280FinalProject\\CS3280FinalProject.csproj",
         "projectName": "CS3280FinalProject",
-        "projectPath": "C:\\Users\\Levi\\Documents\\GitHub\\CS3280FinalProject\\CS3280FinalProject.csproj",
-        "packagesPath": "C:\\Users\\Levi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Levi\\Documents\\GitHub\\CS3280FinalProject\\obj\\",
+        "projectPath": "D:\\College Files\\College Year 5\\CS 3280\\Another Final\\CS3280FinalProject\\CS3280FinalProject.csproj",
+        "packagesPath": "C:\\Users\\hunte\\.nuget\\packages\\",
+        "outputPath": "D:\\College Files\\College Year 5\\CS 3280\\Another Final\\CS3280FinalProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Levi\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\hunte\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
