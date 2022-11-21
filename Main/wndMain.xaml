@@ -63,23 +63,28 @@
 
                 <!--Button to Remove an item from current invoice-->
                 <Button x:Name="RemoveItemButton" Grid.Row="2" Content="Remove Item" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" Width="100" Height="30" Margin="154,85,0,0" IsEnabled="False" Click="RemoveItemButton_Click"/>
-                <DatePicker x:Name="InvoiceDatePicker" HorizontalAlignment="Left" Margin="84,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="160" FontFamily="Arial Black" IsEnabled="False" SelectedDateChanged="DateChange" FontSize="14"/>
+                <DatePicker x:Name="InvoiceDatePicker" HorizontalAlignment="Left" Margin="84,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="160" FontFamily="Arial Black" IsEnabled="False" FontSize="14"/>
                 <Label x:Name="ItemCostLabel" Content="Item Cost: $" HorizontalAlignment="Left" Margin="22,44,0,0" Grid.Row="2" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="14" Width="130" Height="20"/>
             </Grid>
-            <Grid Margin="56,0,24,0" Grid.Column="3">
+            <Grid Margin="56,0,24,10" Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Content="Invoice Information" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="20" Margin="34,35,0,0"/>
 
                 <!--DataGrid to Display Items in Invoice-->
-                <DataGrid x:Name="MainItemDisplay" Margin="15,74,0,132" SelectionChanged="DataGridSelectionChanged" CanUserResizeColumns="False" CanUserAddRows="False" HorizontalAlignment="Center">
+                <DataGrid Grid.Row="0" x:Name="MainItemDisplay" SelectionChanged="DataGridSelectionChanged" CanUserResizeColumns="False" CanUserAddRows="False" Margin="34,74,0,0">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Item Code" Binding="{Binding itemCode}"/>
                         <DataGridTextColumn Header="Item Description" Binding="{Binding itemDesc}"/>
                         <DataGridTextColumn Header="Item Cost" Binding="{Binding itemCost}"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button x:Name="SaveInvoiceButton" Content="Save Invoice" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Height="30" FontFamily="Arial Black" Margin="15,335,0,0" FontSize="14" Click="SaveInvoiceButton_Click" IsEnabled="False"/>
-                <Button x:Name="CancelInvoiceBtn" Content="Cancel Invoice" HorizontalAlignment="Left" Margin="176,335,0,0" VerticalAlignment="Top" Width="120" Height="30" FontFamily="Arial Black" FontSize="14" IsEnabled="False" Click="CancelInvoiceBtn_Click"/>
+                <Button Grid.Row="1" x:Name="SaveInvoiceButton" Content="Save Invoice" VerticalAlignment="Center" HorizontalAlignment="Left" Width="120" Height="30" FontFamily="Arial Black" FontSize="14" Click="SaveInvoiceButton_Click" IsEnabled="False" Margin="10,0,0,0"/>
+                <Button Grid.Row="1" x:Name="CancelInvoiceBtn" Content="Cancel Invoice" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Height="30" FontFamily="Arial Black" FontSize="14" IsEnabled="False" Click="CancelInvoiceBtn_Click" Margin="190,0,0,0"/>
+                <Label Grid.Row ="0" x:Name="SaveErrorLabel" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="16" Foreground="Red" RenderTransformOrigin="-0.188,-4.388" Margin="10,330,0,0"/>
             </Grid>
         </Grid>
     </Grid>

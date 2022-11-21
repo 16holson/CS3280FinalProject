@@ -234,11 +234,11 @@ namespace CS3280FinalProject.Main
         /// </summary>
         /// <param name="iEditedInvoice">Invoice Object</param>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public void UpdateInvoiceCost(Shared.Invoice iEditedInvoice)
+        public void UpdateInvoiceInfo(Shared.Invoice iEditedInvoice)
         {
             try
             {
-                int success = cDataAccess.ExecuteNonQuery(clsMainSQL.UpdateTotalCost(iEditedInvoice.totalCost, iEditedInvoice.invoiceNum));
+                int success = cDataAccess.ExecuteNonQuery(clsMainSQL.UpdateInvoiceInfo(iEditedInvoice.totalCost, iEditedInvoice.invoiceNum));
 
             }
             catch (System.Exception ex)
@@ -288,7 +288,74 @@ namespace CS3280FinalProject.Main
             }
         }
 
+        /// <summary>
+        /// A Method to update the cost of all invoices after
+        /// the Edit window is closed if there is a change
+        /// made in the item section of the database
+        /// </summary>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
+        public void UpdateAllInvoiceCosts()
+        {
+            try
+            {
+                // Get List of all Items as they currently are in database
+                List<Shared.Item> itemList = ItemList();
 
+                // Get List of all Invoices as they currently are in database
+                List<Shared.Invoice> invoiceList = GetInvoices();
+
+                foreach(Shared.Invoice currInvoice in invoiceList)
+                {
+                    currInvoice.items = GetInvoiceItems(currInvoice.invoiceNum);
+
+                    // Bool to know whether the cost for a specific item has changed
+                    bool costChange = false;
+
+                    // Checks all items in current invoice
+                    foreach(Shared.Item currItem in currInvoice.items)
+                    {
+                        // Loops through all items in the database list
+                        foreach(Shared.Item item in itemList)
+                        {
+                            // If they are the same item
+                            if(currItem.itemCode == item.itemCode)
+                            {
+                                // if the costs of each item are different
+                                if (currItem.itemCost != item.itemCost)
+                                {
+                                    // set bool to true
+                                    costChange = true;
+                                    // Update Item Cost
+                                    currItem.itemCost = item.itemCost;
+                                }
+
+                            }
+                        }
+                    }
+                    // if bool is true (at least one item changed)
+                    if (costChange == true)
+                    {
+                        // Set total cost to zero
+                        currInvoice.totalCost = 0;
+
+                        //loop through all items in invoice
+                        foreach (Shared.Item currItem in currInvoice.items)
+                        {
+                            // Recalculate cost
+                            currInvoice.totalCost += currItem.itemCost;
+                        }
+                        // Update invoice in database
+                        UpdateInvoiceInfo(currInvoice);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message); ;
+
+            }
+        }
         #endregion
 
         #region Error Handling

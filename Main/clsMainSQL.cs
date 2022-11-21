@@ -104,7 +104,7 @@ namespace CS3280FinalProject.Main
         /// <param name="iInvoiceNum">Current Invoice Num</param>
         /// <returns>string sSQL</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public static string UpdateTotalCost(int iTotalCost, int iInvoiceNum)
+        public static string UpdateInvoiceInfo(int iTotalCost, int iInvoiceNum)
         {
             try
             {
