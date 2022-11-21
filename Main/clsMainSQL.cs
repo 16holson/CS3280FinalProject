@@ -104,11 +104,12 @@ namespace CS3280FinalProject.Main
         /// <param name="iInvoiceNum">Current Invoice Num</param>
         /// <returns>string sSQL</returns>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public static string UpdateInvoiceInfo(int iTotalCost, int iInvoiceNum)
+        public static string UpdateInvoiceInfo(int iTotalCost, int iInvoiceNum, string iInvoiceDate)
         {
             try
             {
-                string sSQL = "UPDATE Invoices Set TotalCost = " + iTotalCost + " WHERE InvoiceNum = " + iInvoiceNum;
+                string sSQL = "UPDATE Invoices Set TotalCost = " + iTotalCost + ", InvoiceDate = #" + iInvoiceDate +
+                              "# WHERE InvoiceNum = " + iInvoiceNum;
                 return sSQL;
 
             }

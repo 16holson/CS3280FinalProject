@@ -238,7 +238,7 @@ namespace CS3280FinalProject.Main
         {
             try
             {
-                int success = cDataAccess.ExecuteNonQuery(clsMainSQL.UpdateInvoiceInfo(iEditedInvoice.totalCost, iEditedInvoice.invoiceNum));
+                int success = cDataAccess.ExecuteNonQuery(clsMainSQL.UpdateInvoiceInfo(iEditedInvoice.totalCost, iEditedInvoice.invoiceNum, iEditedInvoice.invoiceDate));
 
             }
             catch (System.Exception ex)
