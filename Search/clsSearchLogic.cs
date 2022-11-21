@@ -321,7 +321,7 @@ namespace CS3280FinalProject.Search
         /// </summary>
         /// <param name="sClass">The class in which the error occurred in.</param>
         /// <param name="sMethod">The method in which the error occurred in.</param>
-        private void HandleError(string sClass, string sMethod, string sMessage)
+        public void HandleError(string sClass, string sMethod, string sMessage)
         {
             try
             {
