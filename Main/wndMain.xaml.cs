@@ -326,20 +326,7 @@ namespace CS3280FinalProject.Main
                         // Remove Items from the database
                         foreach (Shared.Item item in lItemsToRemove)
                         {
-                            bool checker = false;
-                            lineItemNum = 0;
-                            foreach (Shared.Item invoiceItem in currentInvoice.items)
-                            {
-                                if (checker != true)
-                                {
-                                    if (invoiceItem == item)
-                                    {
-                                        checker = true;
-                                        lineItemNum = invoiceItem.lineItemNum;
-                                    }
-                                }
-                            }
-                            logic.RemoveLineItem(currentInvoice.invoiceNum, lineItemNum);
+                            logic.RemoveLineItem(currentInvoice.invoiceNum, item.lineItemNum);
                         }
                         lItemsToRemove.Clear();
 
@@ -444,7 +431,7 @@ namespace CS3280FinalProject.Main
                 }
                 else
                 {
-                    ItemCostLabel.Content = "Item Cost: $";
+                    ItemCostLabel.Content = "Item Cost:";
                 }
             }
             catch (Exception ex)
@@ -547,7 +534,9 @@ namespace CS3280FinalProject.Main
                     currentInvoice.totalCost = 0;
                     currentInvoice.items.Clear();
 
-                    TotalCostLabel.Content = "Total Cost: $";
+                    TotalCostLabel.Content = "Total Cost:";
+                    InvoiceNumLabel.Content = "Invoice Num:";
+                    InvoiceDatePicker.SelectedDate = null;
 
                     // Disable Edit Invoice Button
                     EditInvoiceButton.IsEnabled = false;
@@ -560,25 +549,34 @@ namespace CS3280FinalProject.Main
                     MainItemDisplay.ItemsSource = currentInvoice.items;
 
                     TotalCostLabel.Content = "Total Cost: $" + currentInvoice.totalCost;
+                    InvoiceDatePicker.SelectedDate = Convert.ToDateTime(currentInvoice.invoiceDate);
 
                     EditInvoiceButton.IsEnabled = true;
                 }
 
+                // Clear lists
                 lItemsToAdd.Clear();
                 lItemsToRemove.Clear();
 
+                // Enable buttons
                 CreateInvoiceButton.IsEnabled = true;
                 MenuSearch.IsEnabled = true;
                 MenuEditItems.IsEnabled = true;
 
+                // Disable buttons
                 AddItemButton.IsEnabled = false;
                 RemoveItemButton.IsEnabled = false;
                 SaveInvoiceButton.IsEnabled = false;
                 CancelInvoiceBtn.IsEnabled = false;
                 InvoiceDatePicker.IsEnabled = false;
+                InvoiceItemComboBox.IsEnabled = false;
 
+                // Fix Labels
                 InvoiceItemComboBox.SelectedIndex = -1;
-                ItemCostLabel.Content = "Item Cost: $";
+                
+                // set bools to false
+                bInvoiceCreation = false;
+                bRemove = false;
             }
             catch (Exception ex)
             {
