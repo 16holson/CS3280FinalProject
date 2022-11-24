@@ -28,7 +28,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid HorizontalAlignment="Center" Margin="0,-10,0,10" Width="340">
+            <Grid HorizontalAlignment="Center" Width="340">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="136.027"/>
                     <RowDefinition/>
@@ -39,7 +39,7 @@
                 <Button x:Name="CreateInvoiceButton" Content="Create Invoice" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="14" Width="150" Height="30" Margin="12,68,0,0" Click="CreateInvoiceButton_Click"/>
 
                 <!--Edit Invoice Button-->
-                <Button x:Name="EditInvoiceButton" Content="Edit Invoice" Width="150" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="14" Margin="180,68,0,0" Click="EditInvoiceButton_Click" IsEnabled="False" RenderTransformOrigin="0.513,0.218"/>
+                <Button x:Name="EditInvoiceButton" Content="Edit Invoice" Width="150" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="14" Margin="180,68,0,0" Click="EditInvoiceButton_Click" IsEnabled="False"/>
 
 
                 <!--Label for Invoice Num that is being viewed-->
