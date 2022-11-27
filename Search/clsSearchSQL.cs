@@ -28,9 +28,10 @@ namespace CS3280FinalProject.Search
     {
         #region Methods
         /// <summary>
-        /// Returns the SQL to get all invoices
+        /// SQL to get all invoices
         /// </summary>
-        /// <returns></returns>
+        /// <returns>SQL for all invoices</returns>
+        /// <exception cref="Exception">Handles all exceptions</exception>
         public string getInvoices()
         {
             try
@@ -43,10 +44,11 @@ namespace CS3280FinalProject.Search
             }
         }
         /// <summary>
-        /// Gets all the items for a given invoice number
+        /// Items for a given invoice number
         /// </summary>
-        /// <param name="invoiceNum"></param>
-        /// <returns></returns>
+        /// <param name="invoiceNum">Wanted Invoice</param>
+        /// <returns>SQL for given invoice</returns>
+        /// <exception cref="Exception">Handles all exceptions</exception>
         public string getItems(int invoiceNum)
         {
             try

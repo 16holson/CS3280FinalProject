@@ -45,12 +45,13 @@ namespace CS3280FinalProject.Search
         /// <summary>
         /// Default Constructor
         /// </summary>
+        /// <exception cref="Exception">Handles all exceptions</exception>
         public wndSearch()
         {
             try
             {
                 InitializeComponent();
-                selectedNum = -1;
+                selectedNum = 0;
                 logic = new clsSearchLogic();
                 populateWindow();
             }
@@ -69,6 +70,7 @@ namespace CS3280FinalProject.Search
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <exception cref="Exception">Handles all exceptions</exception>
         private void selectInvoice_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -96,6 +98,7 @@ namespace CS3280FinalProject.Search
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <exception cref="Exception">Handles all exceptions</exception>
         private void filter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -114,6 +117,7 @@ namespace CS3280FinalProject.Search
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <exception cref="Exception">Handles all exceptions</exception>
         private void clearFilter_Click(object sender, RoutedEventArgs e)
         {
             try
