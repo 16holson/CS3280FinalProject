@@ -1,10 +1,10 @@
 ﻿/*
- * (Insert your name here)
+ * Levi Bernards
  * CS 3280
- * Final Project prototype class clsMainLogic
+ * Final Project class clsMainLogic
  * Shawn Cowder
- * Due: November 19, 2022 at 11:59 PM
- * Version: 0.5
+ * Due: December 10, 2022 at 11:59 PM
+ * Version: 1.0
  *  ----------------------------------------------------------------------------------------------------------
  * This file contains the logistic for the main window so that the logistics is not behind the UI.
  * -----------------------------------------------------------------------------------------------------------
@@ -17,15 +17,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace CS3280FinalProject.Main
 {
     public class clsMainLogic
     {
-
         #region Variables
-
         /// <summary>
         /// Data Access object to perform SQL operations
         /// </summary>
@@ -35,11 +32,9 @@ namespace CS3280FinalProject.Main
         /// Int Variable to store number of rows returned in DataSets
         /// </summary>
         public int rowsReturned;
-
         #endregion
 
         #region Constructor
-
         /// <summary>
         /// Logic class constructor
         /// </summary>
@@ -48,11 +43,9 @@ namespace CS3280FinalProject.Main
             cDataAccess = new clsDataAccess();
             rowsReturned = 0;
         }
-
         #endregion
 
         #region Invoice Information
-
         /// <summary>
         /// Returns a list of invoice Numbers
         /// for all the invoices in the database
@@ -202,11 +195,9 @@ namespace CS3280FinalProject.Main
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
-
         #endregion
 
         #region Edit Invoices
-
         /// <summary>
         /// Creates a new Invoice in the database
         /// Returns the new invoice num from the database
@@ -346,8 +337,6 @@ namespace CS3280FinalProject.Main
                 System.IO.File.AppendAllText(SavePath, Environment.NewLine + "HandleError Exception: " + ex.Message);
             }
         }
-
         #endregion
-
     }
 }

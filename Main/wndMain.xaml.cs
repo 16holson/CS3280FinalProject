@@ -1,10 +1,10 @@
 ﻿/*
- * (Insert your name here)
+ * Levi Bernards
  * CS 3280
- * Final Project prototype Window wndMain
+ * Final Project Window wndMain
  * Shawn Cowder
- * Due: November 19, 2022 at 11:59 PM
- * Version: 0.5
+ * Due: December 10, 2022 at 11:59 PM
+ * Version: 1.0
  *  ----------------------------------------------------------------------------------------------------------
  * This file contains the required event listeners for the Main window.
  * -----------------------------------------------------------------------------------------------------------
@@ -15,7 +15,6 @@ using CS3280FinalProject.Search;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,7 +27,6 @@ namespace CS3280FinalProject.Main
     public partial class wndMain : Window
     {
         #region Variables
-
         /// <summary>
         /// Bool value to know whether items were changed in the Item Window
         /// </summary>
@@ -87,14 +85,11 @@ namespace CS3280FinalProject.Main
             lItemsToAdd = new List<Shared.Item>();
             lItemsToRemove = new List<Shared.Item>();
         }
-
-
         #endregion
 
         #region UI Functions
-
+        
         #region Menu Buttons
-
         /// <summary>
         /// (Braxton Wright, added the code to hide the main window and display the search window)
         /// This event listener listens for when the user clicks the Search item inside the menu.  
@@ -200,11 +195,9 @@ namespace CS3280FinalProject.Main
             }
 
         }
-
         #endregion
 
         #region Invoice Creation/Changing
-
         /// <summary>
         /// Opens up the DatePicker for the user to use
         /// Also updates labels to show That the invoice num
@@ -382,11 +375,9 @@ namespace CS3280FinalProject.Main
                 logic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
-
         #endregion
 
         #region Adding/Removing Items
-
         /// <summary>
         /// Listener for if an item is selected in the Data Grid
         /// Enables the Remove Item Button
@@ -584,13 +575,11 @@ namespace CS3280FinalProject.Main
                 logic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
-
         #endregion
 
         #endregion
 
         #region Screen Functions
-
         /// <summary>
         /// Empties and fills the General Item List
         /// It then casts it onto the ItemComboBox
@@ -647,8 +636,6 @@ namespace CS3280FinalProject.Main
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
-
         #endregion
-
     }
 }

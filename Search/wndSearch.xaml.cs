@@ -1,23 +1,18 @@
+/*
+* Hunter Olson
+* CS 3280
+* Final Project Window wndSearch
+* Shawn Cowder
+* Due: December 10, 2022 at 11:59 PM
+* Version: 1.0
+*  ----------------------------------------------------------------------------------------------------------
+* This file contains the required event listeners for the Search window.
+* -----------------------------------------------------------------------------------------------------------
+*/
 
-﻿using CS3280FinalProject.Shared;
+using CS3280FinalProject.Shared;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-﻿/*
- * Hunter Olson
- * CS 3280
- * Final Project Window wndSearch
- * Shawn Cowder
- * Due: December 10, 2022 at 11:59 PM
- * Version: 0.5
- *  ----------------------------------------------------------------------------------------------------------
- * This file contains the required event listeners for the Search window.
- * -----------------------------------------------------------------------------------------------------------
- */
-
 using System.Windows;
 using System.Windows.Controls;
 
@@ -38,7 +33,6 @@ namespace CS3280FinalProject.Search
         /// Logic used for this window
         /// </summary>
         private clsSearchLogic logic;
-
         #endregion
 
         #region Constructor
@@ -68,8 +62,8 @@ namespace CS3280FinalProject.Search
         /// <summary>
         /// Sets the selectedNum for the main window to use
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">Contains the event data for the event.</param>
         /// <exception cref="Exception">Handles all exceptions</exception>
         private void selectInvoice_Click(object sender, RoutedEventArgs e)
         {
@@ -93,11 +87,12 @@ namespace CS3280FinalProject.Search
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
+
         /// <summary>
         /// Changes the filter
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">Contains the event data for the event.</param>
         /// <exception cref="Exception">Handles all exceptions</exception>
         private void filter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -112,11 +107,12 @@ namespace CS3280FinalProject.Search
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
+
         /// <summary>
         /// Clears the selected values and resets the datagrid
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">Contains the event data for the event.</param>
         /// <exception cref="Exception">Handles all exceptions</exception>
         private void clearFilter_Click(object sender, RoutedEventArgs e)
         {
@@ -130,16 +126,14 @@ namespace CS3280FinalProject.Search
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
-
         #endregion
 
         #region Helper Methods
-
         /// <summary>
         /// Populates the ComboBoxes and DataGrid with values from the database
         /// Call this function before showing this window
         /// </summary>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Handles all exceptions</exception>
         public void populateWindow()
         {
             try
@@ -160,7 +154,6 @@ namespace CS3280FinalProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
-
         #endregion
     }
 }

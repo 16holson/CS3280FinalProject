@@ -1,36 +1,28 @@
+/*
+* Hunter Olson
+* CS 3280
+* Final Project class clsSearchLogic
+* Shawn Cowder
+* Due: December 10, 2022 at 11:59 PM
+* Version: 1.0
+*  ----------------------------------------------------------------------------------------------------------
+* This file contains the logistic for the search window so that the logistics is not behind the UI.
+* -----------------------------------------------------------------------------------------------------------
+*/
 
 using System;
 using System.Collections.Generic;
-using System.Data.OleDb;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using CS3280FinalProject.Shared;
-﻿/*
- * Hunter Olson
- * CS 3280
- * Final Project class clsSearchLogic
- * Shawn Cowder
- * Due: December 10, 2022 at 11:59 PM
- * Version: 0.5
- *  ----------------------------------------------------------------------------------------------------------
- * This file contains the logistic for the search window so that the logistics is not behind the UI.
- * -----------------------------------------------------------------------------------------------------------
- */
 
 namespace CS3280FinalProject.Search
 {
     public class clsSearchLogic
     {
         #region Class Variables
-        /// <summary>
-        /// Connection string to the database.
-        /// </summary>
-        private string sConnectionString;
         /// <summary>
         /// Holds the list of all invoices and their items
         /// </summary>
@@ -54,7 +46,6 @@ namespace CS3280FinalProject.Search
         {
             try
             {
-                sConnectionString = sConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Directory.GetCurrentDirectory() + "\\Invoice.accdb";
                 invoices = new List<Shared.Invoice>();
                 sql = new clsSearchSQL();
                 dataAccess = new clsDataAccess();
@@ -88,6 +79,7 @@ namespace CS3280FinalProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+
         /// <summary>
         /// Returns a list of distinct invoiceDates
         /// </summary>
@@ -107,6 +99,7 @@ namespace CS3280FinalProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+
         /// <summary>
         /// Returns a list of distinct invoiceTotals
         /// </summary>
@@ -127,13 +120,15 @@ namespace CS3280FinalProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+
         /// <summary>
         /// Sorts invoices based on given parameters
         /// </summary>
         /// <param name="num">invoice number</param>
         /// <param name="date">invoice date</param>
         /// <param name="total">total cost</param>
-        /// <returns>List of filetered Invoices</returns>
+        /// <returns>List of filtered Invoices</returns>
+        /// <exception cref="Exception">Handles all exceptions</exception>
         public List<Invoice> filterList(string num, string date, string total)
         {
             try
@@ -161,7 +156,6 @@ namespace CS3280FinalProject.Search
         #endregion
 
         #region Helper Methods
-
         /// <summary>
         /// Populates the invoices list with all invoices
         /// </summary>
@@ -212,6 +206,7 @@ namespace CS3280FinalProject.Search
         /// </summary>
         /// <param name="sClass">The class in which the error occurred in.</param>
         /// <param name="sMethod">The method in which the error occurred in.</param>
+        /// <param name="sMessage">The message generated.</param>
         public void HandleError(string sClass, string sMethod, string sMessage)
         {
             try

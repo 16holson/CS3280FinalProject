@@ -1,30 +1,24 @@
 ﻿/*
- * (Insert your name here)
+ * Levi Bernards
  * CS 3280
- * Final Project prototype class clsItemsSQL
+ * Final Project class clsItemsSQL
  * Shawn Cowder
- * Due: November 19, 2022 at 11:59 PM
- * Version: 0.5
+ * Due: December 10, 2022 at 11:59 PM
+ * Version: 1.0
  *  ----------------------------------------------------------------------------------------------------------
  * This file contains the functions for the main window that returns a string representing the SQL statement
  * to query the DB.
  * -----------------------------------------------------------------------------------------------------------
  */
 
-using CS3280FinalProject.Shared;
-using Microsoft.VisualBasic;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Windows.Controls.Primitives;
 
 namespace CS3280FinalProject.Main
 {
     public static class clsMainSQL
     {
-
         #region InvoiceCreation
-
         /// <summary>
         /// Returns a SQL String to create a new invoice
         /// </summary>
@@ -119,11 +113,9 @@ namespace CS3280FinalProject.Main
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
-
         #endregion
 
         #region Invoice Information
-
         /// <summary>
         /// Returns a SQL String to get a
         /// List of all Invoice Numbers in the database
@@ -250,7 +242,6 @@ namespace CS3280FinalProject.Main
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
-
         #endregion
     }
 }

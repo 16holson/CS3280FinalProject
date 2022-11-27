@@ -1,26 +1,18 @@
+/*
+* Hunter Olson
+* CS 3280
+* Final Project class clsSearchSQL
+* Shawn Cowder
+* Due: December 10, 2022 at 11:59 PM
+* Version: 1.0
+*  ----------------------------------------------------------------------------------------------------------
+* This file contains the functions for the search window that returns a string representing the SQL statement
+* to query the DB.
+* -----------------------------------------------------------------------------------------------------------
+*/
 
-﻿using System;
-using System.Collections.Generic;
-using System.Data.OleDb;
-using System.Data;
-using System.Linq;
+using System;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.IO;
-﻿/*
- * Hunter Olson
- * CS 3280
- * Final Project class clsSearchSQL
- * Shawn Cowder
- * Due: December 10, 2022 at 11:59 PM
- * Version: 0.5
- *  ----------------------------------------------------------------------------------------------------------
- * This file contains the functions for the search window that returns a string representing the SQL statement
- * to query the DB.
- * -----------------------------------------------------------------------------------------------------------
- */
 
 namespace CS3280FinalProject.Search
 {
@@ -43,6 +35,7 @@ namespace CS3280FinalProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+
         /// <summary>
         /// Items for a given invoice number
         /// </summary>
