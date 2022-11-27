@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.IO;
 ﻿/*
- * (Insert your name here)
+ * Hunter Olson
  * CS 3280
- * Final Project prototype class clsSearchSQL
+ * Final Project class clsSearchSQL
  * Shawn Cowder
- * Due: November 19, 2022 at 11:59 PM
+ * Due: December 10, 2022 at 11:59 PM
  * Version: 0.5
  *  ----------------------------------------------------------------------------------------------------------
  * This file contains the functions for the search window that returns a string representing the SQL statement
@@ -28,10 +28,9 @@ namespace CS3280FinalProject.Search
     {
         #region Methods
         /// <summary>
-        /// SQL to get all invoices
+        /// Returns the SQL to get all invoices
         /// </summary>
-        /// <returns>SQL for all invoices</returns>
-        /// <exception cref="Exception">Handles all exceptions</exception>
+        /// <returns></returns>
         public string getInvoices()
         {
             try
@@ -44,11 +43,10 @@ namespace CS3280FinalProject.Search
             }
         }
         /// <summary>
-        /// Items for a given invoice number
+        /// Gets all the items for a given invoice number
         /// </summary>
-        /// <param name="invoiceNum">Wanted Invoice</param>
-        /// <returns>SQL for given invoice</returns>
-        /// <exception cref="Exception">Handles all exceptions</exception>
+        /// <param name="invoiceNum"></param>
+        /// <returns></returns>
         public string getItems(int invoiceNum)
         {
             try

@@ -8,12 +8,11 @@
         mc:Ignorable="d"
         Title="wndItems"
         Height="auto" 
-        MaxHeight="450"
-        Width="{Binding Width, ElementName=SplitWindowInto2Columns, Mode=OneWay}"
-        SizeToContent="WidthAndHeight"
+        MaxHeight="450" 
         WindowStartupLocation="CenterOwner" 
         ResizeMode="CanMinimize"
-        Style="{StaticResource windowStyle}">
+        Style="{StaticResource windowStyle}"
+        SizeToContent="Width">
     <Window.Resources>
         <Style x:Key="ItemsButtons" TargetType="{x:Type Button}" BasedOn="{StaticResource buttonStyle}">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -37,7 +36,7 @@
     </Window.Resources>
 
     <!--Window creation-->
-    <Grid x:Name="SplitWindowInto2Columns" ShowGridLines="False">
+    <Grid ShowGridLines="False">
         <!--Split the window into two columns, the left for the controls and the right for the data-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="376"/>
@@ -58,7 +57,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <!--Section for adding/editing items-->
+                <!--Section for user input-->
                 <Grid Grid.Row="0" ShowGridLines="False">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -72,10 +71,10 @@
                     </Grid.RowDefinitions>
 
                     <Label x:Name="lblCode" Grid.Row="0" Content="Code:" Style="{StaticResource Labels}"/>
-                    <TextBox x:Name="txtItemCode" Text="" HorizontalAlignment="Left" Width="auto" MinWidth="75" MaxWidth="315" Style="{StaticResource TextInputs}" Grid.Column="1" MaxLength="4" CharacterCasing="Upper"/>
+                    <TextBox x:Name="txtItemCode" Text="" HorizontalAlignment="Left" Width="auto" MinWidth="75" MaxWidth="315" Style="{StaticResource TextInputs}" Grid.Column="1" MaxLength="4" CharacterCasing="Upper" PreviewKeyDown="txtItemCode_PreviewKeyDown"/>
 
                     <Label x:Name="lblCost" Grid.Row="1" Content="Cost:" Style="{StaticResource Labels}"/>
-                    <TextBox x:Name="txtItemCost" Text="" HorizontalAlignment="Left" Width="auto" MinWidth="75" MaxWidth="315" Style="{StaticResource TextInputs}" PreviewKeyDown="txtItemCost_PreviewKeyDown" Grid.Row="1" Grid.Column="1" MaxLength="8"/>
+                    <TextBox x:Name="txtItemCost" Text="" HorizontalAlignment="Left" Width="auto" MinWidth="75" MaxWidth="315" Style="{StaticResource TextInputs}" PreviewKeyDown="txtItemCost_PreviewKeyDown" Grid.Row="1" Grid.Column="1" MaxLength="7"/>
 
                     <Label x:Name="lblDescription" Grid.Row="2" Content="Description:" HorizontalAlignment="Left" Style="{StaticResource Labels}"/>
                     <TextBox x:Name="txtItemDesc" Style="{StaticResource TextInputs}" Grid.Row="4" Grid.ColumnSpan="2" MaxLength="50"/>

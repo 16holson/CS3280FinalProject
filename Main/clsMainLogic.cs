@@ -234,11 +234,11 @@ namespace CS3280FinalProject.Main
         /// </summary>
         /// <param name="iEditedInvoice">Invoice Object</param>
         /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
-        public void UpdateInvoiceCost(Shared.Invoice iEditedInvoice)
+        public void UpdateInvoiceInfo(Shared.Invoice iEditedInvoice)
         {
             try
             {
-                int success = cDataAccess.ExecuteNonQuery(clsMainSQL.UpdateTotalCost(iEditedInvoice.totalCost, iEditedInvoice.invoiceNum));
+                int success = cDataAccess.ExecuteNonQuery(clsMainSQL.UpdateInvoiceInfo(iEditedInvoice.totalCost, iEditedInvoice.invoiceNum, iEditedInvoice.invoiceDate));
 
             }
             catch (System.Exception ex)
@@ -288,7 +288,44 @@ namespace CS3280FinalProject.Main
             }
         }
 
+        /// <summary>
+        /// A Method to update the cost of all invoices after
+        /// the Edit window is closed if there is a change
+        /// made in the item section of the database
+        /// </summary>
+        /// <exception cref="Exception">Catches any exceptions that this method might come across</exception>
+        public void UpdateAllInvoiceCosts()
+        {
+            try
+            {
+                // Get List of all Invoices as they currently are in database
+                List<Shared.Invoice> invoiceList = GetInvoices();
 
+                foreach(Shared.Invoice currInvoice in invoiceList)
+                {
+                    Shared.Invoice invoice = GetInvoice(currInvoice.invoiceNum);
+                    invoice.items = GetInvoiceItems(invoice.invoiceNum);
+                    int totalCost = 0;
+                    foreach(Shared.Item item in invoice.items)
+                    {
+                        totalCost += item.itemCost;
+                    }
+                    // if bool is true (at least one item changed)
+                    if (invoice.totalCost != totalCost)
+                    {
+                        // Update invoice in database
+                        invoice.totalCost = totalCost;
+                        UpdateInvoiceInfo(invoice);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message); ;
+
+            }
+        }
         #endregion
 
         #region Error Handling

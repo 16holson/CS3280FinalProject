@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using CS3280FinalProject.Shared;
 ﻿/*
- * (Insert your name here)
+ * Hunter Olson
  * CS 3280
- * Final Project prototype class clsSearchLogic
+ * Final Project class clsSearchLogic
  * Shawn Cowder
- * Due: November 19, 2022 at 11:59 PM
+ * Due: December 10, 2022 at 11:59 PM
  * Version: 0.5
  *  ----------------------------------------------------------------------------------------------------------
  * This file contains the logistic for the search window so that the logistics is not behind the UI.
@@ -35,21 +35,13 @@ namespace CS3280FinalProject.Search
         /// Holds the list of all invoices and their items
         /// </summary>
         public List<Shared.Invoice> invoices;
-        /// <summary>
-        /// Sql needed for the logic
-        /// </summary>
         private clsSearchSQL sql;
-        /// <summary>
-        /// Executes sql statements
-        /// </summary>
-        private clsDataAccess dataAccess;
         #endregion
 
         #region Constructor
         /// <summary>
         /// Constructor that sets the connection string to the database
         /// </summary>
-        /// <exception cref="Exception">Handles all exceptions</exception>
 		public clsSearchLogic()
         {
             try
@@ -57,7 +49,6 @@ namespace CS3280FinalProject.Search
                 sConnectionString = sConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Directory.GetCurrentDirectory() + "\\Invoice.accdb";
                 invoices = new List<Shared.Invoice>();
                 sql = new clsSearchSQL();
-                dataAccess = new clsDataAccess();
                 populateInvoices();
             }
             catch(Exception ex)
@@ -72,8 +63,7 @@ namespace CS3280FinalProject.Search
         /// <summary>
         /// Returns a list of distinct invoiceNums
         /// </summary>
-        /// <returns>List of invoiceNums that is ordered</returns>
-        /// <exception cref="Exception">Handles all exceptions</exception>
+        /// <returns></returns>
         public List<int> getInvoiceNumList()
         {
             try
@@ -91,8 +81,7 @@ namespace CS3280FinalProject.Search
         /// <summary>
         /// Returns a list of distinct invoiceDates
         /// </summary>
-        /// <returns>List of invoice dates that is ordered</returns>
-        /// <exception cref="Exception">Handles all exceptions</exception>
+        /// <returns></returns>
         public List<String> getInvoiceDateList()
         {
             try
@@ -110,8 +99,7 @@ namespace CS3280FinalProject.Search
         /// <summary>
         /// Returns a list of distinct invoiceTotals
         /// </summary>
-        /// <returns>List of totalCosts that is sorted</returns>
-        /// <exception cref="Exception">Handles all exceptions</exception>
+        /// <returns></returns>
         public List<int> getInvoiceTotalList()
         {
             try
@@ -133,7 +121,7 @@ namespace CS3280FinalProject.Search
         /// <param name="num">invoice number</param>
         /// <param name="date">invoice date</param>
         /// <param name="total">total cost</param>
-        /// <returns>List of filetered Invoices</returns>
+        /// <returns></returns>
         public List<Invoice> filterList(string num, string date, string total)
         {
             try
@@ -162,10 +150,6 @@ namespace CS3280FinalProject.Search
 
         #region Helper Methods
 
-        /// <summary>
-        /// Populates the invoices list with all invoices
-        /// </summary>
-        /// <exception cref="Exception">Handles all exceptions</exception>
         private void populateInvoices()
         {
             try
@@ -173,28 +157,28 @@ namespace CS3280FinalProject.Search
                 //Populate invoices
                 DataSet invoicesDS = new DataSet();
                 int iRef = 0;
-                invoicesDS = dataAccess.ExecuteSQLStatement(sql.getInvoices(), ref iRef);
+                invoicesDS = ExecuteSQLStatement(sql.getInvoices(), ref iRef);
                 foreach(DataRow dr in invoicesDS.Tables[0].Rows)
                 {
                     Shared.Invoice invoice = new Shared.Invoice();
-                    invoice.invoiceNum = Int32.Parse(dr[0].ToString());
+                    invoice.invoiceNum = int.Parse(dr[0].ToString());
                     invoice.invoiceDate = dr[1].ToString();
                     //Get the date not the time
                     invoice.invoiceDate = invoice.invoiceDate.Substring(0, invoice.invoiceDate.IndexOf(" "));
-                    invoice.totalCost = Int32.Parse(dr[2].ToString());
+                    invoice.totalCost = int.Parse(dr[2].ToString());
                     invoices.Add(invoice);
                 }
                 //Populate each invoice in invoices with their items
                 DataSet itemsDS = new DataSet();
                 foreach(Invoice invoice in invoices)
                 {
-                    itemsDS = dataAccess.ExecuteSQLStatement(sql.getItems(invoice.invoiceNum), ref iRef);
+                    itemsDS = ExecuteSQLStatement(sql.getItems(invoice.invoiceNum), ref iRef);
                     foreach(DataRow dr in itemsDS.Tables[0].Rows)
                     {
                         Shared.Item item = new Shared.Item();
                         item.itemCode = dr[0].ToString();
                         item.itemDesc = dr[1].ToString();
-                        item.itemCost = Int32.Parse(dr[2].ToString());
+                        item.itemCost = int.Parse(dr[2].ToString());
                         invoice.items.Add(item);
                     }
                 }
@@ -207,6 +191,131 @@ namespace CS3280FinalProject.Search
             }
         }
 
+        /// <summary>
+        /// This method takes an SQL statement that is passed in and executes it.  The resulting values
+        /// are returned in a DataSet.  The number of rows returned from the query will be put into
+        /// the reference parameter iRetVal.
+        /// </summary>
+        /// <param name="sSQL">The SQL statement to be executed.</param>
+        /// <param name="iRetVal">Reference parameter that returns the number of selected rows.</param>
+        /// <returns>Returns a DataSet that contains the data from the SQL statement.</returns>
+		private DataSet ExecuteSQLStatement(string sSQL, ref int iRetVal)
+        {
+            try
+            {
+                //Create a new DataSet
+                DataSet ds = new DataSet();
+
+                using (OleDbConnection conn = new OleDbConnection(sConnectionString))
+                {
+                    using (OleDbDataAdapter adapter = new OleDbDataAdapter())
+                    {
+
+                        //Open the connection to the database
+                        conn.Open();
+
+                        //Add the information for the SelectCommand using the SQL statement and the connection object
+                        adapter.SelectCommand = new OleDbCommand(sSQL, conn);
+                        adapter.SelectCommand.CommandTimeout = 0;
+
+                        //Fill up the DataSet with data
+                        adapter.Fill(ds);
+                    }
+                }
+
+                //Set the number of values returned
+                iRetVal = ds.Tables[0].Rows.Count;
+
+                //return the DataSet
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// This method takes an SQL statement that is passed in and executes it.  The resulting single 
+        /// value is returned.
+        /// </summary>
+        /// <param name="sSQL">The SQL statement to be executed.</param>
+        /// <returns>Returns a string from the scalar SQL statement.</returns>
+		private string ExecuteScalarSQL(string sSQL)
+        {
+            try
+            {
+                //Holds the return value
+                object obj;
+
+                using (OleDbConnection conn = new OleDbConnection(sConnectionString))
+                {
+                    using (OleDbDataAdapter adapter = new OleDbDataAdapter())
+                    {
+
+                        //Open the connection to the database
+                        conn.Open();
+
+                        //Add the information for the SelectCommand using the SQL statement and the connection object
+                        adapter.SelectCommand = new OleDbCommand(sSQL, conn);
+                        adapter.SelectCommand.CommandTimeout = 0;
+
+                        //Execute the scalar SQL statement
+                        obj = adapter.SelectCommand.ExecuteScalar();
+                    }
+                }
+
+                //See if the object is null
+                if (obj == null)
+                {
+                    //Return a blank
+                    return "";
+                }
+                else
+                {
+                    //Return the value
+                    return obj.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// This method takes an SQL statement that is a non query and executes it.
+        /// </summary>
+        /// <param name="sSQL">The SQL statement to be executed.</param>
+        /// <returns>Returns the number of rows affected by the SQL statement.</returns>
+        private int ExecuteNonQuery(string sSQL)
+        {
+            try
+            {
+                //Number of rows affected
+                int iNumRows;
+
+                using (OleDbConnection conn = new OleDbConnection(sConnectionString))
+                {
+                    //Open the connection to the database
+                    conn.Open();
+
+                    //Add the information for the SelectCommand using the SQL statement and the connection object
+                    OleDbCommand cmd = new OleDbCommand(sSQL, conn);
+                    cmd.CommandTimeout = 0;
+
+                    //Execute the non query SQL statement
+                    iNumRows = cmd.ExecuteNonQuery();
+                }
+
+                //return the number of rows affected
+                return iNumRows;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
         /// <summary>
         /// Handle the error.
         /// </summary>

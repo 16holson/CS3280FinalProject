@@ -7,11 +7,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 ﻿/*
- * (Insert your name here)
+ * Hunter Olson
  * CS 3280
- * Final Project prototype Window wndSearch
+ * Final Project Window wndSearch
  * Shawn Cowder
- * Due: November 19, 2022 at 11:59 PM
+ * Due: December 10, 2022 at 11:59 PM
  * Version: 0.5
  *  ----------------------------------------------------------------------------------------------------------
  * This file contains the required event listeners for the Search window.
@@ -50,7 +50,7 @@ namespace CS3280FinalProject.Search
             try
             {
                 InitializeComponent();
-                selectedNum = 0;
+                selectedNum = -1;
                 logic = new clsSearchLogic();
                 populateWindow();
             }

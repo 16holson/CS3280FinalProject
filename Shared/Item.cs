@@ -6,7 +6,7 @@
  * Due: December 10, 2022 at 11:59 PM
  * Version: 1.0
  * -----------------------------------------------------------------------------------------------------------
- * This file contains the variables and functions that are required make an item.
+ * This file contains the variables and functions that are required make an Item for the UI.
  * -----------------------------------------------------------------------------------------------------------
  */
 
@@ -32,7 +32,7 @@ namespace CS3280FinalProject.Shared
         /// <summary>
         /// Private items cost
         /// </summary>
-        private int iItemCost;
+        private int sItemCost;
 
         /// <summary>
         /// private line item number
@@ -85,11 +85,11 @@ namespace CS3280FinalProject.Shared
         {
             get
             {
-                return iItemCost;
+                return sItemCost;
             }
             set
             {
-                iItemCost = value;
+                sItemCost = value;
 
                 if (PropertyChanged != null)
                     PropertyChanged(this, new PropertyChangedEventArgs("itemCost"));

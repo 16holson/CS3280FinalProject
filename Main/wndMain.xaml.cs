@@ -81,6 +81,7 @@ namespace CS3280FinalProject.Main
             logic = new clsMainLogic();
             fillItemCB();
             currentInvoice = new Shared.Invoice();
+            currentInvoice.invoiceNum = -1;
             MainItemDisplay.ItemsSource = currentInvoice.items;
 
             lItemsToAdd = new List<Shared.Item>();
@@ -181,6 +182,16 @@ namespace CS3280FinalProject.Main
                 {
                     //Refill Combo Box
                     fillItemCB();
+
+                    //Update all invoices
+                    logic.UpdateAllInvoiceCosts();
+
+                    if(currentInvoice.invoiceNum != -1)
+                    {
+                        currentInvoice = logic.GetInvoice(currentInvoice.invoiceNum);
+                        MainItemDisplay.ItemsSource = currentInvoice.items;
+                        TotalCostLabel.Content = "Total Cost: $" + currentInvoice.totalCost;
+                    }
                 }
             }
             catch (Exception ex)
@@ -211,23 +222,28 @@ namespace CS3280FinalProject.Main
                 EditInvoiceButton.IsEnabled = false;
                 MenuSearch.IsEnabled = false;
                 MenuEditItems.IsEnabled = false;
+                SaveInvoiceButton.IsEnabled = true;
 
 
                 //Force User to select a Date
                 InvoiceDatePicker.IsEnabled = true;
-                InvoiceDatePicker.SelectedDate = DateTime.Now;
+                InvoiceDatePicker.SelectedDate = null;
                 bInvoiceCreation = true;
                 CancelInvoiceBtn.IsEnabled = true;
 
+                //Enable Item Select Combo Box
+                InvoiceItemComboBox.IsEnabled = true;
+
                 //Empty DataGrid
                 currentInvoice = new Shared.Invoice();
+                currentInvoice.items.Clear();
                 currentInvoice.invoiceNum = -1;
                 currentInvoice.totalCost = 0;
                 MainItemDisplay.ItemsSource = currentInvoice.items;
 
                 // Show TBD as the Invoice Num
                 InvoiceNumLabel.Content = "Invoice Num: TBD";
-                TotalCostLabel.Content = "Total Cost: __";
+                TotalCostLabel.Content = "Total Cost: $" + currentInvoice.totalCost;
 
             }
             catch (Exception ex)
@@ -260,6 +276,7 @@ namespace CS3280FinalProject.Main
 
                 // Enable the Combo Box for user use
                 InvoiceItemComboBox.IsEnabled = true;
+                InvoiceDatePicker.IsEnabled = true;
 
                 if(MainItemDisplay.SelectedIndex != -1)
                 {
@@ -283,75 +300,82 @@ namespace CS3280FinalProject.Main
         {
             try
             {
-                if (currentInvoice.invoiceNum == -1)
+                if (currentInvoice.items.Count > 0 && InvoiceDatePicker.SelectedDate != null)
                 {
-                    // Create Invoice in Database, and get invoice Number back
-                    currentInvoice.invoiceNum = logic.SaveNewInvoice(currentInvoice);
-
-                    // Update Items associated with Invoice in database
-                    int count = 1;
-                    foreach (Shared.Item item in lItemsToAdd)
+                    if (currentInvoice.invoiceNum == -1)
                     {
-                        logic.AddItemToInvoice(currentInvoice.invoiceNum, count, item.itemCode);
-                        count++;
+                        // Pull Date value from database
+                        currentInvoice.invoiceDate = InvoiceDatePicker.SelectedDate.Value.Date.ToString();
+
+                        // Create Invoice in Database, and get invoice Number back
+                        currentInvoice.invoiceNum = logic.SaveNewInvoice(currentInvoice);
+                        InvoiceNumLabel.Content = "Invoice Num: " + currentInvoice.invoiceNum;
+
+                        // Update Items associated with Invoice in database
+                        int count = 1;
+                        foreach (Shared.Item item in lItemsToAdd)
+                        {
+                            logic.AddItemToInvoice(currentInvoice.invoiceNum, count, item.itemCode);
+                            count++;
+                        }
+                        lItemsToAdd.Clear();
                     }
-                    lItemsToAdd.Clear();
+                    else
+                    {
+                        int lineItemNum;
+                        // Remove Items from the database
+                        foreach (Shared.Item item in lItemsToRemove)
+                        {
+                            logic.RemoveLineItem(currentInvoice.invoiceNum, item.lineItemNum);
+                        }
+                        lItemsToRemove.Clear();
+
+                        // Add Items to the Database
+                        lineItemNum = Int32.Parse(logic.GetMaxLineItem(currentInvoice.invoiceNum).ToString()) + 1;
+                        foreach (Shared.Item item in lItemsToAdd)
+                        {
+                            logic.AddItemToInvoice(currentInvoice.invoiceNum, lineItemNum, item.itemCode);
+                            lineItemNum++;
+                        }
+                        lItemsToAdd.Clear();
+
+                        // Pull Date value from database
+                        currentInvoice.invoiceDate = InvoiceDatePicker.SelectedDate.Value.Date.ToString();
+
+                        // Update Invoice Cost
+                        logic.UpdateInvoiceInfo(currentInvoice);
+                    }
+
+                    // Bools = false
+                    bInvoiceCreation = false;
+                    bRemove = false;
+
+                    // Disable Information Changing Buttons
+                    AddItemButton.IsEnabled = false;
+                    RemoveItemButton.IsEnabled = false;
+                    SaveInvoiceButton.IsEnabled = false;
+                    InvoiceItemComboBox.IsEnabled = false;
+                    CancelInvoiceBtn.IsEnabled = false;
+                    InvoiceDatePicker.IsEnabled = false;
+
+                    //Enable Edit option, Create option and Menu buttons
+                    EditInvoiceButton.IsEnabled = true;
+                    CreateInvoiceButton.IsEnabled = true;
+                    MenuEditItems.IsEnabled = true;
+                    MenuSearch.IsEnabled = true;
+
+                    // Set Combo Box to null and empty error label
+                    InvoiceItemComboBox.SelectedIndex = -1;
+                    SaveErrorLabel.Content = "";
+                }
+                else if(currentInvoice.items.Count < 1)
+                {
+                    SaveErrorLabel.Content = "Add Items to Invoice Before Saving!";
                 }
                 else
                 {
-                    int lineItemNum;
-                    // Remove Items from the database
-                    foreach(Shared.Item item in lItemsToRemove)
-                    {
-                        bool checker = false;
-                        lineItemNum = 0;
-                        foreach (Shared.Item invoiceItem in currentInvoice.items)
-                        {
-                            if(checker != true)
-                            {
-                                if(invoiceItem == item)
-                                {
-                                    checker = true;
-                                    lineItemNum = invoiceItem.lineItemNum;
-                                }
-                            }
-                        }
-                        logic.RemoveLineItem(currentInvoice.invoiceNum, lineItemNum);
-                    }
-                    lItemsToRemove.Clear();
-
-                    // Add Items to the Database
-                    lineItemNum = Int32.Parse(logic.GetMaxLineItem(currentInvoice.invoiceNum).ToString()) + 1;
-                    foreach(Shared.Item item in lItemsToAdd)
-                    {
-                        logic.AddItemToInvoice(currentInvoice.invoiceNum, lineItemNum, item.itemCode);
-                        lineItemNum++;
-                    }
-                    lItemsToAdd.Clear();
-
-                    // Update Invoice Cost
-                    logic.UpdateInvoiceCost(currentInvoice);
+                    SaveErrorLabel.Content = "Select a Date for the Invoice!";
                 }
-
-                // Bools = false
-                bInvoiceCreation = false;
-                bRemove = false;
-
-                // Disable Information Changing Buttons
-                AddItemButton.IsEnabled = false;
-                RemoveItemButton.IsEnabled = false;
-                SaveInvoiceButton.IsEnabled = false;
-                InvoiceItemComboBox.IsEnabled = false;
-                MainItemDisplay.IsEnabled = false;
-                CancelInvoiceBtn.IsEnabled = false;
-
-                //Enable Edit option, Create option and Menu buttons
-                EditInvoiceButton.IsEnabled = true;
-                CreateInvoiceButton.IsEnabled = true;
-                MenuEditItems.IsEnabled = true;
-                MenuSearch.IsEnabled = true;
-
-                InvoiceItemComboBox.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
@@ -364,38 +388,6 @@ namespace CS3280FinalProject.Main
         #region Adding/Removing Items
 
         /// <summary>
-        /// Event Listener for when the date is changed by the user
-        /// Creates a new invoice object and saves the selected date
-        /// Also enables use of buttons for invoice creation
-        /// </summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">Contains the event data for the event.</param>
-        private void DateChange(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                if (bInvoiceCreation == true)
-                {
-                    // Enable Date picker
-                    InvoiceDatePicker.IsEnabled = false;
-
-                    // Create a new invoice, save date value
-                    currentInvoice = new Shared.Invoice();
-                    currentInvoice.invoiceDate = InvoiceDatePicker.SelectedDate.Value.Date.ToString();
-
-                    // Enable the Combo Box and Save Button for user use
-                    InvoiceItemComboBox.IsEnabled = true;
-                    SaveInvoiceButton.IsEnabled = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                logic.HandleException(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
-            
-        }
-
-        /// <summary>
         /// Listener for if an item is selected in the Data Grid
         /// Enables the Remove Item Button
         /// </summary>
@@ -405,7 +397,7 @@ namespace CS3280FinalProject.Main
         {
             try
             {
-                if (bRemove == true && MainItemDisplay.SelectedIndex != -1)
+                if ((bRemove == true || bInvoiceCreation == true) && MainItemDisplay.SelectedIndex != -1)
                 {
                     // Enable Remove Item Button
                     RemoveItemButton.IsEnabled = true;
@@ -439,7 +431,7 @@ namespace CS3280FinalProject.Main
                 }
                 else
                 {
-                    ItemCostLabel.Content = "Item Cost: $";
+                    ItemCostLabel.Content = "Item Cost:";
                 }
             }
             catch (Exception ex)
@@ -542,7 +534,9 @@ namespace CS3280FinalProject.Main
                     currentInvoice.totalCost = 0;
                     currentInvoice.items.Clear();
 
-                    TotalCostLabel.Content = "Total Cost: $";
+                    TotalCostLabel.Content = "Total Cost:";
+                    InvoiceNumLabel.Content = "Invoice Num:";
+                    InvoiceDatePicker.SelectedDate = null;
 
                     // Disable Edit Invoice Button
                     EditInvoiceButton.IsEnabled = false;
@@ -555,24 +549,34 @@ namespace CS3280FinalProject.Main
                     MainItemDisplay.ItemsSource = currentInvoice.items;
 
                     TotalCostLabel.Content = "Total Cost: $" + currentInvoice.totalCost;
+                    InvoiceDatePicker.SelectedDate = Convert.ToDateTime(currentInvoice.invoiceDate);
 
                     EditInvoiceButton.IsEnabled = true;
                 }
 
+                // Clear lists
                 lItemsToAdd.Clear();
                 lItemsToRemove.Clear();
 
+                // Enable buttons
                 CreateInvoiceButton.IsEnabled = true;
                 MenuSearch.IsEnabled = true;
                 MenuEditItems.IsEnabled = true;
 
+                // Disable buttons
                 AddItemButton.IsEnabled = false;
                 RemoveItemButton.IsEnabled = false;
                 SaveInvoiceButton.IsEnabled = false;
                 CancelInvoiceBtn.IsEnabled = false;
+                InvoiceDatePicker.IsEnabled = false;
+                InvoiceItemComboBox.IsEnabled = false;
 
+                // Fix Labels
                 InvoiceItemComboBox.SelectedIndex = -1;
-                ItemCostLabel.Content = "Item Cost: $";
+                
+                // set bools to false
+                bInvoiceCreation = false;
+                bRemove = false;
             }
             catch (Exception ex)
             {

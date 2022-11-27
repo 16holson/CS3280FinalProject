@@ -152,7 +152,21 @@ namespace CS3280FinalProject.Items
 
         #region Event Listeners
         /// <summary>
-        /// This event listener listens for when a user press a key and validates that it is one of the following keys 0-9, '.', or the left and right arrows.
+        /// This event listener listens for when a user press a key and validates that it is not the space bar.
+        /// </summary>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">Contains the event data for the event.</param>
+        private void txtItemCode_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                //Stop the character from being entered into the textbox because space characters are not allowed for the item's codes.
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// This event listener listens for when a user press a key and validates that it is one of the following keys 0-9, backspace, left and right arrow, or a tab.
         /// </summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">Contains the event data for the event.</param>
@@ -160,13 +174,13 @@ namespace CS3280FinalProject.Items
         {
             try
             {
-                if (((e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) || (e.Key == Key.Decimal || e.Key == Key.OemPeriod)) && e.Key != Key.Space || e.Key == Key.Back || e.Key == Key.Right || e.Key == Key.Left || e.Key == Key.Tab)
+                if ((e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) || e.Key == Key.Back || e.Key == Key.Right || e.Key == Key.Left || e.Key == Key.Tab)
                 {
                     //do nothing allow the key to be accepted
                 }
                 else
                 {
-                    //Stop the character from being entered into the textbox because it neither a digit, a '.', a left or right arrow, or a tab keystroke.
+                    //Stop the character from being entered into the textbox because it neither a digit, a backspace, a left/right arrow, or a tab.
                     e.Handled = true;
                 }
             }
@@ -212,14 +226,14 @@ namespace CS3280FinalProject.Items
             try
             {
                 //need to implement a check to make sure that the code is not taken by another.
-                if (txtItemCode.Text != "" && !ItemLogic.ItemCodeIsTaken(txtItemCode.Text) && ItemLogic.ValidateCostFormat(txtItemCost.Text) && txtItemDesc.Text != "")
+                if (txtItemCode.Text != "" && !ItemLogic.ItemCodeIsTaken(txtItemCode.Text) && txtItemCost.Text != "" && txtItemDesc.Text != "")
                 {
-                    float cost = float.Parse(txtItemCost.Text);
+                    int cost = int.Parse(txtItemCost.Text);
 
                     ItemLogic.AddItem(txtItemCode.Text, txtItemDesc.Text, cost);  //add the item to the DB
                     //Add the item to the Items ObservableCollection (and because Items is a ObservableCollection, it is the source of the DataGrid "datagridItems", and the clsItems has the interface "INotifyPropertyChanged",
                     //also to the DataGrid "datagridItems")
-                    Items.Add(new Item(txtItemCode.Text, txtItemDesc.Text, Int32.Parse(txtItemCost.Text)));
+                    Items.Add(new Item(txtItemCode.Text, txtItemDesc.Text, cost));
 
                     ItemsChanged = true;  //once everything has been added, set the changed variable to tell the user that there has been a change in the items
 
@@ -290,14 +304,14 @@ namespace CS3280FinalProject.Items
             try
             {
                 //perform checks on the data to make sure it is valid
-                if (ItemLogic.ValidateCostFormat(txtItemCost.Text) && txtItemDesc.Text != "")  //validate that the price is in the correct format and that the description is not empty.
+                if (txtItemCost.Text != "" && txtItemDesc.Text != "")  //validate that the price is in the correct format and that the description is not empty.
                 {
                     float cost = float.Parse(txtItemCost.Text);
 
                     ItemLogic.UpdateItemData(txtItemCode.Text, txtItemDesc.Text, cost);  //save the changes to the database
                     //update the item from the Items ObservableCollection (and because Items is a ObservableCollection, it is the source of the DataGrid "datagridItems", and the clsItems has the interface "INotifyPropertyChanged",
                     //also from the DataGrid "datagridItems")
-                    CurrentEditingItem.itemCost = Int32.Parse(txtItemCost.Text);
+                    CurrentEditingItem.itemCost = int.Parse(txtItemCost.Text);
                     CurrentEditingItem.itemDesc = txtItemDesc.Text;
 
                     ChangeMode();
@@ -307,9 +321,9 @@ namespace CS3280FinalProject.Items
                 else  //one or both of the conditions failed, so display a message box to the user to tell them what to do
                 {
                     //display the appropriate error message(s)
-                    string errorMessage = ItemLogic.GenerateErrorMessage(txtItemCost.Text, txtItemDesc.Text);
+                    string ErrorMessage = ItemLogic.GenerateErrorMessage(txtItemCost.Text, txtItemDesc.Text);
 
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(ErrorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
             }
