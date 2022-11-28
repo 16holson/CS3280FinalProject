@@ -16,7 +16,6 @@ using System.Data;
 using System.Reflection;
 using System;
 using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace CS3280FinalProject.Items
